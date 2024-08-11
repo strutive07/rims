@@ -1,41 +1,41 @@
-|    | model_name                | cot                | pal                | p2c                | simple greedy              | rims                                                                                          |
-|---:|:--------------------------|:-------------------|:-------------------|:-------------------|:---------------------------|:----------------------------------------------------------------------------------------------|
-|  1 | Meta-Llama-3-8B-Instruct  | 1508/5000 (30.2 %) | 749/5000 (15.0 %)  | 1066/5000 (21.3 %) | math / simple greedy score | outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/rims/rims_math0/processed_rims_scored.txt  |
-|    |                           |                    |                    |                    | 	+ selection: 0.156 (373/2387)                            |                                                                                               |
-|    |                           |                    |                    |                    | 	+ majvote: 0.468 (1224/2613)                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    | total: 0.319 (1597/5000)   | 	+ selection: 0.158 (377/2387)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.468 (1224/2613)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.320 (1601/5000)                                                                      |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/rims/rims_math1/processed_rims_scored.txt  |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    |                            | 	+ selection: 0.131 (312/2387)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.468 (1224/2613)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.307 (1536/5000)                                                                      |
-|  1 | Phi-3-small-128k-instruct | 1842/5000 (36.8 %) | 1904/5000 (38.1 %) | 1814/5000 (36.3 %) | math / simple greedy score | outputs/MATH-full_dt.math/Phi-3-small-128k-instruct/rims/rims_math1/processed_rims_scored.txt |
-|    |                           |                    |                    |                    | 	+ selection: 0.179 (427/2381)                            |                                                                                               |
-|    |                           |                    |                    |                    | 	+ majvote: 0.718 (1881/2619)                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    | total: 0.462 (2308/5000)   | 	+ selection: 0.080 (191/2381)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.718 (1881/2619)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.414 (2072/5000)                                                                      |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | outputs/MATH-full_dt.math/Phi-3-small-128k-instruct/rims/rims_math0/processed_rims_scored.txt |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    |                            | 	+ selection: 0.057 (136/2381)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.718 (1881/2619)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.403 (2017/5000)                                                                      |
-|  1 | Mathstral-7B-v0.1         | 2111/5000 (42.2 %) | 1573/5000 (31.5 %) | 1370/5000 (27.4 %) | math / simple greedy score | outputs/MATH-full_dt.math/Mathstral-7B-v0.1/rims/rims_math1/processed_rims_scored.txt         |
-|    |                           |                    |                    |                    | 	+ selection: 0.246 (562/2288)                            |                                                                                               |
-|    |                           |                    |                    |                    | 	+ majvote: 0.647 (1756/2712)                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    | total: 0.464 (2318/5000)   | 	+ selection: 0.194 (444/2288)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.647 (1756/2712)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.440 (2200/5000)                                                                      |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | outputs/MATH-full_dt.math/Mathstral-7B-v0.1/rims/rims_math0/processed_rims_scored.txt         |
-|    |                           |                    |                    |                    |                            |                                                                                               |
-|    |                           |                    |                    |                    |                            | math / rims score                                                                             |
-|    |                           |                    |                    |                    |                            | 	+ selection: 0.205 (469/2288)                                                                                               |
-|    |                           |                    |                    |                    |                            | 	+ majvote: 0.647 (1756/2712)                                                                                               |
-|    |                           |                    |                    |                    |                            | total: 0.445 (2225/5000)                                                                      |
+-  -------------------------  ------------------  ------------------  ------------------  --------------------------  ---------------------------------------------------------------------------------------------
+1  Meta-Llama-3-8B-Instruct   1508/5000 (30.2 %)  749/5000 (15.0 %)   1066/5000 (21.3 %)  math / simple greedy score  outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/rims/rims_math0/processed_rims_scored.txt
+                                                                                          	+ selection: 0.156 (373/2387)
+                                                                                          	+ majvote: 0.468 (1224/2613)                             math / rims score
+                                                                                          total: 0.319 (1597/5000)    	+ selection: 0.158 (377/2387)
+                                                                                                                      	+ majvote: 0.468 (1224/2613)
+                                                                                                                      total: 0.320 (1601/5000)
+
+                                                                                                                      outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/rims/rims_math1/processed_rims_scored.txt
+
+                                                                                                                      math / rims score
+                                                                                                                      	+ selection: 0.131 (312/2387)
+                                                                                                                      	+ majvote: 0.468 (1224/2613)
+                                                                                                                      total: 0.307 (1536/5000)
+1  Phi-3-small-128k-instruct  1842/5000 (36.8 %)  1904/5000 (38.1 %)  1814/5000 (36.3 %)  math / simple greedy score  outputs/MATH-full_dt.math/Phi-3-small-128k-instruct/rims/rims_math1/processed_rims_scored.txt
+                                                                                          	+ selection: 0.179 (427/2381)
+                                                                                          	+ majvote: 0.718 (1881/2619)                             math / rims score
+                                                                                          total: 0.462 (2308/5000)    	+ selection: 0.080 (191/2381)
+                                                                                                                      	+ majvote: 0.718 (1881/2619)
+                                                                                                                      total: 0.414 (2072/5000)
+
+                                                                                                                      outputs/MATH-full_dt.math/Phi-3-small-128k-instruct/rims/rims_math0/processed_rims_scored.txt
+
+                                                                                                                      math / rims score
+                                                                                                                      	+ selection: 0.057 (136/2381)
+                                                                                                                      	+ majvote: 0.718 (1881/2619)
+                                                                                                                      total: 0.403 (2017/5000)
+1  Mathstral-7B-v0.1          2111/5000 (42.2 %)  1573/5000 (31.5 %)  1370/5000 (27.4 %)  math / simple greedy score  outputs/MATH-full_dt.math/Mathstral-7B-v0.1/rims/rims_math1/processed_rims_scored.txt
+                                                                                          	+ selection: 0.246 (562/2288)
+                                                                                          	+ majvote: 0.647 (1756/2712)                             math / rims score
+                                                                                          total: 0.464 (2318/5000)    	+ selection: 0.194 (444/2288)
+                                                                                                                      	+ majvote: 0.647 (1756/2712)
+                                                                                                                      total: 0.440 (2200/5000)
+
+                                                                                                                      outputs/MATH-full_dt.math/Mathstral-7B-v0.1/rims/rims_math0/processed_rims_scored.txt
+
+                                                                                                                      math / rims score
+                                                                                                                      	+ selection: 0.205 (469/2288)
+                                                                                                                      	+ majvote: 0.647 (1756/2712)
+                                                                                                                      total: 0.445 (2225/5000)
+-  -------------------------  ------------------  ------------------  ------------------  --------------------------  ---------------------------------------------------------------------------------------------

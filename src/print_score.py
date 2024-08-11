@@ -3,6 +3,7 @@ import os
 import glob
 
 import pandas as pd
+from tabulate import tabulate
 
 def load_scores():
     files = glob.glob("outputs/*/*/processed_indiv_scored.md")
@@ -55,8 +56,8 @@ def read_md(fname):
     model_name = fname.split('/')[2]
     
     df['model_name'] = [model_name]
-    df['simple greedy'] = [load_sg(dataset_name, model_name)]
-    df['rims'] = [load_rims(dataset_name, model_name)]
+    df['simple greedy'] = [str(load_sg(dataset_name, model_name))]
+    df['rims'] = [str(load_rims(dataset_name, model_name))]
     df = df[['model_name', 'cot', 'pal', 'p2c', 'simple greedy', 'rims']]
 
     return dataset_name, model_name, df
@@ -65,4 +66,4 @@ def read_md(fname):
 dfs = load_scores()
 for dataset_name in dfs:
     with open(f'scores/{dataset_name}.md', 'w') as f:
-        f.write(dfs[dataset_name].to_markdown())
+        f.write(tabulate(dfs[dataset_name]))
