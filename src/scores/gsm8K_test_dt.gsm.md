@@ -1,62 +1,7 @@
--  -------------------------  ------------------  ------------------  ------------------  -------------------------  --------------------------------------------------------------------------------------------
-1  Meta-Llama-3-8B-Instruct   963/1319 (73.0 %)   1002/1319 (76.0 %)  859/1319 (65.1 %)   gsm / simple greedy score  outputs/gsm8K_test_dt.gsm/Meta-Llama-3-8B-Instruct/rims/rims_gsm2/processed_rims_scored.txt
-                                                                                          	+ selection: 0.324 (77/238)
-                                                                                          	+ majvote: 0.926 (1001/1081)                            gsm / rims score
-                                                                                          total: 0.817 (1078/1319)   	+ selection: 0.399 (95/238)
-                                                                                                                     	+ majvote: 0.926 (1001/1081)
-                                                                                                                     total: 0.831 (1096/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Meta-Llama-3-8B-Instruct/rims/rims_gsm1/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.391 (93/238)
-                                                                                                                     	+ majvote: 0.926 (1001/1081)
-                                                                                                                     total: 0.829 (1094/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Meta-Llama-3-8B-Instruct/rims/rims_gsm0/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.349 (83/238)
-                                                                                                                     	+ majvote: 0.926 (1001/1081)
-                                                                                                                     total: 0.822 (1084/1319)
-1  Phi-3-small-128k-instruct  1113/1319 (84.4 %)  1139/1319 (86.4 %)  1068/1319 (81.0 %)  gsm / simple greedy score  outputs/gsm8K_test_dt.gsm/Phi-3-small-128k-instruct/rims/rims_gsm1/processed_rims_scored.txt
-                                                                                          	+ selection: 0.295 (26/88)
-                                                                                          	+ majvote: 0.950 (1169/1231)                            gsm / rims score
-                                                                                          total: 0.906 (1195/1319)   	+ selection: 0.432 (38/88)
-                                                                                                                     	+ majvote: 0.950 (1169/1231)
-                                                                                                                     total: 0.915 (1207/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Phi-3-small-128k-instruct/rims/rims_gsm0/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.500 (44/88)
-                                                                                                                     	+ majvote: 0.950 (1169/1231)
-                                                                                                                     total: 0.920 (1213/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Phi-3-small-128k-instruct/rims/rims_gsm2/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.136 (12/88)
-                                                                                                                     	+ majvote: 0.950 (1169/1231)
-                                                                                                                     total: 0.895 (1181/1319)
-1  Mathstral-7B-v0.1          1009/1319 (76.5 %)  1014/1319 (76.9 %)  968/1319 (73.4 %)   gsm / simple greedy score  outputs/gsm8K_test_dt.gsm/Mathstral-7B-v0.1/rims/rims_gsm2/processed_rims_scored.txt
-                                                                                          	+ selection: 0.313 (46/147)
-                                                                                          	+ majvote: 0.915 (1072/1172)                            gsm / rims score
-                                                                                          total: 0.848 (1118/1319)   	+ selection: 0.415 (61/147)
-                                                                                                                     	+ majvote: 0.915 (1072/1172)
-                                                                                                                     total: 0.859 (1133/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Mathstral-7B-v0.1/rims/rims_gsm0/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.517 (76/147)
-                                                                                                                     	+ majvote: 0.915 (1072/1172)
-                                                                                                                     total: 0.870 (1148/1319)
-
-                                                                                                                     outputs/gsm8K_test_dt.gsm/Mathstral-7B-v0.1/rims/rims_gsm1/processed_rims_scored.txt
-
-                                                                                                                     gsm / rims score
-                                                                                                                     	+ selection: 0.401 (59/147)
-                                                                                                                     	+ majvote: 0.915 (1072/1172)
-                                                                                                                     total: 0.857 (1131/1319)
--  -------------------------  ------------------  ------------------  ------------------  -------------------------  --------------------------------------------------------------------------------------------
++----+---------------------------+--------------------+--------------------+--------------------+-------------------+-------------------+
+|    | model_name                | cot                | pal                | p2c                | simple greedy     | rims              |
+|----+---------------------------+--------------------+--------------------+--------------------+-------------------+-------------------|
+|  1 | Meta-Llama-3-8B-Instruct  | 963/1319 (73.0 %)  | 1002/1319 (76.0 %) | 859/1319 (65.1 %)  | 0.817 (1078/1319) | 0.831 (1084/1319) |
+|  1 | Phi-3-small-128k-instruct | 1113/1319 (84.4 %) | 1139/1319 (86.4 %) | 1068/1319 (81.0 %) | 0.906 (1195/1319) | 0.92 (1181/1319)  |
+|  1 | Mathstral-7B-v0.1         | 1009/1319 (76.5 %) | 1014/1319 (76.9 %) | 968/1319 (73.4 %)  | 0.848 (1118/1319) | 0.87 (1131/1319)  |
++----+---------------------------+--------------------+--------------------+--------------------+-------------------+-------------------+

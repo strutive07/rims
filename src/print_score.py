@@ -5,6 +5,7 @@ import glob
 import pandas as pd
 from tabulate import tabulate
 
+
 def load_scores():
     files = glob.glob("outputs/*/*/processed_indiv_scored.md")
 
@@ -21,12 +22,17 @@ def load_scores():
         df_dict[dataset_name] = pd.concat(df_dict[dataset_name].values())
     return df_dict
 
+def get_score_from_text(text):
+    for line in text.split('\n'):
+         if 'total:' in line:
+             return line.replace('total:', '').strip().split(' ')
+    return 0
 
 def load_sg(dataset_name, model_name):
     fname = f'outputs/{dataset_name}/{model_name}/simple_greedy/processed_sg_scored.txt'
     if os.path.exists(fname):
         with open(fname) as f:
-            return f.read()
+            return ' '.join(get_score_from_text(f.read()))
     else:
         return ''
 
@@ -34,15 +40,16 @@ def load_rims(dataset_name, model_name):
     fname = f'outputs/{dataset_name}/{model_name}/rims/*/processed_rims_scored.txt'
 
     fnames = glob.glob(fname)
-    res = ''
+    max_score = 0
+    status = ''
     
     for fname in fnames:
         with open(fname) as f:
-            res += f"""{fname}
+            score, status = get_score_from_text(f.read())
+            if float(score) >= max_score:
+                max_score = float(score)
 
-{f.read()}
-"""
-    return res
+    return f'{max_score} {status}'
 
 def read_md(fname):
     with open(fname) as f:
@@ -66,4 +73,4 @@ def read_md(fname):
 dfs = load_scores()
 for dataset_name in dfs:
     with open(f'scores/{dataset_name}.md', 'w') as f:
-        f.write(tabulate(dfs[dataset_name]))
+        f.write(tabulate(dfs[dataset_name], headers='keys', tablefmt='psql'))
