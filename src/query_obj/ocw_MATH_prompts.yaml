@@ -1,0 +1,355 @@
+ocw_cot:
+  system: "You are a helpful assistant that can solve problems step by step."
+  user_tmp: |
+    {QUESTION}
+  user:
+    - |
+      Let's solve the following math problems. You need to solve these math problems step by step. Here is one example how to do it,
+
+      Problem:
+      Subproblem 0: What is the net charge of arginine in a solution of $\mathrm{pH} 1.0$?
+      Please format your answer as +n or -n.
+
+      Solution:
+      Arginine is an amino acid with three groups that can be protonated and contribute to its net charge, depending on the solution's pH:\n\n1. The carboxyl group (-COOH), which typically has a pKa around 2.17.\n2. The amino group (-NH3+), with a pKa around 9.04.\n3. The side chain (guanidinium group, -C(NH2)2+), which has a pKa of approximately 12.48.\n\nAt a pH of 1.0, all three groups are in their protonated forms due to the low pH value being well below their respective pKa values. The carboxyl group would be COOH, the amino group would be NH3+, and the side chain would be protonated as well. The net charge of arginine in this situation is the sum of the charges of these groups:\n\n- The carboxyl group (-COOH) is neutral at this pH.\n- The amino group (-NH3+) carries a charge of +1.\n- The guanidinium group (-C(NH2)2+) carries a charge of +1.\n\nNet charge = 0 (from -COOH) +1 (from -NH3+) +1 (from -C(NH2)2+)\n\nNet charge = +2\n\nThus, the net charge of arginine in a solution of pH 1.0 is +2.\n\nFinal answer: The net charge of arginine at pH 1.0 is +2.
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      Preamble: For each Laplace Transform \(Y(s)\), find the function \(y(t)\):
+      Subproblem 0:
+      \[Y(s)=\boxed{\frac{1}{(s+a)(s+b)}}\]
+    - |
+      Problem:
+      Preamble: The following subproblems refer to the differential equation
+      $\ddot{x}+b \dot{x}+x=0$.
+      Subproblem 0: What is the characteristic polynomial $p(s)$ of
+      $\ddot{x}+b \dot{x}+x=0$?
+    - |
+      Problem:
+      Subproblem 0: Let $z = 1 + \sqrt{3} i$. Find $a, b$ that satisfy the equation
+      $z^4 = a + bi$. Express your answer as the ordered pair $(a,b)$.
+  assistant:
+    - |
+      Solution:
+      We can simplify with partial fractions:
+      \[Y(s)=\\frac{1}{(s+a)(s+b)}=\\frac{C}{s+a}+\\frac{D}{s+b}\]\nfind the constants
+      \(C\) and \(D\) by setting \(s=-a\) and \(s=-b\)
+      \[
+        \begin{aligned}
+        \frac{1}{(s+a)(s+b)} &=\\frac{C}{s+a}+\\frac{D}{s+b} \\\\
+        1 &=C(s+b)+D(s+a) \\
+        C &=\\frac{1}{b-a} \\
+        D &=\\frac{1}{a-b}
+        \end{aligned}
+      \]
+      therefore
+      \[\nY(s)=\frac{1}{b-a} \frac{1}{s+a}-\frac{1}{b-a} \frac{1}{s+b}
+      \]
+      By looking up the inverse Laplace Transform of \(\frac{1}{s+b}\), we find the total
+      solution \(y(t)\)
+      \[
+        y(t)=\boxed{\frac{1}{b-a}\left(e^{-a t}-e^{-b t}\right)}
+      \].
+      Final answer: The final answer is \[\frac{1}{b-a}\left(e^{-a t}-e^{-b t}\right)\]. I hope it is correct.
+    - |
+      Solution:
+      The characteristic polynomial is $p(s)=\\boxed{s^{2}+b s+1}$.
+      Final answer: The final answer is $s^{2}+b s+1$. I hope it is correct.
+    - |
+      Solution:
+      $z^{4}$ has argument $4 \pi / 3$ and radius 16 , so it's equal to $-8-8 \sqrt{3} i$.
+      Thus $a = -8, b = -8\sqrt 3$, and our answer is $\boxed{(-8, -8\sqrt{3})}$.
+      Final answer: The final answer is (-8, -8\sqrt{3}). I hope it is correct.
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - "$2$"
+    - "\\[\\frac{1}{b-a}\\left(e^{-a t}-e^{-b t}\\right)\\]"
+    - "$s^{2}+b s+1$"
+    - "$\\left(-8, -8\\sqrt{3}\\right)$"
+  questions: # only for fewshot harvesting
+    - |
+      Problem:
+      Subproblem 0: What is the net charge of arginine in a solution of $\mathrm{pH} 1.0$?
+      Please format your answer as +n or -n.
+    - |
+      Problem:
+      Preamble: For each Laplace Transform \(Y(s)\), find the function \(y(t)\):
+      Subproblem 0:
+      \[Y(s)=\boxed{\frac{1}{(s+a)(s+b)}}\]
+    - |
+      Problem:
+      Preamble: The following subproblems refer to the differential equation
+      $\ddot{x}+b \dot{x}+x=0$.
+      Subproblem 0: What is the characteristic polynomial $p(s)$ of
+      $\ddot{x}+b \dot{x}+x=0$?
+    - |
+      Problem:
+      Subproblem 0: Let $z = 1 + \sqrt{3} i$. Find $a, b$ that satisfy the equation
+      $z^4 = a + bi$. Express your answer as the ordered pair $(a,b)$.
+
+ocw_pal:
+  system: "You are a helpful assistant that can solve problems by using Python code."
+  user_tmp: |
+    {QUESTION}
+
+    # solution in Python
+
+  user:
+    - |
+      Let's use python to solve problems. You need to write python code to answer these problems. Here is one example how to do it,
+
+      Problem:
+      Subproblem 0: What is the net charge of arginine in a solution of $\mathrm{pH} 1.0$?
+      Please format your answer as +n or -n.
+
+      # solution in Python
+      def arginine_net_charge_at_ph1():
+          # These are the expected charges at pH 1.0
+          charge_alpha_amino = +1     # protonated amino group
+          charge_alpha_carboxyl = 0   # protonated carboxyl group is neutral
+          charge_guanidino = +1       # protonated guanidino group
+
+          net_charge = charge_alpha_amino + charge_alpha_carboxyl + charge_guanidino
+          return f"+{net_charge}"
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      Preamble: For each Laplace Transform \(Y(s)\), find the function \(y(t)\):
+      Subproblem 0:
+      \[Y(s)=\boxed{\frac{1}{(s+a)(s+b)}}\]
+    - |
+      Problem:
+      Preamble: The following subproblems refer to the differential equation
+      $\ddot{x}+b \dot{x}+x=0$.
+      Subproblem 0: What is the characteristic polynomial $p(s)$ of
+      $\ddot{x}+b \dot{x}+x=0$?
+    - |
+      Problem:
+      Subproblem 0: Let $z = 1 + \sqrt{3} i$. Find $a, b$ that satisfy the equation
+      $z^4 = a + bi$. Express your answer as the ordered pair $(a,b)$.
+
+  assistant:
+    - | # following will not evaluate correct but let us just give it as a fewshot
+      import sympy as sp
+      def solution():
+          # Define variables
+          s, t, a, b = sp.symbols('s t a b')
+          # Define the Laplace transform
+          Y_s = 1 / ((s + a) * (s + b))
+          # Calculate the inverse Laplace transform
+          y_t = sp.inverse_laplace_transform(Y_s, s, t)
+          # Check if y_t is an equation and extract the RHS
+          if isinstance(y_t, sp.Eq):
+              y_t_rhs = y_t.rhs
+          else:
+              y_t_rhs = y_t
+          # since the results should be in latex, apply `sp.latex()`
+          return sp.latex(y_t_rhs)
+    - |
+      import sympy as sp
+      from sympy import symbols, Function, Eq, diff
+
+      def solution():
+          # Define the symbols
+          t, b, s = symbols('t b s')
+          x = Function('x')(t)
+
+          # Define the differential equation
+          diffeq = Eq(diff(x, t, t) + b * diff(x, t) + x, 0)
+
+          # Find the characteristic equation by replacing d^2x/dt^2 with s^2, dx/dt with s, and x with 1
+          char_eq = diffeq.subs({diff(x, t, t): s**2, diff(x, t): s, x: 1}).lhs
+
+          return sp.latex(char_eq)
+    - |
+      from sympy import symbols, I, sqrt, latex
+      def solution():
+          # Define the complex number z
+          z = 1 + sqrt(3) * I
+
+          # Calculate z^4
+          z_4 = z**4
+
+          # Simplify the result to get it in the form a + bi
+          z_4_simplified = z_4.expand(complex=True)
+
+          # Extract real and imaginary parts
+          a = z_4_simplified.as_real_imag()[0]
+          b = z_4_simplified.as_real_imag()[1]
+          return latex(a, b)
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - "$2$"
+    - "\\[\\frac{1}{b-a}\\left(e^{-a t}-e^{-b t}\\right)\\]"
+    - "$s^{2}+b s+1$"
+    - "$\\left(-8, -8\\sqrt{3}\\right)$"
+
+
+math_cot:
+  system: "You are a helpful assistant that can solve problems step by step."
+  user_tmp: |
+    {QUESTION}
+  user:
+    - |
+      Let's solve the following math problems. You need to solve these math problems step by step. Here is one example how to do it,
+
+      Problem:
+      Find the domain of the expression  $\frac{\sqrt{x-2}}{\sqrt{5-x}}$.}
+
+      Solution:
+      The expressions inside each square root must be non-negative. Therefore, $x-2 \ge 0$, so $x\ge2$, and $5 - x \ge 0$, so $x \le 5$. Also, the denominator cannot be equal to zero, so $5-x>0$, which gives $x<5$. Therefore, the domain of the expression is $\boxed{[2,5)}$.
+      Final Answer: The final answer is $[2,5)$. I hope it is correct.
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      If $\det \mathbf{A} = 2$ and $\det \mathbf{B} = 12,$ then find $\det (\mathbf{A} \mathbf{B}).$
+    - |
+      Problem:
+      Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?
+    - |
+      Problem:
+      If the system of equations
+
+      \begin{align*}
+      6x-4y&=a,\\
+      6y-9x &=b.
+      \end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,
+      find $\frac{a}{b},$ assuming $b$ is nonzero.
+  assistant:
+    - |
+      Solution:
+      We have that $\det (\mathbf{A} \mathbf{B}) = (\det \mathbf{A})(\det \mathbf{B}) = (2)(12) = \boxed{24}.$
+      Final Answer: The final answer is $24$. I hope it is correct.
+    - |
+      Solution:
+      If Terrell lifts two 20-pound weights 12 times, he lifts a total of $2\cdot 12\cdot20=480$ pounds of weight.  If he lifts two 15-pound weights instead for $n$ times, he will lift a total of $2\cdot15\cdot n=30n$ pounds of weight.  Equating this to 480 pounds, we can solve for $n$:
+      \begin{align*}
+      30n&=480\\
+      \Rightarrow\qquad n&=480/30=\boxed{16}
+      \end{align*}
+      Final Answer: The final answer is $16$. I hope it is correct.
+    - |
+      Solution:
+      If we multiply the first equation by $-\frac{3}{2}$, we obtain
+
+      $$6y-9x=-\frac{3}{2}a.$$Since we also know that $6y-9x=b$, we have
+
+      $$-\frac{3}{2}a=b\Rightarrow\frac{a}{b}=\boxed{-\frac{2}{3}}.$$
+      Final Answer: The final answer is $-\frac{2}{3}$. I hope it is correct.
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - "[2,5)"
+    - 24
+    - 16
+    - -\frac{2}{3}
+  questions: # only for fewshot harvesting
+    - |
+      Problem:
+      Find the domain of the expression  $\frac{\sqrt{x-2}}{\sqrt{5-x}}$.}
+    - |
+      Problem:
+      If $\det \mathbf{A} = 2$ and $\det \mathbf{B} = 12,$ then find $\det (\mathbf{A} \mathbf{B}).$
+    - |
+      Problem:
+      Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?
+    - |
+      Problem:
+      If the system of equations
+
+      \begin{align*}
+      6x-4y&=a,\\
+      6y-9x &=b.
+      \end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,
+      find $\frac{a}{b},$ assuming $b$ is nonzero.
+math_pal:
+  system: "You are a helpful assistant that can solve math problems by using Python code."
+  user_tmp: |
+    {QUESTION}
+
+    # solution in Python
+
+  user:
+    - |
+      Let's use python to solve math problems. You need to write python code to answer these math problems. Here is one example how to do it,
+
+      Problem:
+      Find the domain of the expression  $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$.}
+
+      # solution in Python
+      import sympy as sp
+
+      def solution():
+          x = sp.symbols('x')
+          expr = sp.sqrt(x - 2) / sp.sqrt(5 - x)
+
+          # Define the conditions for the numerator and denominator
+          num_cond = x - 2 >= 0
+          den_cond = 5 - x > 0
+
+          # Solve the inequalities to find the domain
+          num_sol = sp.solve_univariate_inequality(num_cond, x, relational=False)
+          den_sol = sp.solve_univariate_inequality(den_cond, x, relational=False)
+
+          # Find the intersection of the solutions to get the domain
+          domain = sp.latex(sp.Intersection(num_sol, den_sol))
+          return domain
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      If $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$
+    - |
+      Problem:
+      Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?
+    - |
+      Problem:
+      If the system of equations
+
+      \\begin{align*}
+      6x-4y&=a,\\\\\n6y-9x &=b.
+      \\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,
+      find $\\frac{a}{b},$ assuming $b$ is nonzero.
+  assistant:
+    - |
+      def solution():
+          """If det A = 2 and det B = 12, find det(AB)."""
+          det_A = 2
+          det_B = 12
+          det_AB = det_A * det_B
+          result = det_AB
+          return result
+    - |
+      def solution():
+          """Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?"""
+          weight1 = 20
+          weight2 = 15
+          lifts1 = 12
+          total_weight1 = weight1 * 2 * lifts1
+          lifts2 = total_weight1 / (weight2 * 2)
+          result = lifts2
+          return result
+    - |
+      import sympy as sp
+
+      def solution():
+          x, y, a, b = sp.symbols('x y a b')
+
+          # Define the equations
+          eq1 = sp.Eq(6*x - 4*y, a)
+          eq2 = sp.Eq(6*y - 9*x, b)
+
+          # Solve the equations for a and b
+          solutions = sp.solve([eq1, eq2], (a, b), dict=True)
+
+          # If solutions are found, express a/b
+          if solutions:
+              a_expr = solutions[0][a]
+              b_expr = solutions[0][b]
+              ratio = a_expr / b_expr
+              return sp.simplify(ratio)
+          return "No solution found"
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - "[2,5)"
+    - 24
+    - 16
+    - -\frac{2}{3}

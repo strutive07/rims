@@ -1,0 +1,4 @@
+gsm / simple greedy score
+	+ selection: 0.313 (46/147)
+	+ majvote: 0.915 (1072/1172)
+total: 0.848 (1118/1319)

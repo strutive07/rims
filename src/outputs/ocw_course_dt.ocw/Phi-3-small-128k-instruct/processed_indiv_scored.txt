@@ -1,0 +1,40 @@
+file      = outputs/ocw_course_dt.ocw/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = ocw
+=======individual performance=======
+cot:	73   /  272 (26.8%)
+
+
+pal:	37   /  272 (13.6%)
+
+
+p2c:	49   /  272 (18.0%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 15, 'cotpal-p2c': 6, 'palp2c-cot': 9, 'p2ccot-pal': 8, 'cot_only': 44, 'pal_only': 7, 'p2c_only': 17}
+=====================================
+
+
+file      = outputs/ocw_course_dt.ocw/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = ocw
+=======individual performance=======
+cot:	73   /  272 (26.8%)
+
+
+pal:	37   /  272 (13.6%)
+
+
+p2c:	49   /  272 (18.0%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 15, 'cotpal-p2c': 6, 'palp2c-cot': 9, 'p2ccot-pal': 8, 'cot_only': 44, 'pal_only': 7, 'p2c_only': 17}
+=====================================
+
+

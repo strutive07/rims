@@ -1,0 +1,92 @@
+# "Question:" as a stop sequence
+system_msg: You are tutoring a student who wants to learn python. You are great at teaching how break down solving math word problems with step-by-step plans in numbered list so that your student actually code an appropriate solution by following it. Write down your step-by-step guide into a list after `Suggestion`.
+
+user_template: |
+  {QUESTION}
+
+  `Suggestion`:
+fewshots_user:
+  - |
+    Question: Olivia has $23. She bought five bagels for $3 each. How much money does she have left?
+
+    `Suggestion`:
+  - |
+    Question: Michael had 58 golf balls. On tuesday, he lost 23 golf balls. On wednesday, he lost 2 more. How many golf balls did he have at the end of wednesday?
+
+    `Suggestion`:
+  - |
+    Question: There were nine computers in the server room. Five more computers were installed each day, from monday to thursday. How many computers are now in the server room?
+
+    `Suggestion`:
+  - |
+    Question: Shawn has five toys. For Christmas, he got two toys each from his mom and dad. How many toys does he have now?
+
+    `Suggestion`:
+  - |
+    Question: Jason had 20 lollipops. He gave Denny some lollipops. Now Jason has 12 lollipops. How many lollipops did Jason give to Denny?
+
+    `Suggestion`:
+  - |
+    Question: There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done, there will be 21 trees. How many trees did the grove workers plant today?
+
+    `Suggestion`:
+  - |
+    Question: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+
+    `Suggestion`:
+  - |
+    Question: Leah had 32 chocolates and her sister had 42. If they ate 35, how many pieces do they have left in total?
+
+    `Suggestion`:
+fewshots_assistant:
+  - |
+    1. Start by defining a variable to store Olivia's initial amount of money, let's call it "money_initial" and store 23 as a initial value.
+    2. Define another variable to store the cost of each bagel, let's call it "bagel_cost" initialized with 3.
+    3. Define another variable to keep track of the number of bagels Olivia bought, let's call it "num_bagels", and assign a value, 5.
+    4. Calculate the total amount of money spent on bagels by multiplying "bagel_cost" and "num_bagels".
+    5. Subtract the total amount spent on bagels from Olivia's initial amount of money to find out how much money she has left.
+    6. Return the result of the subtraction.
+  - |
+    1. Start by defining a variable to represent the initial number of golf balls Michael had (e.g., `golf_balls_initial = 58`).
+    2. Subtract the number of balls lost on Tuesday from the initial number of balls (e.g., `remaining_balls = initial_balls - 23`).
+    3. Subtract the number of balls lost on Wednesday from the number of remaining balls (e.g., `final_balls = remaining_balls - 2`).
+    4. Return the `final_balls` which represents the number of golf balls Michael had at the end of Wednesday.
+  - |
+    1. Start by setting a variable count_computers to represent the current number of computers in the server room.
+    2. Initialize count_computers to 9, as mentioned in the question.
+    3. Create a loop to iterate over the days from Monday to Thursday.
+    4. Inside the loop, increase count_computers by 5 each day.
+    5. After the loop finishes, the value of count_computers will represent the total number of computers in the server room. Return the final result.
+  - |
+    1. Start by storing the initial number of toys Shawn has as a variable, let's say `initial_toys`.
+    2. Initialize `initial_toys` to 5, since Shawn initially has 5 toys.
+    3. Create two variables, `toys_from_mom` and `toys_from_dad`, to represent the number of toys Shawn received from his mom and dad respectively.
+    4. Assign 2 to both `toys_from_mom` and `toys_from_dad`, since Shawn got 2 toys from each parent.
+    5. Create a new variable `total_toys` and assign it the sum of `initial_toys`, `toys_from_mom`, and `toys_from_dad`.
+    6. Return the value of `total_toys`.
+  - |
+    1. Determine the unknown quantity in the problem: We need to find out how many lollipops Jason gave to Denny.
+    2. Let's represent the unknown quantity with a variable, like `x`.
+    3. Current number of lollipops summed with x need to be the same as initial number of lollipops Jason had.
+    4. That is, `initial_lollipops` - `x` = `current_lollipops`
+    5. Rearranging the equation above will return the value of `x`, the number of lollipops given to Denny.
+  - |
+    1. Define the total number of trees in the grove before planting as a variable, let's say "initial_trees". Set "initial_trees" equal to 15.
+    2. Define the total number of trees in the grove after planting as another variable, let's say "final_trees". Set "final_trees" equal to 21.
+    3. Calculate the number of trees planted today by subtracting "initial_trees" from "final_trees".
+    4. Store the result in a variable, let's say "trees_planted_today".
+    5. Return the value of "trees_planted_today" as an answer.
+  - |
+    1. Start by initializing a variable `num_cars` with the initial number of cars in the parking lot.
+    2. Assign the value of 3 to `num_cars` since there are initially 3 cars in the parking lot.
+    3. Initialize another variable `new_cars` with the number of cars that arrive.
+    4. Assign the value of 2 to `new_cars` since 2 more cars arrive.
+    5. Add the value of `new_cars` to `num_cars` to get the total number of cars in the parking lot.
+    6. Return `num_cars`.
+  - |
+    1. Start by defining the initial number of chocolates Leah and her sister have.
+    2. Assign Leah's initial number of chocolates to a variable.
+    3. Assign her sisters's initial number of chocolates to a variable.
+    4. Calculate the total number of chocolates they have together.
+    5. Subtract the number of chocolates they ate from the total.
+    6. Return the total number of chocolates they have left.

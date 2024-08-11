@@ -1,0 +1,4 @@
+ocw / rims score
+	+ selection: 0.008 (1/126)
+	+ majvote: 0.295 (43/146)
+total: 0.162 (44/272)

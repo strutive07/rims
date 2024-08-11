@@ -1,0 +1,4 @@
+ocw / simple greedy score
+	+ selection: 0.081 (12/149)
+	+ majvote: 0.171 (21/123)
+total: 0.121 (33/272)

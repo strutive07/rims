@@ -1,0 +1,32 @@
+file      = outputs/ocw_course_dt.ocw/Mathstral-7B-v0.1/processed_indiv.jsonl
+dataset   = ocw
+=======individual performance=======
+cot:	59   /  272 (21.7%)
+
+
+pal:	23   /  272 (8.5%)
+
+
+p2c:	26   /  272 (9.6%)
+
+
+file      = outputs/ocw_course_dt.ocw/Mathstral-7B-v0.1/processed_indiv.jsonl
+dataset   = ocw
+=======individual performance=======
+cot:	59   /  272 (21.7%)
+
+
+pal:	23   /  272 (8.5%)
+
+
+p2c:	26   /  272 (9.6%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 5, 'cotpal-p2c': 4, 'palp2c-cot': 4, 'p2ccot-pal': 6, 'cot_only': 44, 'pal_only': 10, 'p2c_only': 11}
+=====================================
+
+

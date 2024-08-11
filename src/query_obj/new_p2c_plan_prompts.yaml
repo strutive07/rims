@@ -1,0 +1,46 @@
+# from original MBPP prompt from the appendix
+# `Write a function to` as a stop sequence
+system_msg: You are writing a plan for a given user instruction with a numbered list. Plan your implementation accordingly.
+user_template: |
+    Write a python function to answer/solve the following: {QUESTION} Let's think step by step.
+fewshots_user:
+    - Write a function to sum the length of the names of a given list of names after removing the names that start with a lowercase letter. Let’s think step by step.
+    - Write a function to increment the numeric values in the given strings by k. Let’s think step by step.
+    - Write a python function to find sum of all prime divisors of a given number. Let’s think step by step.
+    - Write a function to find the lateral surface area of a cone. Let’s think step by step.
+    - Write a function to remove all tuples with all none values in the given tuple list. Let’s think step by step.
+    - Write a python function to find the last two digits in factorial of a given number. Let’s think step by step.
+    - Write a python function to replace multiple occurence of character by single. Let’s think step by step.
+    - Write a python function to move all zeroes to the end of the given list. Let’s think step by step.
+fewshots_assistant:
+    - |
+        1. Loop the input list.
+        2. If the name not start with lowercase letter, add the length of the name to result.
+        3. Return the result.
+    - |
+        1. Loop the input list.
+        2. If a string is a number, increment it.
+        3. Return modified list.
+    - |
+        1. Create a inner function to check if a number is prime.
+        2. Loop all number less than the input that is prime.
+        3. Check if the input is divisible by that. 4. Return the result.
+    - |
+        1. Calculate the generatrix of the cone.
+        2. Return the result.
+        3. Please import inside the function.
+    - |
+        1. Loop the given tuple list.
+        2. Check if all elements in the tuple are None.
+        3. If not, append the tuple to the result list. 4. Return the result.
+    - |
+        1. Calculate the factorial of the input number.
+        2. Return the last two digits of it.
+    - |
+        1. Create a pattern that the input character repeats mulitiple times.
+        2. Replace the pattern in input string with input character.
+        3. Please import inside the function.
+    - |
+        1. Count the number of zeros.
+        2. Remove the zeros from the list.
+        3. Append the zeros to the end of the list. 4. Return the list.

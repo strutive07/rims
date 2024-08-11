@@ -1,0 +1,143 @@
+You are now solving math word problems. You brilliantly detects the errors in the wrong solution and find `Workaround Method` to correct the solution. The methods you are taking are as follows. Each has its strength and weakness:
+
+- Chain of Thought (cot): Solving problem with writing steps of reasoning in a natural language. Might help correct understanding of the problem but this could be weaker in precise computation.
+- Program-aided Language Modeling (pal): Using python language to reason and obtain an accurate answer to the given question, but this could be weaker in understanding the problem.
+- Plan-and-then-Code (p2c): When a question seems requiring amount of steps to reach the answer, write plans first for what to compute and write a python code to it for solving the problem. However if planning goes wrong, the code will also be wrong. If any steps of planning provided before programming, then it will be considered as Plan-and-then-Code.
+
+Followings are the examples of correcting the wrong solutions with a `Workaround Method` based on diagnosis (`Mistakes`) and `Hint for a better Method choice`.
+
+
+
+
+`Question`: Nedy can eat 8 packs of crackers from Monday to Thursday. If Nedy ate twice the amount on Friday, how many crackers did Nedy eat in all?
+`Method`: Chain-of-Thought (cot)
+`Attempt 1`: Answer:
+Nedy can eat 8 packs of crackers from Monday to Thursday.
+On Friday, Nedy ate twice the amount, which means 2 * 8 = 16 packs of crackers on Friday.
+So in total, Nedy ate 8 (from Monday to Thursday) + 16 (on Friday) = 24 packs of crackers.
+So the answer is 24.
+`Answer 1`: 24.0
+`Evaluation`: Wrong
+`Mistakes`: The mistake in the original attempt is in misunderstanding the problem statement. It is stated that Nedy can eat 8 packs of crackers from Monday to Thursday, which suggests that Nedy eats 8 packs each day, not for the whole period from Monday to Thursday. The calculation was based on the incorrect assumption that the 8 packs were for the entire four days.
+`Hint for a better Method choice`: A program-aided language model or a planned coding approach would help carry out the calculations more systematically to avoid such misunderstandings and provide accurate arithmetic computations.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Nedy can eat 8 packs of crackers from Monday to Thursday. If Nedy ate twice the amount on Friday, how many crackers did Nedy eat in all?
+
+    Let's think step by step.
+    1. Calculate the total number of crackers eaten from Monday to Thursday (8 packs/day * 4 days).
+    2. Calculate the number of crackers eaten on Friday (twice the amount of a regular day).
+    3. Add the total from Monday to Thursday and the amount from Friday to get the total number of crackers eaten.
+    4. Return the total number of crackers eaten.
+    '''
+    # Step 1: Total number of crackers eaten from Monday to Thursday
+    monday_to_thursday = 8 * 4
+
+    # Step 2: Number of crackers eaten on Friday (twice the amount of regular day)
+    friday = 8 * 2
+
+    # Step 3: Total number of crackers eaten
+    total_crackers_eaten = monday_to_thursday + friday
+
+    # Step 4: Return the total number of crackers eaten
+    return total_crackers_eaten
+`Answer 2`: 48.0
+`Evaluation`: Correct
+
+
+
+`Question`: Two white socks cost 25 cents more than a single brown sock. If two white socks cost 45 cents, how much would you pay for 15 brown socks?
+`Method`: Program-aided Language Modeling (pal)
+`Attempt 1`:
+def solution():
+    cost_two_white_socks = 45  # cost in cents
+    cost_difference = 25  # cost difference in cents
+
+    # Since two white socks cost 25 cents more than a single brown sock,
+    # subtract the cost difference from the cost of two white socks to find the cost of one brown sock.
+    cost_one_brown_sock = cost_two_white_socks - cost_difference
+
+    # Find the cost for 15 brown socks by multiplying the cost of one brown sock by 15.
+    cost_fifteen_brown_socks = cost_one_brown_sock * 15
+    result = cost_fifteen_brown_socks
+    return result
+
+# Call the function and print the result
+print(solution())
+
+`Answer 1`: 300.0
+`Evaluation`: Wrong
+`Mistakes`: The error in the first attempt is due to a misunderstanding of the problem statement. The cost of one brown sock should not be calculated by simply subtracting the cost difference from the cost of two white socks. Instead, the cost for two white socks should be divided by two to find the cost of one white sock first before finding the cost of a single brown sock.
+`Hint for a better Method choice`: Use Chain of Thought to clearly understand the relationship between the cost of brown and white socks before calculating the final cost for 15 brown socks. This will help avoid the pitfall of incorrect subtraction that led to the error in the initial attempt.
+`Workaround Method`: Chain-of-Thought (cot)
+`Attempt 2`: Answer:
+Two white socks cost 45 cents.
+One brown sock costs 25 cents less than two white socks.
+Therefore, the cost of one brown sock is 45 cents - 25 cents = 20 cents.
+
+If one brown sock costs 20 cents, then 15 brown socks would cost:
+15 * 20 cents = 300 cents.
+
+Since 100 cents is equal to 1 dollar:
+300 cents is equal to 300 / 100 = $3.
+
+So, you would pay $3 for 15 brown socks.
+`Answer 2`: 3.0
+`Evaluation`: Correct
+
+
+
+`Question`: Bonnie and Samuel went to the market together. Bonnie bought 8 apples. Samuel bought 20 more apples than Bonnie. Samuel then ate half of them and used 1/7 of them to make apple pie. How many apples does Samuel have left?
+`Method`: Program-aided Language Modeling (pal)
+`Attempt 1`:
+def solution():
+    bonnie_apples = 8
+    samuel_apples_more = 20
+    samuel_apples_bought = bonnie_apples + samuel_apples_more
+    samuel_apples_after_eating_half = samuel_apples_bought / 2
+    apples_for_pie = samuel_apples_after_eating_half / 7
+    samuel_apples_left = samuel_apples_after_eating_half - apples_for_pie
+    result = samuel_apples_left
+    return result
+
+`Answer 1`: 12.0
+`Evaluation`: Wrong
+`Mistakes`: The mistake in the first attempt lies in the incorrect calculation of apples used for the pie. The attempt incorrectly divides the halved number of apples by 7 to determine the amount used for the pie when it should be calculated from the original total of apples Samuel bought.
+`Hint for a better Method choice`: A plan-and-then-code approach would ensure a clear step-by-step process is outlined before coding, which is crucial in a problem with multiple sequential calculations to avoid logical errors.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Bonnie and Samuel went to the market together. Bonnie bought 8 apples. Samuel bought 20 more apples than Bonnie. Samuel then ate half of them and used 1/7 of them to make apple pie. How many apples does Samuel have left?
+
+    Let's think step by step.
+    1. Calculate the total number of apples bought by Samuel: 8 + 20 = 28 apples.
+    2. Calculate the number of apples that Samuel ate: 28 / 2 = 14 apples.
+    3. Calculate the number of apples used to make apple pie: 28 / 7 = 4 apples.
+    4. Calculate the number of apples Samuel has left: 28 - 14 - 4 = 10 apples.
+    5. Return the result.
+    '''
+    # Step 1: Calculate the total number of apples bought by Samuel
+    total_apples_samuel = 8 + 20
+
+    # Step 2: Calculate the number of apples that Samuel ate
+    ate_apples = total_apples_samuel / 2
+
+    # Step 3: Calculate the number of apples used to make apple pie
+    pie_apples = total_apples_samuel / 7
+
+    # Step 4: Calculate the number of apples Samuel has left
+    apples_left = total_apples_samuel - ate_apples - pie_apples
+
+    # Step 5: Return the result
+    return apples_left
+`Answer 2`: 10.0
+`Evaluation`: Correct
+
+
+
+Now, try the `Question` below following the same procedure as above. Try the question with the choice of your `Method`, and evaluate the `Answer`. If your `Attempt` is considered wrong, identify the `Mistakes` and reason to take `Workaround Method` by writing `Hint for a better Method choice`. Based on it, make a correct reattempt.
+
+`Question`: [QUESTION]

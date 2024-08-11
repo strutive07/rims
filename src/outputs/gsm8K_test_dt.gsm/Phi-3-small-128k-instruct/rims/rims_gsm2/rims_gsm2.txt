@@ -1,0 +1,194 @@
+You are now solving math word problems. You brilliantly detects the errors in the wrong solution and find `Workaround Method` to correct the solution. The methods you are taking are as follows. Each has its strength and weakness:
+
+- Chain of Thought (cot): Solving problem with writing steps of reasoning in a natural language. Might help correct understanding of the problem but this could be weaker in precise computation.
+- Program-aided Language Modeling (pal): Using python language to reason and obtain an accurate answer to the given question, but this could be weaker in understanding the problem.
+- Plan-and-then-Code (p2c): When a question seems requiring amount of steps to reach the answer, write plans first for what to compute and write a python code to it for solving the problem. However if planning goes wrong, the code will also be wrong. If any steps of planning provided before programming, then it will be considered as Plan-and-then-Code.
+
+Followings are the examples of correcting the wrong solutions with a `Workaround Method` based on diagnosis (`Mistakes`) and `Hint for a better Method choice`.
+
+
+
+
+`Question`: Jerry is making cherry syrup. He needs 500 cherries per quart of syrup. It takes him 2 hours to pick 300 cherries and 3 hours to make the syrup. How long will it take him to make 9 quarts of syrup?
+`Method`: Program-aided Language Modeling (pal)
+`Attempt 1`:
+def solution():
+    cherries_per_quart = 500
+    total_quarts = 9
+    total_cherries_needed = cherries_per_quart * total_quarts
+
+    cherries_per_2_hours = 300
+    time_per_300_cherries = 2  # hours
+
+    # Time to pick cherries for 9 quarts
+    # We find how many 2-hour sessions we need by dividing the total cherries needed by the cherries picked in 2 hours.
+    # We use the ceiling to ensure we pick enough cherries even if the total isn't a multiple of 300.
+    time_to_pick_per_quart = time_per_300_cherries / cherries_per_2_hours * cherries_per_quart
+    total_time_to_pick = time_to_pick_per_quart * total_quarts
+
+    syrup_making_time = 3  # hours for each quart
+    total_time_to_make_syrup = syrup_making_time * total_quarts
+
+    # Total time to make 9 quarts of syrup is the sum of picking time and making time
+    total_time = total_time_to_pick + total_time_to_make_syrup
+    return total_time
+
+`Answer 1`: 57.0
+`Evaluation`: Wrong
+`Mistakes`: The error in the first attempt came from incorrect calculation of the time taken to pick cherries. The attempt wrongly assumes that the syrup making time is multiplied by the number of quarts, which is not stated in the problem. The correct approach should consider the cherry picking time proportional to the number of cherries but treat the syrup making as a fixed duration independent of the quantity.
+`Hint for a better Method choice`: Taking the problem step by step with a plan to address each part of the process (picking and making) separately could avoid compounding errors and lead to a correct solution. Writing out the plan before implementing the code will help verify the logic before execution.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Jerry is making cherry syrup. He needs 500 cherries per quart of syrup. It takes him 2 hours to pick 300 cherries and 3 hours to make the syrup. How long will it take him to make 9 quarts of syrup?
+
+    Let's think step by step.
+    1. Calculate the total number of cherries needed for 9 quarts of syrup.
+    2. Calculate the total number of cherries picked per hour.
+    3. Calculate the total number of hours it will take to pick all the cherries needed.
+    4. Calculate the total time to make 9 quarts of syrup including picking and making the syrup.
+    5. Return the total time.
+    '''
+    # Step 1: Calculate the total number of cherries needed for 9 quarts of syrup
+    cherries_needed = 500 * 9
+
+    # Step 2: Calculate the total number of cherries picked per hour
+    cherries_per_hour = 300 / 2
+
+    # Step 3: Calculate the total number of hours it will take to pick all the cherries needed
+    hours_to_pick_cherries = cherries_needed / cherries_per_hour
+
+    # Step 4: Calculate the total time to make 9 quarts of syrup including picking and making the syrup
+    total_time = hours_to_pick_cherries + 3
+
+    # Step 5: Return the total time
+    return total_time
+`Answer 2`: 33.0
+`Evaluation`: Correct
+
+
+
+`Question`: A man drives 60 mph for 3 hours.  How fast would he have to drive over the next 2 hours to get an average speed of 70 mph?
+`Method`: Chain-of-Thought (cot)
+`Attempt 1`: To solve this problem, we need to work out the total distance the man would need to travel in 5 hours to have an average speed of 70 mph, and then determine how fast he would have to drive in the last 2 hours to cover the remaining distance.
+
+Step 1: Calculate the target total distance for an average speed of 70 mph over 5 hours.
+Total distance = Average speed × Total time
+Total distance = 70 mph × 5 hours = 350 miles
+
+Step 2: Calculate the distance he covered in the first 3 hours driving at 60 mph.
+Distance covered in 3 hours = Speed × Time
+Distance covered = 60 mph × 3 hours = 180 miles
+
+Step 3: Calculate the remaining distance he still needs to cover in the next 2 hours to reach the target total distance of 350 miles.
+Remaining distance = Target total distance - Distance already covered
+Remaining distance = 350 miles - 180 miles = 170 miles
+
+Step 4: Calculate the speed he needs to maintain in the next 2 hours to cover the remaining distance of 170 miles.
+Speed required = Remaining distance / Time left
+Speed required = 170 miles / 2 hours = 85 mph
+
+So, to achieve an average speed of 70 mph over the total journey of 5 hours, the man would have to drive at a speed of 85 mph over the next 2 hours.
+`Answer 1`: 2.0
+`Evaluation`: Wrong
+`Mistakes`: The diagnosis of the first attempt does not seem to have an error in the thought process—the mistake lies in the final answer given ("2.0") which does not match the correct answer calculated ("85 mph").
+`Hint for a better Method choice`: Using a programming approach can help avoid simple calculation errors and ensures that the computed values are correctly reported as the final answer.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: A man drives 60 mph for 3 hours.  How fast would he have to drive over the next 2 hours to get an average speed of 70 mph?
+
+    Let's think step by step.
+    1. Calculate the total distance covered in the first 3 hours (60 mph * 3 hours).
+    2. Calculate the distance needed in the next 2 hours to have an average speed of 70 mph over 5 hours.
+    3. Calculate the speed needed for the next 2 hours to cover the remaining distance in 2 hours.
+    4. Return the speed needed for the next 2 hours.
+    '''
+    # Step 1: Calculate the total distance covered in the first 3 hours (60 mph * 3 hours)
+    distance_covered_3_hours = 60 * 3
+
+    # Step 2: Calculate the distance needed in the next 2 hours to have an average speed of 70 mph over 5 hours
+    average_speed = 70
+    total_time = 5
+    total_distance = average_speed * total_time
+
+    distance_needed_next_2_hours = total_distance - distance_covered_3_hours
+
+    # Step 3: Calculate the speed needed for the next 2 hours to cover the remaining distance in 2 hours
+    speed_needed_next_2_hours = distance_needed_next_2_hours / 2
+
+    # Step 4: Return the speed needed for the next 2 hours
+    return speed_needed_next_2_hours
+`Answer 2`: 85.0
+`Evaluation`: Correct
+
+
+
+`Question`: There are enough provisions in a castle to feed 300 people for 90 days. After 30 days, 100 people leave the castle. How many more days are left until all the food runs out?
+`Method`: Chain-of-Thought (cot)
+`Attempt 1`: Answer:
+Originally, there are enough provisions to feed 300 people for 90 days.
+
+Step 1: Calculate the total provisions in terms of "person-days," which is the number of days that a given amount of food can feed one person. This is done by multiplying the number of people by the number of days the food can last.
+
+Total provisions = 300 people * 90 days = 27000 person-days
+
+Step 2: Determine how many person-days have been used after 30 days with 300 people.
+
+Provisions used in 30 days = 300 people * 30 days = 9000 person-days
+
+Step 3: Subtract the provisions used from the total provisions to find out how many person-days are left.
+
+Provisions left = Total provisions - Provisions used
+Provisions left = 27000 person-days - 9000 person-days
+Provisions left = 18000 person-days
+
+Step 4: Calculate how many days the remaining food will last for the reduced number of people (200 people) after 100 people have left.
+
+Days left for food = Provisions left / Number of people remaining
+Days left for food = 18000 person-days / 200 people
+Days left for food = 90 days
+
+Therefore, after 30 days have passed and 100 people leave, the castle has enough provisions to last for another 90 days for the remaining 200 people.
+`Answer 1`: 200.0
+`Evaluation`: Wrong
+`Mistakes`: The error in the first attempt is in the final step of calculation where the answer is incorrectly represented as 200 days. The correct calculation of days left for food with the remaining 200 people should be 18000 person-days divided by 200 people, which gives 90 days, not 200.
+`Hint for a better Method choice`: For complex calculations involving several steps, a program-aided approach can help avoid human errors in arithmetic and provide a precise result.
+`Workaround Method`: Program-aided Language Modeling (pal)
+`Attempt 2`:
+def solution():
+    initial_people = 300
+    provisions_for_days = 90
+    days_passed = 30
+    people_left = 100
+
+    # Calculate total provisions for 300 people for 90 days
+    total_provisions = initial_people * provisions_for_days
+
+    # Calculate provisions consumed in 30 days
+    provisions_consumed = initial_people * days_passed
+
+    # Calculate remaining provisions after 30 days
+    remaining_provisions = total_provisions - provisions_consumed
+
+    # Calculate number of people remaining after 100 people leave
+    remaining_people = initial_people - people_left
+
+    # Calculate how many days provisions will now last with the remaining 200 people
+    days_remaining = remaining_provisions // remaining_people
+
+    return days_remaining
+
+# Call the function and print the result
+print(solution())
+
+`Answer 2`: 90.0
+`Evaluation`: Correct
+
+
+
+Now, try the `Question` below following the same procedure as above. Try the question with the choice of your `Method`, and evaluate the `Answer`. If your `Attempt` is considered wrong, identify the `Mistakes` and reason to take `Workaround Method` by writing `Hint for a better Method choice`. Based on it, make a correct reattempt.
+
+`Question`: [QUESTION]

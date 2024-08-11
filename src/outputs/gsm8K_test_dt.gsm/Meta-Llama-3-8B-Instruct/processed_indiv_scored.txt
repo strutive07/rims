@@ -1,0 +1,18 @@
+file      = outputs/gsm8K_test_dt.gsm/Meta-Llama-3-8B-Instruct/processed_indiv.jsonl
+dataset   = gsm
+=======individual performance=======
+cot:	963  / 1319 (73.0%)
+
+
+pal:	1002 / 1319 (76.0%)
+
+
+p2c:	859  / 1319 (65.1%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 648, 'cotpal-p2c': 175, 'palp2c-cot': 98, 'p2ccot-pal': 73, 'cot_only': 67, 'pal_only': 81, 'p2c_only': 40}
+=====================================

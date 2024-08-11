@@ -1,0 +1,11 @@
+dataset/99_9_rims_cotpal_inference_prompt_k2_long_DEC4_gpt4/tgt_conflict_12_05_02_32_gsm8K_test.jsonl
+# above by running dec 4
+python selection_math.py \
+    --tgt_conflict \
+    --rimsprompt /Users/seonils/dev/llm-reasoners/examples/Model-Selection-Reasoning/src/RIMS/99_9_rims_cotpal_inference_prompt_k2_long_DEC4.txt \
+    --leftovers # --include_gsm8k_test
+
+
+
+
+dataset/99_9_rims_cotpal_inference_prompt_k2_long_DEC4_gpt4/tgt_conflict_12_08_17_05_gsm8K_test_leftover.jsonl # leftovers added later

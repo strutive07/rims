@@ -1,0 +1,4 @@
+math / rims score
+	+ selection: 0.080 (191/2381)
+	+ majvote: 0.718 (1881/2619)
+total: 0.414 (2072/5000)

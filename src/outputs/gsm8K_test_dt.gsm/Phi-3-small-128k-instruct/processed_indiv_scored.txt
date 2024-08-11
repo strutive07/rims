@@ -1,0 +1,32 @@
+file      = outputs/gsm8K_test_dt.gsm/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = gsm
+=======individual performance=======
+cot:	1113 / 1319 (84.4%)
+
+
+pal:	1139 / 1319 (86.4%)
+
+
+p2c:	1068 / 1319 (81.0%)
+
+
+file      = outputs/gsm8K_test_dt.gsm/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = gsm
+=======individual performance=======
+cot:	1113 / 1319 (84.4%)
+
+
+pal:	1139 / 1319 (86.4%)
+
+
+p2c:	1068 / 1319 (81.0%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 898, 'cotpal-p2c': 115, 'palp2c-cot': 100, 'p2ccot-pal': 52, 'cot_only': 48, 'pal_only': 26, 'p2c_only': 18}
+=====================================
+
+

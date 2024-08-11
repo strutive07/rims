@@ -1,0 +1,384 @@
+
+system_msg: ""
+user_template: |
+    def solution():
+        '''
+        Create a function solution that returns the answer of the following question: {QUESTION}
+
+        Let's think step by step.
+        {PLAN}
+        '''
+fewshots_user:
+    - |
+        def encrypt(s):
+            '''
+            Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.
+            For example:
+            encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’
+            encrypt(’et’) returns ’ix’
+
+            Let’s think step by step.
+            1. Create a alphabet, bias two places multiplied by two.
+            2. Loop the input, find the latter bias letter in alphabet.
+            3. Return result.
+            '''
+    - |
+        def check_if_last_char_is_a_letter(txt):
+            '''
+            Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.
+            Examples:
+            check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False
+
+            Let’s think step by step.
+            1. If the string is empty, return False.
+            2. If the string does not end with a alphabetical character, return False.
+            3. Split the given string into a list of words.
+            4. Check if the length of the last word is equal to 1.
+            '''
+    - |
+        def file_name_check(file_name):
+            '''
+            Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]
+            Examples:
+            file name check(”example.txt”) => ’Yes’
+            file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter)
+
+            Let’s think step by step.
+            1. Check if the file name is valid according to the conditions.
+            2. Return ”Yes” if valid, otherwise return ”NO”.
+            '''
+    - |
+        def fruit_distribution(s,n):
+            '''
+            In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.
+            for examble:
+            fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8
+            fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2
+            fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19
+
+            Let’s think step by step.
+            1. Extract the numbers of oranges and apples from given string.
+            2. Calculate the sum of oranges and apples.
+            3. Deduct the sum from the total number of fruits.
+            4. Return the number of mangoes.
+            '''
+    - |
+        def prime_fib(n: int):
+            '''
+            prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:
+            >>> prime_fib(1) 2
+            >>> prime_fib(2) 3
+            >>> prime_fib(3) 5
+            >>> prime fib(4) 13
+            >>> prime fib(5) 89
+
+            Let’s think step by step.
+            1. Create a function to check if a number is prime.
+            2. Generate a Fibonacci sequence.
+            3. Check if each number in the Fibonacci sequence is prime, decrement the counter.
+            4. If the counter is 0, return the Fibonacci number.
+            '''
+    - |
+        def compare_one(a, b):
+            '''
+            Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,
+            Examples:
+            compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None
+
+            Let’s think step by step.
+            1. Store the original inputs.
+            2. Check if inputs are strings and convert to floats.
+            3. Compare the two inputs and return the larger one in its original data type.
+            '''
+    - |
+        def sort_even(l: list):
+            '''
+            This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.
+            Examples:
+            >>> sort even([1, 2, 3])
+            [1, 2, 3]
+            >>> sort even([5, 6, 3, 4])
+            [3, 6, 5, 4]
+            Let’s think step by step.
+            1. Create a list of all the even indices of the given list.
+            2. Sort the list of even indices.
+            3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices
+            in the even indicies.
+            '''
+    - |
+        def search(lst):
+            '''
+            You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.
+            Examples:
+            search([4, 1, 2, 2, 3, 1]) == 2
+            search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3
+            search([5, 5, 4, 4, 4]) == -1
+
+            Let’s think step by step.
+            1. Create a frequency dict.
+            2. Sort the input list.
+            3. Loop the input list, if frequency no lesser than the integer, set result.
+            4. Return the result.
+            '''
+fewshots_assistant:
+    - |
+        def encrypt(s):
+            '''
+            Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.
+            For example:
+            encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’
+            encrypt(’et’) returns ’ix’
+
+            Let’s think step by step.
+            1. Create a alphabet, bias two places multiplied by two.
+            2. Loop the input, find the latter bias letter in alphabet.
+            3. Return result.
+            '''
+            # Step 1: Create an alphabet, shift it by 2 * 2 = 4 places.
+            original_alphabet = 'abcdefghijklmnopqrstuvwxyz'
+            shifted_alphabet = original_alphabet[4:] + original_alphabet[:4]
+
+            # Create a dictionary to map each original letter to its encrypted counterpart
+            encryption_dict = {original: shifted for original, shifted in zip(original_alphabet, shifted_alphabet)}
+
+            # Step 2: Loop through the input string, find the shifted letter in the alphabet.
+            encrypted_string = ''
+            for char in s:
+                if char in encryption_dict:  # Check if the character is a letter that needs to be encrypted.
+                    encrypted_string += encryption_dict[char]
+                else:
+                    encrypted_string += char  # If not a letter (e.g., punctuation), leave it as is.
+
+            # Step 3: Return the result.
+            return encrypted_string
+
+
+    - |
+        def check_if_last_char_is_a_letter(txt):
+            '''
+            Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.
+            Examples:
+            check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False
+
+            Let’s think step by step.
+            1. If the string is empty, return False.
+            2. If the string does not end with a alphabetical character, return False.
+            3. Split the given string into a list of words.
+            4. Check if the length of the last word is equal to 1.
+            '''
+            # Step 1: If the string is empty, return False.
+            if not txt:
+                return False
+
+            # Step 2: If the string does not end with an alphabetical character, return False.
+            if not txt[-1].isalpha():
+                return False
+
+            # Step 3: Split the given string into a list of words.
+            words = txt.split()
+
+            # Step 4: Check if the length of the last word is equal to 1.
+            if len(words) > 0 and len(words[-1]) == 1:
+                return True
+            else:
+                return False
+    - |
+        def file_name_check(file_name):
+            '''
+            Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]
+            Examples:
+            file name check(”example.txt”) => ’Yes’
+            file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter)
+
+            Let’s think step by step.
+            1. Check if the file name is valid according to the conditions.
+            2. Return ”Yes” if valid, otherwise return ”NO”.
+            '''
+            # Checking if there's exactly one dot in the file name
+            if file_name.count('.') != 1:
+                return 'No'
+
+            # Splitting the file name into the name part and the extension part
+            name_part, extension_part = file_name.split('.')
+
+            # Checking if the name part is not empty and starts with a latin alphabet letter
+            if not name_part or not name_part[0].isalpha():
+                return 'No'
+
+            # Checking if there are more than three digits in the name part
+            if sum(c.isdigit() for c in name_part) > 3:
+                return 'No'
+
+            # Checking if the extension part is one of the allowed extensions
+            if extension_part not in ['txt', 'exe', 'dll']:
+                return 'No'
+
+            # If all checks passed, the file name is considered valid
+            return 'Yes'
+    - |
+        def fruit_distribution(s,n):
+            '''
+            In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.
+            for examble:
+            fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8
+            fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2
+            fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19
+
+            Let’s think step by step.
+            1. Extract the numbers of oranges and apples from given string.
+            2. Calculate the sum of oranges and apples.
+            3. Deduct the sum from the total number of fruits.
+            4. Return the number of mangoes.
+            '''
+            # Step 1: Extract the numbers of oranges and apples from the given string.
+            # Using regular expressions to find all numbers in the string
+            numbers = re.findall(r'\d+', s)
+
+            # Assuming the first number is apples and the second is oranges based on the format
+            if len(numbers) >= 2:
+                apples = int(numbers[0])
+                oranges = int(numbers[1])
+            else:
+                # Default to 0 if the numbers are not found correctly (as a fallback, although the task assumes valid input)
+                apples = 0
+                oranges = 0
+
+            # Step 2: Calculate the sum of oranges and apples.
+            total_apples_oranges = apples + oranges
+
+            # Step 3: Deduct the sum from the total number of fruits.
+            mangoes = n - total_apples_oranges
+
+            # Step 4: Return the number of mangoes.
+            return mangoes
+    - |
+        def prime_fib(n: int):
+            '''
+            prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:
+            >>> prime_fib(1) 2
+            >>> prime_fib(2) 3
+            >>> prime_fib(3) 5
+            >>> prime fib(4) 13
+            >>> prime fib(5) 89
+
+            Let’s think step by step.
+            1. Create a function to check if a number is prime.
+            2. Generate a Fibonacci sequence.
+            3. Check if each number in the Fibonacci sequence is prime, decrement the counter.
+            4. If the counter is 0, return the Fibonacci number.
+            '''
+            def is_prime(num):
+                if num < 2:
+                    return False
+                for i in range(2, int(num**0.5) + 1):
+                    if num % i == 0:
+                        return False
+                return True
+
+            fib_sequence = [0, 1]
+            counter = n
+
+            while counter > 0:
+                next_fib = fib_sequence[-1] + fib_sequence[-2]
+                if is_prime(next_fib):
+                    counter -= 1
+                fib_sequence.append(next_fib)
+
+            return fib_sequence[-1]
+    - |
+        def compare_one(a, b):
+            '''
+            Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,
+            Examples:
+            compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None
+
+            Let’s think step by step.
+            1. Store the original inputs.
+            2. Check if inputs are strings and convert to floats.
+            3. Compare the two inputs and return the larger one in its original data type.
+            '''
+            # Step 1: Store the original inputs
+            original_a, original_b = a, b
+
+            # Helper function to handle conversion
+            def convert_if_string(input_value):
+                if isinstance(input_value, str):
+                    input_value = input_value.replace(',', '.')  # Replace comma with dot for conversion
+                    return float(input_value)
+                return input_value
+
+            # Step 2: Check if inputs are strings and convert to floats
+            a = convert_if_string(a)
+            b = convert_if_string(b)
+
+            # Step 3: Compare the two inputs and return the larger one in its original data type
+            if a > b:
+                return original_a
+            elif b > a:
+                return original_b
+            else:  # a == b
+                return None
+    - |
+        def sort_even(l: list):
+            '''
+            This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.
+            Examples:
+            >>> sort even([1, 2, 3])
+            [1, 2, 3]
+            >>> sort even([5, 6, 3, 4])
+            [3, 6, 5, 4]
+            Let’s think step by step.
+            1. Create a list of all the even indices of the given list.
+            2. Sort the list of even indices.
+            3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices
+            in the even indicies.
+            '''
+            # Step 1: Create a list of all the even indices of the given list
+            even_indices_values = [l[i] for i in range(len(l)) if i % 2 == 0]
+
+            # Step 2: Sort the list of even indices
+            even_indices_values_sorted = sorted(even_indices_values)
+
+            # Step 3: Return a new list that is identical to the original list in the odd indices,
+            # and equal to the sorted even indices in the even indices
+            result_list = l.copy()  # Start with a copy of the original list to preserve odd indices
+            even_index = 0  # To track the position in the sorted even indices list
+
+            for i in range(len(l)):
+                if i % 2 == 0:  # Check for even indices based on Python's zero-based indexing
+                    result_list[i] = even_indices_values_sorted[even_index]
+                    even_index += 1  # Move to the next element in the sorted even indices list
+
+            return result_list
+    - |
+        def search(lst):
+            '''
+            You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.
+            Examples:
+            search([4, 1, 2, 2, 3, 1]) == 2
+            search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3
+            search([5, 5, 4, 4, 4]) == -1
+
+            Let’s think step by step.
+            1. Create a frequency dict.
+            2. Sort the input list.
+            3. Loop the input list, if frequency no lesser than the integer, set result.
+            4. Return the result.
+            '''
+            # Step 1: Create a frequency dict
+            freq_dict = {}
+            for num in lst:
+                if num in freq_dict:
+                    freq_dict[num] += 1
+                else:
+                    freq_dict[num] = 1
+
+            # Step 3: Loop through the frequency dict to find the highest number
+            # satisfying the condition
+            result = -1
+            for num, freq in freq_dict.items():
+                if num <= freq:
+                    result = max(result, num)
+
+            # Step 4: Return the result
+            return result

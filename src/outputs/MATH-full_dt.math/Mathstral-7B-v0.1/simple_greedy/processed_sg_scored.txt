@@ -1,0 +1,4 @@
+math / simple greedy score
+	+ selection: 0.246 (562/2288)
+	+ majvote: 0.647 (1756/2712)
+total: 0.464 (2318/5000)

@@ -1,0 +1,48 @@
+file      = outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/processed_indiv.jsonl
+dataset   = math
+=======individual performance=======
+cot:	1508 / 5000 (30.2%)
+
+
+pal:	749  / 5000 (15.0%)
+
+
+p2c:	1066 / 5000 (21.3%)
+
+
+file      = outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/processed_indiv.jsonl
+dataset   = math
+=======individual performance=======
+cot:	1508 / 5000 (30.2%)
+
+
+pal:	749  / 5000 (15.0%)
+
+
+p2c:	1066 / 5000 (21.3%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 192, 'cotpal-p2c': 197, 'palp2c-cot': 140, 'p2ccot-pal': 376, 'cot_only': 743, 'pal_only': 220, 'p2c_only': 358}
+=====================================
+file      = outputs/MATH-full_dt.math/Meta-Llama-3-8B-Instruct/processed_indiv.jsonl
+dataset   = math
+=======individual performance=======
+cot:	1508 / 5000 (30.2%)
+
+
+pal:	749  / 5000 (15.0%)
+
+
+p2c:	1066 / 5000 (21.3%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 192, 'cotpal-p2c': 197, 'palp2c-cot': 140, 'p2ccot-pal': 376, 'cot_only': 743, 'pal_only': 220, 'p2c_only': 358}
+=====================================

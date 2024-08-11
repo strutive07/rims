@@ -1,0 +1,172 @@
+You are now solving math word problems. You brilliantly detects the errors in the wrong solution and find `Workaround Method` to correct the solution. The methods you are taking are as follows. Each has its strength and weakness:
+
+- Chain of Thought (cot): Solving problem with writing steps of reasoning in a natural language. Might help correct understanding of the problem but this could be weaker in precise computation.
+- Program-aided Language Modeling (pal): Using python language to reason and obtain an accurate answer to the given question, but this could be weaker in understanding the problem.
+- Plan-and-then-Code (p2c): When a question seems requiring amount of steps to reach the answer, write plans first for what to compute and write a python code to it for solving the problem. However if planning goes wrong, the code will also be wrong. If any steps of planning provided before programming, then it will be considered as Plan-and-then-Code.
+
+Followings are the examples of correcting the wrong solutions with a `Workaround Method` based on diagnosis (`Mistakes`) and `Hint for a better Method choice`.
+
+
+
+
+`Question`: Kristin can run three times faster than Sarith. If Kristin runs 12 times around the adult football field and Sarith runs at the same time around the children's football field that is half the distance as the other field, how many laps did Sarith go around the children's football field?
+`Method`: Plan-and-then-Code (p2c)
+`Attempt 1`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Kristin can run three times faster than Sarith. If Kristin runs 12 times around the adult football field and Sarith runs at the same time around the children's football field that is half the distance as the other field, how many laps did Sarith go around the children's football field?
+
+    Let's think step by step.
+    1. Determine the ratio of the speeds of Kristin and Sarith.
+    2. Calculate the distance Kristin ran.
+    3. Calculate the distance Sarith needs to run.
+    4. Calculate the number of laps Sarith needs to run around the children's football field.
+    5. Return the number of laps Sarith ran.
+    '''
+    speed_kristin = 1  # We can assume unit speed for Kristin, as we'll calculate relative speed.
+    speed_sarith = speed_kristin / 3
+
+    laps_kristin = 12
+
+    # Sarith runs three times more laps because for every lap Kristin runs
+    # Sarith runs three laps if the distance is half and speed is one-third.
+    laps_sarith_total = laps_kristin * 3
+
+    return laps_sarith_total
+`Answer 1`: 36.0
+`Evaluation`: Wrong
+`Mistakes`: The mistake in the initial attempt is in the calculation for the number of laps Sarith runs. The initial attempt wrongly assumes that if Sarith runs at one-third the speed of Kristin and the children's field is half the distance of the adult field, Sarith would be able to run three laps on the children's field for every lap Kristin runs on the adult field. This conclusion is not correct.
+`Hint for a better Method choice`: To clearly understand the relationship between speeds, distances, and the time both runners spend running, a Chain of Thought with logical reasoning step by step would help in avoiding incorrect assumptions and reach the right conclusion.
+`Workaround Method`: Chain-of-Thought (cot)
+`Attempt 2`: Answer:
+
+Since Kristin can run three times faster than Sarith and she runs around the adult football field, which is twice the distance of the children's field, we can work out the laps Sarith runs as follows:
+
+Let's assume the distance around the children's football field is "d". The distance around the adult football field would then be "2d".
+
+If Kristin runs 12 laps around the adult field, she covers a total distance of 12 * 2d = 24d.
+
+Sarith runs around the smaller field, which is half the distance (d).
+
+Since Kristin runs three times faster, Sarith would be able to cover one-third of the distance Kristin runs during the same amount of time.
+
+So to find out how many laps Sarith runs on the children's field (with distance d), we divide Kristin's total distance by three and then by the smaller field's single lap distance (d):
+
+Total distance Kristin runs (given in terms of the children's field distance): 24d
+Total distance Sarith runs: 24d / 3 (since Sarith runs three times slower)
+
+So, Sarith runs 24d / 3 = 8d around the children's field.
+
+Since 8d corresponds to Sarith's laps around the children's field and "d" is the distance of one lap around that field:
+
+Number of laps = 8d / d = 8
+
+Sarith would have run 8 laps around the children's football field.
+`Answer 2`: 8.0
+`Evaluation`: Correct
+
+
+
+`Question`: Kristin can run three times faster than Sarith. If Kristin runs 12 times around the adult football field and Sarith runs at the same time around the children's football field that is half the distance as the other field, how many laps did Sarith go around the children's football field?
+`Method`: Program-aided Language Modeling (pal)
+`Attempt 1`:
+def solution():
+    kristin_speed_ratio = 3 # Kristin can run 3 times faster than Sarith
+    kristin_laps = 12
+    children_field_ratio = 0.5 # The children's field is half the distance of the adult's field
+
+    # For each lap Kristin runs, Sarith runs 3 times slower, but the distance is half so:
+    # It means Sarith would complete 3 * 0.5 = 1.5 laps on the children's field for each of Kristin's laps
+    sarith_laps_per_kristin_lap = kristin_speed_ratio * children_field_ratio
+
+    # Calculate Sarith's total laps
+    sarith_total_laps = kristin_laps * sarith_laps_per_kristin_lap
+    return sarith_total_laps
+
+# Call the function and print the result
+print(solution())
+
+`Answer 1`: 18.0
+`Evaluation`: Wrong
+`Mistakes`: The original attempt incorrectly calculated the ratio between the laps Kristin and Sarith could run, not taking into account the correct relationship between their speeds and the distance difference of the fields correctly. The flaw lies in misunderstanding the relationship between the time it takes to complete laps and the different distances of the fields.
+`Hint for a better Method choice`: A step-by-step explanation with proper ratio analysis will clarify the relationship between speeds, laps, and field distances, preventing incorrect mathematical assumptions.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Kristin can run three times faster than Sarith. If Kristin runs 12 times around the adult football field and Sarith runs at the same time around the children's football field that is half the distance as the other field, how many laps did Sarith go around the children's football field?
+
+    Let's think step by step.
+    1. Calculate the distance Kristin ran by multiplying the number of laps by the distance of one lap around the adult field.
+    2. Since Kristin runs three times faster, Sarith would run one third the distance in the same time.
+    3. Given that the children's football field is half the distance of the adult field, Sarith's distance would be doubled when converted to laps around the children's field.
+    4. Return the number of laps Sarith ran.
+    '''
+    # Since the problem does not provide actual distances, we can assume a unit distance for the adult field
+    # and use relative distances for calculations.
+    # Kristin's speed = 3 * Sarith's speed
+    # Kristin's distance = 12 laps * 1 distance unit (adult field)
+    kristin_distance = 12
+
+    # Sarith's distance in the same time = Kristin's distance / 3
+    sarith_distance = kristin_distance / 3
+
+    # Children's field distance = 1/2 * adult field distance
+    # Sarith's number of laps = Sarith's distance / (1/2) = 2 * Sarith's distance
+    sarith_laps = 2 * sarith_distance
+
+    return int(sarith_laps)
+
+`Answer 2`: 8.0
+`Evaluation`: Correct
+
+
+
+`Question`: When Jeffrey walks, for every three steps forward, he takes two steps backwards.  Therefore, if the distance between the house and the mailbox is 66 steps, what is the total number of steps Jeffrey takes when he goes from the house to the mailbox?
+`Method`: Program-aided Language Modeling (pal)
+`Attempt 1`:
+def solution():
+    distance_to_mailbox = 66
+    net_progress_per_cycle = 3 - 2  # for every three steps forward he takes two back
+    actual_steps_per_cycle = 3      # the number of actual steps taken per cycle
+    total_cycles = distance_to_mailbox // net_progress_per_cycle  # find the number of complete cycles
+    remaining_steps_needed = distance_to_mailbox % net_progress_per_cycle  # check if there is a remainder of steps to take
+
+    # If there is a remaining step to make, he will take 3 actual steps to make 1 effective step forward.
+    total_steps = (total_cycles * actual_steps_per_cycle) + (3 if remaining_steps_needed > 0 else 0)
+    return total_steps
+
+# Call the function and print the result
+print(solution())
+
+`Answer 1`: 198.0
+`Evaluation`: Wrong
+`Mistakes`: The error in the first attempt is the incorrect calculation of the total number of steps. The solution seems to forget to account for the additional steps Jeffrey takes for each cycle that are not part of a complete net step forward. Therefore, it calculates the actual steps for the complete cycles but does not correctly handle remaining partial cycles.
+`Hint for a better Method choice`: The Chain of Thought method could help to correct the understanding of the problem by breaking down the process into cycles of progress and taking into account the total steps taken in each cycle, including the backward steps, which are essential to get the correct total steps Jeffrey takes.
+`Workaround Method`: Chain-of-Thought (cot)
+`Attempt 2`: Answer:
+For every three steps forward Jeffrey takes, he effectively moves one step forward (since he takes two steps backward).
+
+So for every group of 3 forward steps:
+
+- 3 steps forward
+- 2 steps back
+Net result: 3 - 2 = 1 step forward
+
+Now, we need to figure out how many groups of 3 steps are in 66 steps. Since every group of 3 steps results in 1 step forward, we divide the total steps by the net steps per group to find the number of groups:
+
+66 steps / 1 step per group = 66 groups
+
+Since each group is actually a set of 3 steps forward and 2 steps backward (a total of 5 steps for every 1 step forward he actually achieves), we need to calculate the total number of steps in these groups:
+
+66 groups * 5 steps per group = 330 steps
+
+So, Jeffrey takes 330 steps to reach the mailbox that is 66 steps away.
+`Answer 2`: 330.0
+`Evaluation`: Correct
+
+
+
+Now, try the `Question` below following the same procedure as above. Try the question with the choice of your `Method`, and evaluate the `Answer`. If your `Attempt` is considered wrong, identify the `Mistakes` and reason to take `Workaround Method` by writing `Hint for a better Method choice`. Based on it, make a correct reattempt.
+
+`Question`: [QUESTION]

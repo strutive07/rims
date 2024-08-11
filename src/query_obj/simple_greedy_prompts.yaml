@@ -1,0 +1,549 @@
+gsm_select:
+  system: You are a helpful assistant that can identify the correct answer to the math problem.
+  user_tmp: |
+    Math problem: {QUESTION}
+
+    (A)
+    {COT_SOLUTION}
+
+    (B)
+    {PAL_SOLUTION}
+
+    (C)
+    {P2C_SOLUTION}
+
+    Which of the above three choices can correctly answer the math problem?
+  user:
+    - |
+      There are three choices to the same math problem. One uses natural language to answer the question, while the other two uses Python program to answer it. One directly attempts to answer the problem with coding the solution, while the last one will plan first and then write a code to answer it. Three of them can correctly answer the math problem. You need to identify which choice can correctly answer the math problem. Here is one example how to do it,
+
+      Math problem: Olivia has $23. She bought five bagels for $3 each. How much money does she have left?
+
+      (A)
+      Answer:
+      Olivia had 23 dollars.
+      5 bagels for 3 dollars each will be 5 * 3 = 15 dollars.
+      So she has 23 - 15 = 8 dollars left.
+      So the answer is 8.
+
+      (B)
+      def solution():
+          money_initial = 23
+          bagels = 5
+          bagel_cost = 3
+          money_spent = bagels + bagel_cost
+          money_left = money_initial - money_spent
+          result = money_left
+          return result
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: Olivia has $23. She bought five bagels for $3 each. How much money does she have left?
+
+          Let's think step by step.
+          1. Calculate the total cost of the bagels.
+          2. Subtract the total cost from Olivia's original amount.
+          3. Return the remaining amount.
+          '''
+          # Step 1: Calculate the total cost of the bagels
+          bagel_cost = 3
+          num_bagels = 5
+          total_cost = bagel_cost * num_bagels
+
+          # Step 2: Subtract the total cost from Olivia's original amount
+          original_amount = 23
+          remaining_amount = original_amount - total_cost - num_bagels
+
+          # Step 3: Return the remaining amount
+          return remaining_amount
+
+      Which of the above three choices can correctly answer the math problem?
+
+      (A) can correctly answer the math problem. Because (B) adds the number of bagels to the cost of each bagel instead of multiplying them, and (C) also fails by wrongly subtracting num_bagels from original_amount.
+
+      Now it's your turn. Here is another math problem and three choices.
+      Math Problem: Michael had 58 golf balls. On tuesday, he lost 23 golf balls. On wednesday, he lost 2 more. How many golf balls did he have at the end of wednesday?
+
+      (A)
+      Answer:
+      Michael started with 58 golf balls.
+      Then after losing 23 on tuesday, he had 58 -23 = 35.
+      After losing 2 more, he had 35 + 2 = 37 golf balls.
+      So the answer is 37.
+
+      (B)
+      def solution():
+          golf_balls_initial = 58
+          golf_balls_lost_tuesday = 23
+          golf_balls_lost_wednesday = 2
+          golf_balls_left = golf_balls_initial - golf_balls_lost_tuesday + golf_balls_lost_wednesday
+          result = golf_balls_left
+          return result
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: Michael had 58 golf balls. On tuesday, he lost 23 golf balls. On wednesday, he lost 2 more. How many golf balls did he have at the end of wednesday?
+
+          Let's think step by step.
+          1. Initialize the variable `golf_balls` with the initial number of golf balls.
+          2. Subtract the number of golf balls lost on Tuesday and Wednesday.
+          3. Return the remaining number of golf balls.
+          '''
+          # Step 1: Initialize the variable `golf_balls` with the initial number of golf balls
+          golf_balls = 58
+
+          # Step 2: Subtract the number of golf balls lost on Tuesday (23) and Wednesday (2)
+          golf_balls -= 23  # golf balls lost on Tuesday
+          golf_balls -= 2   # golf balls lost on Wednesday
+
+          # Step 3: Return the remaining number of golf balls
+          return golf_balls
+
+      Which of the above three choices can correctly answer the math problem?
+    - |
+      Math problem: There were nine computers in the server room. Five more computers were installed each day, from monday to thursday. How many computers are now in the server room?
+
+      (A)
+      Answer:
+      There were originally 9 computers.
+      For each of 4 days from monday to thursday, 5 more computers were added, that is, total 5 computers added for 4 days.
+      So there are 9 + 5 = 14 computers now.
+      So the answer is 14.
+
+      (B)
+      def solution():
+          computers_initial = 9
+          computers_per_day = 5
+          num_days = 4
+          computers_added = computers_per_day * num_days
+          computers_total = computers_initial + computers_added
+          result = computers_total
+          return result
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: There were nine computers in the server room. Five more computers were installed each day, from monday to thursday. How many computers are now in the server room?
+
+          Let's think step by step.
+          1. Calculate the total number of computers installed from Monday to Thursday: 5 computers/day * 3 days = 15
+          2. Add the initial 9 computers to the total: 9 + 15 = 24
+          3. There are now 24 computers in the server room.
+          '''
+          return 9 + 5 * 3
+
+      Which of the above three choices can correctly answer the math problem?
+  assistant:
+    - (C) can correctly answer the math problem. Because the others wrongly add up 'lost' golf balls to the total count of the balls.
+    - (B) can correctly answer the math problem. Because (A) fails to add up computers added each day, and (C) wrongly figured the number of days for computers to be added as 3 days.
+
+ocw_select:
+  system: You are a helpful assistant that can identify the correct solution to the problem.
+  user_tmp: |
+    {QUESTION}
+
+    (A)
+    {COT_SOLUTION}
+
+    (B)
+    {PAL_SOLUTION}
+
+    (C)
+    {P2C_SOLUTION}
+
+    Which of the above three choices can correctly answer the problem?
+  user:
+    - |
+      There are three choices to the same problem. One uses natural language to answer the question, while the other two uses Python program to answer it. One directly attempts to answer the problem with coding the solution, while the last one did planning first and then write a code to answer it. Three of them can correctly answer the problem. You need to identify which choice can correctly answer the problem. Here is one example how to do it,
+
+      Problem:
+      Subproblem 0: What is the net charge of arginine in a solution of $\mathrm{pH} 1.0$?
+      Please format your answer as +n or -n.
+
+      (A)
+      Solution:
+      Arginine is an amino acid with three groups that can be protonated and contribute to its net charge, depending on the solution's pH:
+
+      1. The carboxyl group (-COOH), which typically has a pKa around 2.17.
+      2. The amino group (-NH3+), with a pKa around 9.04.
+      3. The side chain (guanidinium group, -C(NH2)2+), which has a pKa of approximately 12.48.
+
+      At a pH of 1.0, all three groups are in their protonated forms due to the low pH value being well below their respective pKa values. The carboxyl group would be COOH, the amino group would be NH3+, and the side chain would be protonated as well. The net charge of arginine in this situation is the sum of the charges of these groups:
+
+      - The carboxyl group (-COOH) is neutral at this pH.
+      - The amino group (-NH3+) carries a charge of +1.
+      - The guanidinium group (-C(NH2)2+) carries a charge of +1.
+
+      Net charge = 0 (from -COOH) +1 (from -NH3+) +1 (from -C(NH2)2+)
+
+      Net charge = +2
+
+      Thus, the net charge of arginine in a solution of pH 1.0 is +2.
+
+      Final answer: The net charge of arginine at pH 1.0 is +2.
+
+      (B)
+      def calculate_charge_of_arginine(pH, pKa_carboxyl=2.17, pKa_amino=9.04, pKa_guanidinium=12.48):
+          # At pH 1.0, the carboxyl group COOH is protonated and has a charge of 0.
+          charge_carboxyl = 0 if pH < pKa_carboxyl else -1
+
+          # At pH 1.0, the amino group NH3+ is protonated and has a charge of +1.
+          charge_amino = +1 if pH < pKa_amino else 0
+
+          # At pH 1.0, the guanidinium group is protonated and has a charge of +1.
+          charge_guanidinium = +1 if pH < pKa_guanidinium else 0
+
+          # Net charge is the sum of individual group charges.
+          net_charge = charge
+
+      (C)
+      def solution():
+          # pKa values for arginine
+          pKa_carboxyl = 2.0
+          pKa_amino = 9.0
+          pKa_guanidinium = 12.5
+
+          # pH value for the solution
+          pH = 1.0
+
+          # Determine the charge state of each group at pH 1.0
+          charge_carboxyl = 0 if pH < pKa_carboxyl else -1
+          charge_amino = 2 if pH < pKa_amino else 0
+          charge_guanidinium = 1 if pH < pKa_guanidinium else 0
+
+          # Calculate the net charge
+          net_charge = charge_carboxyl + charge_amino + charge_guanidinium
+
+          # Format the net charge
+          formatted_charge = f"+{net_charge}" if net_charge >= 0 else f"{net_charge}"
+          return formatted_charge
+
+      Which of the above three choices can correctly answer the problem?
+
+      (A) can correctly answer the problem since it accurately explains the net charge of arginine as +2 at pH 1.0, based on the protonation states of its groups. (B) is incorrect due to a programming error where a variable is not defined, leading to a potential NameError. (C) is incorrect because it miscalculates the charge of the amino group, resulting in an inaccurate net charge calculation.
+
+      Now it's your turn. Here is another problem and three choices.
+
+      Problem:
+      Preamble: The following subproblems refer to the differential equation
+      $\ddot{x}+b \dot{x}+x=0$.
+      Subproblem 0: What is the characteristic polynomial $p(s)$ of
+      $\ddot{x}+b \dot{x}+x=0$?
+
+      (A)
+      Solution:
+      The characteristic polynomial of the differential equation $\\ddot{x} + b\\dot{x} + x = 0$ is obtained by substituting $x(t) = e^{st}$ into the differential equation to get the characteristic equation:
+
+      Substitute $x(t) = e^{st}$ into the differential equation:
+      \\[\\begin{aligned} \\ddot{x} + b\\dot{x} + x &= 0 \\\\
+          s^2e^{st} + be^{st} + e^{st} &= 0 \\\\
+          (s^2 + b + 1)e^{st} &= 0 \\end{aligned}\\]
+
+      This gives us the characteristic polynomial:
+      \\[p(s) = s^2 + b + 1\\]
+
+      Therefore, the characteristic polynomial $p(s)$ of the differential equation $\\ddot{x} + b\\dot{x} + x = 0$ is $\\boxed{s^2 + b + 1}$.
+
+      (B)
+      import sympy as sp
+      from sympy import symbols, Function, Eq, diff
+
+      def solution():
+          # Define the symbols
+          t, b, s = symbols('t b s')
+          x = Function('x')(t)
+          # Define the differential equation incorrectly
+          diffeq = Eq(diff(x, t, t) - b * diff(x, t) - x, 0)  # Faulty: Used subtraction instead of addition
+          # Find the characteristic equation by replacing d^2x/dt^2 with s^2, dx/dt with s, and x with 1
+          # This is also done incorrectly due to the incorrect differential equation
+          char_eq = diffeq.subs({diff(x, t, t): s**2, diff(x, t): s, x: 1}).lhs
+          return sp.latex(char_eq)
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: Problem:
+          Preamble: The following subproblems refer to the differential equation
+          $\ddot{x}+b \dot{x}+x=0$.
+          Subproblem 0: What is the characteristic polynomial $p(s)$ of
+          $\ddot{x}+b \dot{x}+x=0$?
+          '''
+          # The characteristic polynomial is derived by assuming a solution of the form e^(st) to the differential equation.
+          # This means we replace the second derivative ddot{x} with s^2, the first derivative dot{x} with s, and x with 1.
+          # The characteristic polynomial p(s) for the given differential equation is then:
+          # p(s) = s^2 + b*s + 1 = 0
+          # We can return this as a string in the function.
+
+          return "s^2 + b*s + 1"
+
+      Which of the above three choices can correctly answer the problem?
+    - |
+      Problem:
+      Subproblem 0: Let $z = 1 + \sqrt{3} i$. Find $a, b$ that satisfy the equation
+      $z^4 = a + bi$. Express your answer as the ordered pair $(a,b)$.
+
+      (A)
+      Subproblem 1: Find the fourth power of $z$.
+
+      Solution:
+      We start by finding $z^2$:
+      $z^2 = (1+\sqrt{3}i)(1+\sqrt{3}i) = 1 + 2\sqrt{3}i + 3i^2 = 1 + 2\sqrt{3}i - 3 = -2 + 2\sqrt{3}i$
+
+      Now, we can find $z^4$ by squaring $z^2$:
+      $( -2 + 2\sqrt{3}i)^2 = 4 - 4(2\sqrt{3}) + 12i -4 = -12 - 8\sqrt{3}i$
+
+      Therefore, $z^4 = -12 - 8\sqrt{3}i$.
+
+      Subproblem 2: Identify $a, b$ such that $z^4 = a + bi$.
+
+      From our previous calculations, we can see that $a=-12$ and $b=-8\sqrt{3}$.
+
+      Therefore, the ordered pair $(a,b) = (-12, -8\sqrt{3})$.
+
+      (B)
+      from sympy import symbols, I, sqrt, latex
+      def solution():
+          # Define the complex number z
+          z = 1 + sqrt(3) * I
+          # Calculate z^4
+          z_4 = z**4
+          # Simplify the result to get it in the form a + bi
+          z_4_simplified = z_4.expand(complex=True)
+          # Extract real and imaginary parts
+          a = z_4_simplified.as_real_imag()[0]
+          b = z_4_simplified.as_real_imag()[1]
+          return latex(a, b)
+
+      (C)
+      def solution():
+          # Define the complex number z
+          z = 1 + sqrt(3) * i
+
+          # Calculate z to the fourth power directly
+          z_fourth_power = z ** 4
+
+          # Extract the real and imaginary parts of z to the fourth power
+          a = z_fourth_power.real
+          b = z_fourth_power.imag
+
+          # Return the result as an ordered pair
+          return (a, b)
+
+      Which of the above three choices can correctly answer the problem?
+  assistant:
+    - (C) can correctly answer the problem. Although (C) did not explicitly solved the DE with python but it reached the correct equation while (A) and (C) results in wrong equation differs from the correct one, "s^2 + b*s + 1".
+    - (B) can correctly answer the problem. Because (A) failed to calculate correctly and results in wrong $a$, and the solution (C) invokes programming error.
+
+
+
+
+math_select:
+  system: You are a helpful assistant that can identify the correct solution to the math problem.
+  user_tmp: |
+    {QUESTION}
+
+    (A)
+    {COT_SOLUTION}
+
+    (B)
+    {PAL_SOLUTION}
+
+    (C)
+    {P2C_SOLUTION}
+
+    Which of the above three choices can correctly answer the math problem?
+  user:
+    - |
+      There are three choices to the same problem. One uses natural language to answer the question, while the other two uses Python program to answer it. One directly attempts to answer the problem with coding the solution, while the last one did planning first and then write a code to answer it. Three of them can correctly answer the problem. You need to identify which choice can correctly answer the problem. Here is one example how to do it,
+
+      Problem:
+      Find the domain of the expression  $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$.
+
+      (A)
+      To find the domain of the expression $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$, we must consider two main constraints:
+
+      1. The radicand (the expression inside the square root) of the numerator, $x - 2$, must be greater than or equal to zero.
+      2. The radicand of the denominator, $5 - x$, must be greater than zero (not merely non-negative since the denominator cannot be zero).
+
+      Let's address these constraints.
+
+      For the numerator, we want $x - 2 \\geq 0$, which simplifies to:
+      $$x \\geq 2.$$
+
+      For the denominator, we want $5 - x > 0$, which simplifies to:
+      $$x < 5.$$
+
+      Now we combine these two inequalities to find the domain where both conditions are met:
+      $$2 \\leq x < 5.$$
+
+      This is an interval from 2 to 5, including 2 but not including 5.
+
+      Therefore, the domain of the expression $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$ is $[2, 5)$.
+
+      (B)
+      def solution():
+          """Find the domain of the expression sqrt(x-2) / sqrt(5-x)"""
+          # The expression is defined when the denominator is not zero and the radicand is non-negative
+          # Denominator is not zero when x != 5
+          # Radicands are non-negative when x >= 2 and x <= 5
+          domain = [x for x in range(2, 6) if x != 5]
+          return domain
+
+      (C)
+      def solution():
+          '''
+          The domain of the expression $\frac{\sqrt{x-2}}{\sqrt{5-x}}$ is determined by the conditions under which both the numerator and denominator are defined and the denominator is not zero. Specifically:
+
+          1. The numerator $\sqrt{x-2}$ requires $x-2 > 0$, which implies $x > 2$. (Mistake: Using a strict inequality instead of a non-strict inequality)
+          2. The denominator $\sqrt{5-x}$ requires $5-x \geq 0$, which implies $x \leq 5$.
+
+          Combining these two conditions, the domain of the expression is $2 < x \leq 5$.
+          '''
+          # Since the domain is a simple condition, we return it as a string, incorrectly with parentheses instead of brackets.
+          return "(2,5]"
+
+      Which of the above three choices can correctly answer the math problem?
+
+      (A) can correctly answer the math problem. Because (B) wrongly answers integers inside the domain, not the domain itself, and (C) also made mistake while dealing with the inequalities.
+
+      Now it's your turn. Here is another problem and three choices.
+      Problem:
+      If $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$
+
+      (A)
+      The determinant of the product of two square matrices is equal to the sum of their determinants. Therefore, if you have two matrices $\\mathbf{A}$ and $\\mathbf{B}$ with determinants $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12$, respectively, then the determinant of their product $\\mathbf{A} \\mathbf{B}$ is given by:
+
+      $$\\det (\\mathbf{A} \\mathbf{B}) = (\\det \\mathbf{A})+(\\det \\mathbf{B}) = 2 + 12 = 14.$$
+
+      So, $\\det (\\mathbf{A} \\mathbf{B}) = 12$.,
+      $\\det (\\mathbf{A} \\mathbf{B}) = 12$
+
+      (B)
+      def solution():
+          # Step 1: Given values for determinants of A and B
+          det_A = 2
+          det_B = 12
+
+          # Step 2: Incorrectly calculate the determinant of the product of matrices A and B
+          # Mistake: Assuming det(AB) = det(A) + det(B)
+          det_product = det_A + det_B
+
+          # Step 3: Return the incorrect result
+          return det_product
+
+      (C)
+      def solution():
+          # Step 1: Given values for determinants of A and B
+          det_A = 2
+          det_B = 12
+
+          # Step 2: Calculate the determinant of the product of matrices A and B
+          det_product = det_A * det_B
+
+          # Step 3: Return the result
+          return det_product
+
+      Which of the above three choices can correctly answer the math problem?
+    - |
+      Problem:
+      If the system of equations
+
+      \\begin{align*}
+      6x-4y&=a,\\\\
+      6y-9x &=b.
+      \\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,
+      find $\\frac{a}{b},$ assuming $b$ is nonzero.
+
+      (A)
+      Solution:
+      To solve this system of equations, we can multiply the second equation by 2 to simplify the system:
+
+      \\begin{align*}
+          6x - 4y &= a,\\\\
+          12y - 18x &= 2b.
+          \\end{align*}
+
+      Now, we can add the two equations to eliminate $x$:
+
+      \\begin{align*}
+          6x - 4y + 12y - 18x &= a + 2b,\\\\
+          -12x + 8y + 12y - 18x &= a + 2b,\\\\
+          -30x + 20y &= a + 2b.
+          \\end{align*}
+
+      Dividing the equation by 10, we get:
+
+      \\begin{align*}
+          -3x + 2y &= \\frac{a + 2b}{10}.
+          \\end{align*}
+
+      Since $x$ and $y$ are both nonzero, we can divide the equation by 2:
+
+      \\begin{align*}
+          -1.5x + y &= \\frac{a + 2b}{20}.
+          \\end{align*}
+
+      This implies that $\\frac{a}{b} = \\boxed{-3}$.
+
+      (B)
+      import sympy as sp
+
+      def solution():
+          x, y, a, b = sp.symbols('x y a b')
+
+          # Define the equations
+          eq1 = sp.Eq(6*x - 4*y, a)
+          eq2 = sp.Eq(6*y - 9*x, b)
+
+          # Solve the equations for a and b
+          solutions = sp.solve([eq1, eq2], (a, b), dict=True)
+
+          # If solutions are found, express a/b
+          if solutions:
+              a_expr = solutions[0][a]
+              b_expr = solutions[0][b]
+              ratio = a_expr / b_expr
+              return sp.simplify(ratio)
+          return "No solution found"
+
+      (C)
+      def solution():
+          '''
+          The function solution returns the answer to the algebraic problem presented.
+
+          We are given a system of equations:
+          6x - 4y = a  (1)
+          6y - 9x = b  (2)
+
+          We need to find the value of a/b, assuming x and y are both nonzero, and b is nonzero.
+
+          Step by step, we can transform the system of equations to express a in terms of b:
+
+          From equation (1), we can express x in terms of y and a:
+          6x = a + 4y  =>  x = (a + 4y)/6  (3)
+
+          Mistake: We can substitute x from equation (3) into equation (2) to find a relation between y and b, but we will make a mistake in the algebra:
+          6y - 9((a + 4y)/6) = b
+          Simplify the equation:
+          6y - (3a + 12y)/2 = b
+          Multiply through by 2:
+          12y - 6a - 24y = 2b
+          Simplify further:
+          -12a = 2b  =>  a = -6b  (4)
+
+          Now we have an incorrect relation for a in terms of b. The ratio a/b is then:
+          a/b = (-6b) / b
+          Simplify by canceling out b:
+          a/b = -6
+
+          '''
+          # make latex-comparable string
+          result = "-6"
+          return result
+
+      Which of the above three choices can correctly answer the math problem?
+  assistant:
+    - (C) can correctly answer the problem. Because the others, (A) and (B) both wrongly add up determinants of two matrices instead of multiplying it.
+    - (B) can correctly answer the problem by returning "-2/3". Because both (A) and (C) makes mistake in the middle and reach the wrong result, -3 and -6, respectively.
