@@ -1,0 +1,323 @@
+{
+    "CoTQueryObject": {
+        "contents": [
+            "Solution:\nTo find the vertical asymptotes, we need to find the values of $x$ for which the denominator is equal to zero. We can do this by setting the denominator equal to zero and solving for $x$:\n\n$$x^2+x-6=0$$\n\nFactoring the quadratic, we get:\n\n$$(x+3)(x-2)=0$$\n\nThis gives us two possible values for $x$: $x=-3$ and $x=2$. Therefore, the graph of $y=\\frac{2}{x^2+x-6}$ has two vertical asymptotes at $x=-3$ and $x=2$.\n\nFinal Answer: The final answer is 2. I hope it is correct."
+        ],
+        "query_message": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that can solve problems step by step."
+            },
+            {
+                "role": "user",
+                "content": "Let's solve the following math problems. You need to solve these math problems step by step. Here is one example how to do it,\n\nProblem:\nFind the domain of the expression  $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$.}\n\nSolution:\nThe expressions inside each square root must be non-negative. Therefore, $x-2 \\ge 0$, so $x\\ge2$, and $5 - x \\ge 0$, so $x \\le 5$. Also, the denominator cannot be equal to zero, so $5-x>0$, which gives $x<5$. Therefore, the domain of the expression is $\\boxed{[2,5)}$.\nFinal Answer: The final answer is $[2,5)$. I hope it is correct.\n\n\nNow it's your turn. Here is another math problem:\nProblem:\nIf $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$\n"
+            },
+            {
+                "role": "assistant",
+                "content": "Solution:\nWe have that $\\det (\\mathbf{A} \\mathbf{B}) = (\\det \\mathbf{A})(\\det \\mathbf{B}) = (2)(12) = \\boxed{24}.$\nFinal Answer: The final answer is $24$. I hope it is correct.\n"
+            },
+            {
+                "role": "user",
+                "content": "Problem:\nTerrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?\n"
+            },
+            {
+                "role": "assistant",
+                "content": "Solution:\nIf Terrell lifts two 20-pound weights 12 times, he lifts a total of $2\\cdot 12\\cdot20=480$ pounds of weight.  If he lifts two 15-pound weights instead for $n$ times, he will lift a total of $2\\cdot15\\cdot n=30n$ pounds of weight.  Equating this to 480 pounds, we can solve for $n$:\n\\begin{align*}\n30n&=480\\\\\n\\Rightarrow\\qquad n&=480/30=\\boxed{16}\n\\end{align*}\nFinal Answer: The final answer is $16$. I hope it is correct.\n"
+            },
+            {
+                "role": "user",
+                "content": "Problem:\nIf the system of equations\n\n\\begin{align*}\n6x-4y&=a,\\\\\n6y-9x &=b.\n\\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,\nfind $\\frac{a}{b},$ assuming $b$ is nonzero.\n"
+            },
+            {
+                "role": "assistant",
+                "content": "Solution:\nIf we multiply the first equation by $-\\frac{3}{2}$, we obtain\n\n$$6y-9x=-\\frac{3}{2}a.$$Since we also know that $6y-9x=b$, we have\n\n$$-\\frac{3}{2}a=b\\Rightarrow\\frac{a}{b}=\\boxed{-\\frac{2}{3}}.$$\nFinal Answer: The final answer is $-\\frac{2}{3}$. I hope it is correct.\n"
+            },
+            {
+                "role": "user",
+                "content": "How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have?\n"
+            }
+        ],
+        "meta": {
+            "method_obj": "CoTQueryObject",
+            "dataset_type": "math",
+            "gt_answer": "2"
+        }
+    },
+    "PALQueryObject": {
+        "contents": [
+            "import sympy as sp\n\ndef solution():\n    x = sp.symbols('x')\n    expr = 2 / (x**2 + x - 6)\n    \n    # Find the denominator's roots\n    roots = sp.solve(x**2 + x - 6, x)\n    \n    # Check if the roots are vertical asymptotes\n    asymptotes = [root for root in roots if sp.limit(expr, x, root, dir='+').is_infinity or sp.limit(expr, x, root, dir='-').is_infinity]\n    \n    # Return the number of vertical asymptotes\n    return len(asymptotes)"
+        ],
+        "query_message": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that can solve math problems by using Python code."
+            },
+            {
+                "role": "user",
+                "content": "Let's use python to solve math problems. You need to write python code to answer these math problems. Here is one example how to do it,\n\nProblem:\nFind the domain of the expression  $\\\\frac{\\\\sqrt{x-2}}{\\\\sqrt{5-x}}$.}\n\n# solution in Python\nimport sympy as sp\n\ndef solution():\n    x = sp.symbols('x')\n    expr = sp.sqrt(x - 2) / sp.sqrt(5 - x)\n    \n    # Define the conditions for the numerator and denominator\n    num_cond = x - 2 >= 0\n    den_cond = 5 - x > 0\n    \n    # Solve the inequalities to find the domain\n    num_sol = sp.solve_univariate_inequality(num_cond, x, relational=False)\n    den_sol = sp.solve_univariate_inequality(den_cond, x, relational=False)\n    \n    # Find the intersection of the solutions to get the domain\n    domain = sp.latex(sp.Intersection(num_sol, den_sol))\n    return domain\n\n\nNow it's your turn. Here is another math problem:\nProblem:\nIf $\\\\det \\\\mathbf{A} = 2$ and $\\\\det \\\\mathbf{B} = 12,$ then find $\\\\det (\\\\mathbf{A} \\\\mathbf{B}).$\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def solution():\n    \"\"\"If det A = 2 and det B = 12, find det(AB).\"\"\"\n    det_A = 2\n    det_B = 12\n    det_AB = det_A * det_B\n    result = det_AB\n    return result\n"
+            },
+            {
+                "role": "user",
+                "content": "Problem:\nTerrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def solution():\n    \"\"\"Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?\"\"\"\n    weight1 = 20\n    weight2 = 15\n    lifts1 = 12\n    total_weight1 = weight1 * 2 * lifts1\n    lifts2 = total_weight1 / (weight2 * 2)\n    result = lifts2\n    return result\n"
+            },
+            {
+                "role": "user",
+                "content": "Problem:\nIf the system of equations\n\n\\\\begin{align*}\n6x-4y&=a,\\\\\\\\\\n6y-9x &=b.\n\\\\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,\nfind $\\\\frac{a}{b},$ assuming $b$ is nonzero.\n"
+            },
+            {
+                "role": "assistant",
+                "content": "import sympy as sp\n\ndef solution():\n    x, y, a, b = sp.symbols('x y a b')\n    \n    # Define the equations\n    eq1 = sp.Eq(6*x - 4*y, a)\n    eq2 = sp.Eq(6*y - 9*x, b)\n    \n    # Solve the equations for a and b\n    solutions = sp.solve([eq1, eq2], (a, b), dict=True)\n    \n    # If solutions are found, express a/b\n    if solutions:\n        a_expr = solutions[0][a]\n        b_expr = solutions[0][b]\n        ratio = a_expr / b_expr\n        return sp.simplify(ratio)\n    return \"No solution found\"\n"
+            },
+            {
+                "role": "user",
+                "content": "How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have?\n\n# solution in Python\n"
+            }
+        ],
+        "meta": {
+            "method_obj": "PALQueryObject",
+            "dataset_type": "math",
+            "gt_answer": "2"
+        }
+    },
+    "P2CQueryObject": {
+        "contents": [
+            "def solution():\n    '''\n    Create a function solution that returns the answer of the following question: How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have? \n    \n    Let’s think step by step.\n    1. Find the zeros of the denominator.\n    2. The vertical asymptotes occur at the zeros of the denominator.\n    3. Calculate the zeros of the denominator.\n    4. Return the number of zeros found.\n    \n    Note: The zeros of the denominator are the values of x for which the denominator is equal to zero.\n    '''\n    # Step 1: Find the zeros of the denominator\n    denominator = x**2 + x - 6\n    \n    # Step 2: Calculate the zeros of the denominator\n    zeros = [x for x in range(-10, 11) if denominator(x) == 0]\n    \n    # Step 3: Return the number of zeros found\n    return len(zeros)"
+        ],
+        "query_message": [
+            {
+                "role": "system",
+                "content": ""
+            },
+            {
+                "role": "user",
+                "content": "def encrypt(s): \n    '''\n    Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.\n    For example:\n    encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’\n    encrypt(’et’) returns ’ix’\n\n    Let’s think step by step.\n    1. Create a alphabet, bias two places multiplied by two.\n    2. Loop the input, find the latter bias letter in alphabet.\n    3. Return result.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def encrypt(s): \n    '''\n    Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.\n    For example:\n    encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’\n    encrypt(’et’) returns ’ix’\n\n    Let’s think step by step.\n    1. Create a alphabet, bias two places multiplied by two.\n    2. Loop the input, find the latter bias letter in alphabet.\n    3. Return result.\n    '''\n    # Step 1: Create an alphabet, shift it by 2 * 2 = 4 places.\n    original_alphabet = 'abcdefghijklmnopqrstuvwxyz'\n    shifted_alphabet = original_alphabet[4:] + original_alphabet[:4]\n    \n    # Create a dictionary to map each original letter to its encrypted counterpart\n    encryption_dict = {original: shifted for original, shifted in zip(original_alphabet, shifted_alphabet)}\n    \n    # Step 2: Loop through the input string, find the shifted letter in the alphabet.\n    encrypted_string = ''\n    for char in s:\n        if char in encryption_dict:  # Check if the character is a letter that needs to be encrypted.\n            encrypted_string += encryption_dict[char]\n        else:\n            encrypted_string += char  # If not a letter (e.g., punctuation), leave it as is.\n    \n    # Step 3: Return the result.\n    return encrypted_string\n"
+            },
+            {
+                "role": "user",
+                "content": "def check_if_last_char_is_a_letter(txt): \n    '''\n    Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.\n    Examples:\n    check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False\n    \n    Let’s think step by step.\n    1. If the string is empty, return False.\n    2. If the string does not end with a alphabetical character, return False.\n    3. Split the given string into a list of words.\n    4. Check if the length of the last word is equal to 1.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def check_if_last_char_is_a_letter(txt): \n    '''\n    Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.\n    Examples:\n    check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False\n    \n    Let’s think step by step.\n    1. If the string is empty, return False.\n    2. If the string does not end with a alphabetical character, return False.\n    3. Split the given string into a list of words.\n    4. Check if the length of the last word is equal to 1.\n    '''\n    # Step 1: If the string is empty, return False.\n    if not txt:\n        return False\n    \n    # Step 2: If the string does not end with an alphabetical character, return False.\n    if not txt[-1].isalpha():\n        return False\n    \n    # Step 3: Split the given string into a list of words.\n    words = txt.split()\n    \n    # Step 4: Check if the length of the last word is equal to 1.\n    if len(words) > 0 and len(words[-1]) == 1:\n        return True\n    else:\n        return False\n"
+            },
+            {
+                "role": "user",
+                "content": "def file_name_check(file_name): \n    '''\n    Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]\n    Examples:\n    file name check(”example.txt”) => ’Yes’\n    file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter) \n    \n    Let’s think step by step.\n    1. Check if the file name is valid according to the conditions.\n    2. Return ”Yes” if valid, otherwise return ”NO”.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def file_name_check(file_name): \n    '''\n    Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]\n    Examples:\n    file name check(”example.txt”) => ’Yes’\n    file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter) \n    \n    Let’s think step by step.\n    1. Check if the file name is valid according to the conditions.\n    2. Return ”Yes” if valid, otherwise return ”NO”.\n    '''\n    # Checking if there's exactly one dot in the file name\n    if file_name.count('.') != 1:\n        return 'No'\n    \n    # Splitting the file name into the name part and the extension part\n    name_part, extension_part = file_name.split('.')\n    \n    # Checking if the name part is not empty and starts with a latin alphabet letter\n    if not name_part or not name_part[0].isalpha():\n        return 'No'\n    \n    # Checking if there are more than three digits in the name part\n    if sum(c.isdigit() for c in name_part) > 3:\n        return 'No'\n    \n    # Checking if the extension part is one of the allowed extensions\n    if extension_part not in ['txt', 'exe', 'dll']:\n        return 'No'\n    \n    # If all checks passed, the file name is considered valid\n    return 'Yes'\n"
+            },
+            {
+                "role": "user",
+                "content": "def fruit_distribution(s,n): \n    '''\n    In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8\n    fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2\n    fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19 \n    \n    Let’s think step by step.\n    1. Extract the numbers of oranges and apples from given string.\n    2. Calculate the sum of oranges and apples.\n    3. Deduct the sum from the total number of fruits.\n    4. Return the number of mangoes.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def fruit_distribution(s,n): \n    '''\n    In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8\n    fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2\n    fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19 \n    \n    Let’s think step by step.\n    1. Extract the numbers of oranges and apples from given string.\n    2. Calculate the sum of oranges and apples.\n    3. Deduct the sum from the total number of fruits.\n    4. Return the number of mangoes.\n    '''\n    # Step 1: Extract the numbers of oranges and apples from the given string.\n    # Using regular expressions to find all numbers in the string\n    numbers = re.findall(r'\\d+', s)\n    \n    # Assuming the first number is apples and the second is oranges based on the format\n    if len(numbers) >= 2:\n        apples = int(numbers[0])\n        oranges = int(numbers[1])\n    else:\n        # Default to 0 if the numbers are not found correctly (as a fallback, although the task assumes valid input)\n        apples = 0\n        oranges = 0\n    \n    # Step 2: Calculate the sum of oranges and apples.\n    total_apples_oranges = apples + oranges\n    \n    # Step 3: Deduct the sum from the total number of fruits.\n    mangoes = n - total_apples_oranges\n    \n    # Step 4: Return the number of mangoes.\n    return mangoes\n"
+            },
+            {
+                "role": "user",
+                "content": "def prime_fib(n: int): \n    '''\n    prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:\n    >>> prime_fib(1) 2\n    >>> prime_fib(2) 3\n    >>> prime_fib(3) 5 \n    >>> prime fib(4) 13 \n    >>> prime fib(5) 89 \n\n    Let’s think step by step.\n    1. Create a function to check if a number is prime.\n    2. Generate a Fibonacci sequence.\n    3. Check if each number in the Fibonacci sequence is prime, decrement the counter.\n    4. If the counter is 0, return the Fibonacci number.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def prime_fib(n: int): \n    '''\n    prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:\n    >>> prime_fib(1) 2\n    >>> prime_fib(2) 3\n    >>> prime_fib(3) 5 \n    >>> prime fib(4) 13 \n    >>> prime fib(5) 89 \n\n    Let’s think step by step.\n    1. Create a function to check if a number is prime.\n    2. Generate a Fibonacci sequence.\n    3. Check if each number in the Fibonacci sequence is prime, decrement the counter.\n    4. If the counter is 0, return the Fibonacci number.\n    '''\n    def is_prime(num):\n        if num < 2:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    fib_sequence = [0, 1]\n    counter = n\n\n    while counter > 0:\n        next_fib = fib_sequence[-1] + fib_sequence[-2]\n        if is_prime(next_fib):\n            counter -= 1\n        fib_sequence.append(next_fib)\n\n    return fib_sequence[-1]\n"
+            },
+            {
+                "role": "user",
+                "content": "def compare_one(a, b): \n    '''\n    Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,\n    Examples:\n    compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None \n    \n    Let’s think step by step.\n    1. Store the original inputs.\n    2. Check if inputs are strings and convert to floats.\n    3. Compare the two inputs and return the larger one in its original data type.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def compare_one(a, b): \n    '''\n    Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,\n    Examples:\n    compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None \n    \n    Let’s think step by step.\n    1. Store the original inputs.\n    2. Check if inputs are strings and convert to floats.\n    3. Compare the two inputs and return the larger one in its original data type.\n    '''\n    # Step 1: Store the original inputs\n    original_a, original_b = a, b\n    \n    # Helper function to handle conversion\n    def convert_if_string(input_value):\n        if isinstance(input_value, str):\n            input_value = input_value.replace(',', '.')  # Replace comma with dot for conversion\n            return float(input_value)\n        return input_value\n    \n    # Step 2: Check if inputs are strings and convert to floats\n    a = convert_if_string(a)\n    b = convert_if_string(b)\n    \n    # Step 3: Compare the two inputs and return the larger one in its original data type\n    if a > b:\n        return original_a\n    elif b > a:\n        return original_b\n    else:  # a == b\n        return None\n"
+            },
+            {
+                "role": "user",
+                "content": "def sort_even(l: list): \n    '''\n    This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.\n    Examples:\n    >>> sort even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    Let’s think step by step.\n    1. Create a list of all the even indices of the given list.\n    2. Sort the list of even indices.\n    3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices\n    in the even indicies. \n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def sort_even(l: list): \n    '''\n    This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.\n    Examples:\n    >>> sort even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    Let’s think step by step.\n    1. Create a list of all the even indices of the given list.\n    2. Sort the list of even indices.\n    3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices\n    in the even indicies. \n    '''\n    # Step 1: Create a list of all the even indices of the given list\n    even_indices_values = [l[i] for i in range(len(l)) if i % 2 == 0]\n    \n    # Step 2: Sort the list of even indices\n    even_indices_values_sorted = sorted(even_indices_values)\n    \n    # Step 3: Return a new list that is identical to the original list in the odd indices,\n    # and equal to the sorted even indices in the even indices\n    result_list = l.copy()  # Start with a copy of the original list to preserve odd indices\n    even_index = 0  # To track the position in the sorted even indices list\n    \n    for i in range(len(l)):\n        if i % 2 == 0:  # Check for even indices based on Python's zero-based indexing\n            result_list[i] = even_indices_values_sorted[even_index]\n            even_index += 1  # Move to the next element in the sorted even indices list\n    \n    return result_list\n"
+            },
+            {
+                "role": "user",
+                "content": "def search(lst): \n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.\n    Examples:\n    search([4, 1, 2, 2, 3, 1]) == 2 \n    search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3 \n    search([5, 5, 4, 4, 4]) == -1\n    \n    Let’s think step by step.\n    1. Create a frequency dict.\n    2. Sort the input list.\n    3. Loop the input list, if frequency no lesser than the integer, set result.\n    4. Return the result.\n    '''\n"
+            },
+            {
+                "role": "assistant",
+                "content": "def search(lst): \n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.\n    Examples:\n    search([4, 1, 2, 2, 3, 1]) == 2 \n    search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3 \n    search([5, 5, 4, 4, 4]) == -1\n    \n    Let’s think step by step.\n    1. Create a frequency dict.\n    2. Sort the input list.\n    3. Loop the input list, if frequency no lesser than the integer, set result.\n    4. Return the result.\n    '''\n    # Step 1: Create a frequency dict\n    freq_dict = {}\n    for num in lst:\n        if num in freq_dict:\n            freq_dict[num] += 1\n        else:\n            freq_dict[num] = 1\n    \n    # Step 3: Loop through the frequency dict to find the highest number\n    # satisfying the condition\n    result = -1\n    for num, freq in freq_dict.items():\n        if num <= freq:\n            result = max(result, num)\n    \n    # Step 4: Return the result\n    return result"
+            },
+            {
+                "role": "user",
+                "content": "def solution():\n    '''\n    Create a function solution that returns the answer of the following question: How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have? \n    \n    Let's think step by step.\n    1. Find the zeros of the denominator.\n    2. The vertical asymptotes occur at the zeros of the denominator.\n    3. Calculate the zeros of the denominator.\n    4. Return the number of zeros found.\n    \n    Note: The zeros of the denominator are the values of x for which the denominator is equal to zero.\n    '''\n"
+            }
+        ],
+        "meta": {
+            "method_obj": "P2CQueryObject",
+            "plan": "1. Find the zeros of the denominator.\n2. The vertical asymptotes occur at the zeros of the denominator.\n3. Calculate the zeros of the denominator.\n4. Return the number of zeros found.\n\nNote: The zeros of the denominator are the values of x for which the denominator is equal to zero.",
+            "codequery": [
+                {
+                    "role": "system",
+                    "content": ""
+                },
+                {
+                    "role": "user",
+                    "content": "def encrypt(s): \n    '''\n    Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.\n    For example:\n    encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’\n    encrypt(’et’) returns ’ix’\n\n    Let’s think step by step.\n    1. Create a alphabet, bias two places multiplied by two.\n    2. Loop the input, find the latter bias letter in alphabet.\n    3. Return result.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def encrypt(s): \n    '''\n    Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.\n    For example:\n    encrypt(’hi’) returns ’lm’ encrypt(’asdfghjkl’) returns ’ewhjklnop’ encrypt(’gf’) returns ’kj’\n    encrypt(’et’) returns ’ix’\n\n    Let’s think step by step.\n    1. Create a alphabet, bias two places multiplied by two.\n    2. Loop the input, find the latter bias letter in alphabet.\n    3. Return result.\n    '''\n    # Step 1: Create an alphabet, shift it by 2 * 2 = 4 places.\n    original_alphabet = 'abcdefghijklmnopqrstuvwxyz'\n    shifted_alphabet = original_alphabet[4:] + original_alphabet[:4]\n    \n    # Create a dictionary to map each original letter to its encrypted counterpart\n    encryption_dict = {original: shifted for original, shifted in zip(original_alphabet, shifted_alphabet)}\n    \n    # Step 2: Loop through the input string, find the shifted letter in the alphabet.\n    encrypted_string = ''\n    for char in s:\n        if char in encryption_dict:  # Check if the character is a letter that needs to be encrypted.\n            encrypted_string += encryption_dict[char]\n        else:\n            encrypted_string += char  # If not a letter (e.g., punctuation), leave it as is.\n    \n    # Step 3: Return the result.\n    return encrypted_string\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def check_if_last_char_is_a_letter(txt): \n    '''\n    Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.\n    Examples:\n    check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False\n    \n    Let’s think step by step.\n    1. If the string is empty, return False.\n    2. If the string does not end with a alphabetical character, return False.\n    3. Split the given string into a list of words.\n    4. Check if the length of the last word is equal to 1.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def check_if_last_char_is_a_letter(txt): \n    '''\n    Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: ”word” is a group of characters separated by space.\n    Examples:\n    check if last char is a letter(”apple pie”) → False check if last char is a letter(”apple pi e”) → True check if last char is a letter(”apple pi e ”) → False check if last char is a letter(””) → False\n    \n    Let’s think step by step.\n    1. If the string is empty, return False.\n    2. If the string does not end with a alphabetical character, return False.\n    3. Split the given string into a list of words.\n    4. Check if the length of the last word is equal to 1.\n    '''\n    # Step 1: If the string is empty, return False.\n    if not txt:\n        return False\n    \n    # Step 2: If the string does not end with an alphabetical character, return False.\n    if not txt[-1].isalpha():\n        return False\n    \n    # Step 3: Split the given string into a list of words.\n    words = txt.split()\n    \n    # Step 4: Check if the length of the last word is equal to 1.\n    if len(words) > 0 and len(words[-1]) == 1:\n        return True\n    else:\n        return False\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def file_name_check(file_name): \n    '''\n    Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]\n    Examples:\n    file name check(”example.txt”) => ’Yes’\n    file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter) \n    \n    Let’s think step by step.\n    1. Check if the file name is valid according to the conditions.\n    2. Return ”Yes” if valid, otherwise return ”NO”.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def file_name_check(file_name): \n    '''\n    Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise. A file’s name is considered to be valid if and only if all the following conditions are met: - There should not be more than three digits (’0’-’9’) in the file’s name. - The file’s name contains exactly one dot ’.’ - The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’). - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]\n    Examples:\n    file name check(”example.txt”) => ’Yes’\n    file name check(”1example.dll”) => ’No’ (the name should start with a latin alphapet letter) \n    \n    Let’s think step by step.\n    1. Check if the file name is valid according to the conditions.\n    2. Return ”Yes” if valid, otherwise return ”NO”.\n    '''\n    # Checking if there's exactly one dot in the file name\n    if file_name.count('.') != 1:\n        return 'No'\n    \n    # Splitting the file name into the name part and the extension part\n    name_part, extension_part = file_name.split('.')\n    \n    # Checking if the name part is not empty and starts with a latin alphabet letter\n    if not name_part or not name_part[0].isalpha():\n        return 'No'\n    \n    # Checking if there are more than three digits in the name part\n    if sum(c.isdigit() for c in name_part) > 3:\n        return 'No'\n    \n    # Checking if the extension part is one of the allowed extensions\n    if extension_part not in ['txt', 'exe', 'dll']:\n        return 'No'\n    \n    # If all checks passed, the file name is considered valid\n    return 'Yes'\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def fruit_distribution(s,n): \n    '''\n    In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8\n    fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2\n    fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19 \n    \n    Let’s think step by step.\n    1. Extract the numbers of oranges and apples from given string.\n    2. Calculate the sum of oranges and apples.\n    3. Deduct the sum from the total number of fruits.\n    4. Return the number of mangoes.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def fruit_distribution(s,n): \n    '''\n    In this task, you will be given a string that represents a number of apples and oranges that are distributed in a basket of fruit this basket contains apples, oranges, and mango fruits. Given the string that represents the total number of the oranges and apples and an integer that represent the total number of the fruits in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit distribution(”5 apples and 6 oranges”, 19) -¿19 - 5 - 6 = 8\n    fruit distribution(”0 apples and 1 oranges”,3) -¿ 3 - 0 - 1 = 2\n    fruit distribution(”2 apples and 3 oranges”, 100) -¿ 100 - 2 - 3 = 95 fruit distribution(”100 apples and 1 oranges”,120) -¿ 120 - 100 - 1 = 19 \n    \n    Let’s think step by step.\n    1. Extract the numbers of oranges and apples from given string.\n    2. Calculate the sum of oranges and apples.\n    3. Deduct the sum from the total number of fruits.\n    4. Return the number of mangoes.\n    '''\n    # Step 1: Extract the numbers of oranges and apples from the given string.\n    # Using regular expressions to find all numbers in the string\n    numbers = re.findall(r'\\d+', s)\n    \n    # Assuming the first number is apples and the second is oranges based on the format\n    if len(numbers) >= 2:\n        apples = int(numbers[0])\n        oranges = int(numbers[1])\n    else:\n        # Default to 0 if the numbers are not found correctly (as a fallback, although the task assumes valid input)\n        apples = 0\n        oranges = 0\n    \n    # Step 2: Calculate the sum of oranges and apples.\n    total_apples_oranges = apples + oranges\n    \n    # Step 3: Deduct the sum from the total number of fruits.\n    mangoes = n - total_apples_oranges\n    \n    # Step 4: Return the number of mangoes.\n    return mangoes\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def prime_fib(n: int): \n    '''\n    prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:\n    >>> prime_fib(1) 2\n    >>> prime_fib(2) 3\n    >>> prime_fib(3) 5 \n    >>> prime fib(4) 13 \n    >>> prime fib(5) 89 \n\n    Let’s think step by step.\n    1. Create a function to check if a number is prime.\n    2. Generate a Fibonacci sequence.\n    3. Check if each number in the Fibonacci sequence is prime, decrement the counter.\n    4. If the counter is 0, return the Fibonacci number.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def prime_fib(n: int): \n    '''\n    prime fib returns n-th number that is a Fibonacci number and it’s also prime. Examples:\n    >>> prime_fib(1) 2\n    >>> prime_fib(2) 3\n    >>> prime_fib(3) 5 \n    >>> prime fib(4) 13 \n    >>> prime fib(5) 89 \n\n    Let’s think step by step.\n    1. Create a function to check if a number is prime.\n    2. Generate a Fibonacci sequence.\n    3. Check if each number in the Fibonacci sequence is prime, decrement the counter.\n    4. If the counter is 0, return the Fibonacci number.\n    '''\n    def is_prime(num):\n        if num < 2:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    fib_sequence = [0, 1]\n    counter = n\n\n    while counter > 0:\n        next_fib = fib_sequence[-1] + fib_sequence[-2]\n        if is_prime(next_fib):\n            counter -= 1\n        fib_sequence.append(next_fib)\n\n    return fib_sequence[-1]\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def compare_one(a, b): \n    '''\n    Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,\n    Examples:\n    compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None \n    \n    Let’s think step by step.\n    1. Store the original inputs.\n    2. Check if inputs are strings and convert to floats.\n    3. Compare the two inputs and return the larger one in its original data type.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def compare_one(a, b): \n    '''\n    Create a function that takes integers, floats, or strings representing real numbers, and returns the larger variable in its given variable type. Return None if the values are equal. Note: If a real number is represented as a string, the floating point might be . or ,\n    Examples:\n    compare one(1, 2.5) → 2.5 compare one(1, ”2,3”) → ”2,3” compare one(”5,1”, ”6”) → ”6” compare one(”1”, 1) → None \n    \n    Let’s think step by step.\n    1. Store the original inputs.\n    2. Check if inputs are strings and convert to floats.\n    3. Compare the two inputs and return the larger one in its original data type.\n    '''\n    # Step 1: Store the original inputs\n    original_a, original_b = a, b\n    \n    # Helper function to handle conversion\n    def convert_if_string(input_value):\n        if isinstance(input_value, str):\n            input_value = input_value.replace(',', '.')  # Replace comma with dot for conversion\n            return float(input_value)\n        return input_value\n    \n    # Step 2: Check if inputs are strings and convert to floats\n    a = convert_if_string(a)\n    b = convert_if_string(b)\n    \n    # Step 3: Compare the two inputs and return the larger one in its original data type\n    if a > b:\n        return original_a\n    elif b > a:\n        return original_b\n    else:  # a == b\n        return None\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def sort_even(l: list): \n    '''\n    This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.\n    Examples:\n    >>> sort even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    Let’s think step by step.\n    1. Create a list of all the even indices of the given list.\n    2. Sort the list of even indices.\n    3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices\n    in the even indicies. \n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def sort_even(l: list): \n    '''\n    This function takes a list l and returns a list l’ such that l’ is identical to l in the odd indicies, while its values at the even indicies are equal to the values of the even indicies of l, but sorted.\n    Examples:\n    >>> sort even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    Let’s think step by step.\n    1. Create a list of all the even indices of the given list.\n    2. Sort the list of even indices.\n    3. Return a new list that is identical to the original list in the odd indicies, and equal to the sorted even indices\n    in the even indicies. \n    '''\n    # Step 1: Create a list of all the even indices of the given list\n    even_indices_values = [l[i] for i in range(len(l)) if i % 2 == 0]\n    \n    # Step 2: Sort the list of even indices\n    even_indices_values_sorted = sorted(even_indices_values)\n    \n    # Step 3: Return a new list that is identical to the original list in the odd indices,\n    # and equal to the sorted even indices in the even indices\n    result_list = l.copy()  # Start with a copy of the original list to preserve odd indices\n    even_index = 0  # To track the position in the sorted even indices list\n    \n    for i in range(len(l)):\n        if i % 2 == 0:  # Check for even indices based on Python's zero-based indexing\n            result_list[i] = even_indices_values_sorted[even_index]\n            even_index += 1  # Move to the next element in the sorted even indices list\n    \n    return result_list\n"
+                },
+                {
+                    "role": "user",
+                    "content": "def search(lst): \n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.\n    Examples:\n    search([4, 1, 2, 2, 3, 1]) == 2 \n    search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3 \n    search([5, 5, 4, 4, 4]) == -1\n    \n    Let’s think step by step.\n    1. Create a frequency dict.\n    2. Sort the input list.\n    3. Loop the input list, if frequency no lesser than the integer, set result.\n    4. Return the result.\n    '''\n"
+                },
+                {
+                    "role": "assistant",
+                    "content": "def search(lst): \n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than zero, and has a frequency greater than or equal to the value of the integer itself. The frequency of an integer is the number of times it appears in the list. If no such a value exist, return -1.\n    Examples:\n    search([4, 1, 2, 2, 3, 1]) == 2 \n    search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3 \n    search([5, 5, 4, 4, 4]) == -1\n    \n    Let’s think step by step.\n    1. Create a frequency dict.\n    2. Sort the input list.\n    3. Loop the input list, if frequency no lesser than the integer, set result.\n    4. Return the result.\n    '''\n    # Step 1: Create a frequency dict\n    freq_dict = {}\n    for num in lst:\n        if num in freq_dict:\n            freq_dict[num] += 1\n        else:\n            freq_dict[num] = 1\n    \n    # Step 3: Loop through the frequency dict to find the highest number\n    # satisfying the condition\n    result = -1\n    for num, freq in freq_dict.items():\n        if num <= freq:\n            result = max(result, num)\n    \n    # Step 4: Return the result\n    return result"
+                },
+                {
+                    "role": "user",
+                    "content": "def solution():\n    '''\n    Create a function solution that returns the answer of the following question: How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have? \n    \n    Let's think step by step.\n    1. Find the zeros of the denominator.\n    2. The vertical asymptotes occur at the zeros of the denominator.\n    3. Calculate the zeros of the denominator.\n    4. Return the number of zeros found.\n    \n    Note: The zeros of the denominator are the values of x for which the denominator is equal to zero.\n    '''\n"
+                }
+            ],
+            "planquery": [
+                {
+                    "role": "system",
+                    "content": "You are writing a plan for a given user instruction with a numbered list. Plan your implementation accordingly."
+                },
+                {
+                    "role": "user",
+                    "content": "Write a function to sum the length of the names of a given list of names after removing the names that start with a lowercase letter. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Loop the input list.\n2. If the name not start with lowercase letter, add the length of the name to result. \n3. Return the result.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a function to increment the numeric values in the given strings by k. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Loop the input list.\n2. If a string is a number, increment it.\n3. Return modified list.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a python function to find sum of all prime divisors of a given number. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Create a inner function to check if a number is prime.\n2. Loop all number less than the input that is prime.\n3. Check if the input is divisible by that. 4. Return the result.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a function to find the lateral surface area of a cone. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Calculate the generatrix of the cone.\n2. Return the result.\n3. Please import inside the function.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a function to remove all tuples with all none values in the given tuple list. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Loop the given tuple list.\n2. Check if all elements in the tuple are None.\n3. If not, append the tuple to the result list. 4. Return the result.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a python function to find the last two digits in factorial of a given number. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Calculate the factorial of the input number.\n2. Return the last two digits of it.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a python function to replace multiple occurence of character by single. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Create a pattern that the input character repeats mulitiple times.\n2. Replace the pattern in input string with input character.\n3. Please import inside the function.\n"
+                },
+                {
+                    "role": "user",
+                    "content": "Write a python function to move all zeroes to the end of the given list. Let’s think step by step."
+                },
+                {
+                    "role": "assistant",
+                    "content": "1. Count the number of zeros.\n2. Remove the zeros from the list.\n3. Append the zeros to the end of the list. 4. Return the list."
+                },
+                {
+                    "role": "user",
+                    "content": "Write a python function to answer/solve the following: How many vertical asymptotes does the graph of $y=\\frac{2}{x^2+x-6}$ have? Let's think step by step.\n"
+                }
+            ],
+            "dataset_type": "math",
+            "gt_answer": "2"
+        }
+    }
+}
