@@ -36,11 +36,11 @@ If you have problem that is resolved by calling it again like `connection error`
 
 ### Print scores
 ```bash
+cd src
+
 python3 print_score.py
 
-cat scores/gsm8K_test_dt.gsm.md
-cat scores/MATH-full_dt.math.md
-cat scores/ocw_course_dt.ocw.md
+cat scores.md
 ```
 
 

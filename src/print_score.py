@@ -71,6 +71,7 @@ def read_md(fname):
 
 
 dfs = load_scores()
-for dataset_name in dfs:
-    with open(f'scores/{dataset_name}.md', 'w') as f:
-        f.write(dfs[dataset_name].to_markdown())
+with open(f'scores.md', 'w') as f:
+    for dataset_name in dfs:
+        f.write(f'# {dataset_name} \n')
+        f.write(dfs[dataset_name].to_markdown() + '\n\n\n')
