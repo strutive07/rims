@@ -71,7 +71,7 @@ async def run_task(
 async def main(
     gsm_jslf: str = "",
     dataset_type: Literal[
-        "gsm", "ocw", "math"
+        "gsm", "ocw", "math", "svamp"
     ] = "gsm",  # affects get_concordant_answer
     num_methods: int = 3,  # number of methods (3-> cot pal p2c / 2-> cot pal )
     start_idx: int = 0,
@@ -85,11 +85,15 @@ async def main(
     assert gsm_jslf, f"need to specify {gsm_jslf=}"
     assert dataset_type in "gsm ocw math svamp".split(), f"invalid {dataset_type=}"
 
-    import jsonlines
+    if dataset_type == "svamp":
+        with open(gsm_jslf) as f:
+            records = json.load(f)
+    else:
+        import jsonlines
 
-    with jsonlines.open(gsm_jslf) as f:
-        records = list(f)[start_idx:]
-        records = dedup(records)
+        with jsonlines.open(gsm_jslf) as f:
+            records = list(f)[start_idx:]
+            records = dedup(records)
     error_idx = []
     res = []
 
@@ -103,6 +107,7 @@ async def main(
     if outpath.exists():
         error_idx = []
         res = []
+        import jsonlines
         with jsonlines.open(outpath) as f:
             for idx, row in enumerate(f):
                 if "error" in row:

@@ -28,3 +28,23 @@ p2c:	1814 / 5000 (36.3%)
 ========distinctive behaviors========
 {'all': 719, 'cotpal-p2c': 311, 'palp2c-cot': 483, 'p2ccot-pal': 298, 'cot_only': 514, 'pal_only': 391, 'p2c_only': 314}
 =====================================
+file      = outputs/MATH-full_dt.math/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = math
+=======individual performance=======
+cot:	1842 / 5000 (36.8%)
+
+
+pal:	1908 / 5000 (38.2%)
+
+
+p2c:	1815 / 5000 (36.3%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 719, 'cotpal-p2c': 312, 'palp2c-cot': 483, 'p2ccot-pal': 298, 'cot_only': 513, 'pal_only': 394, 'p2c_only': 315}
+=====================================
+
+

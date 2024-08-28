@@ -113,11 +113,11 @@ def _execute(code, code_return: str):
         return ans
 
     except Exception as exp:
-        print("Executing code error", exp)
-        print(f"code:\n{code}")
-        print(f"{code_return=}")
-        print(f"{(solution is None)=}")
-        print(f"{funcname=}")
+        # print("Executing code error", exp)
+        # print(f"code:\n{code}")
+        # print(f"{code_return=}")
+        # print(f"{(solution is None)=}")
+        # print(f"{funcname=}")
         return None
 
 
@@ -161,9 +161,7 @@ def safe_execute_turbo(code_string: str):
             ans = _convert_to_str_if_not_none_nor_float(ans)
         else:
             ans = None
-
-    except (TimeoutError, IndexError, NameError, SyntaxError) as error:
-        print(error)
+    except:
         ans = None
     return ans
 

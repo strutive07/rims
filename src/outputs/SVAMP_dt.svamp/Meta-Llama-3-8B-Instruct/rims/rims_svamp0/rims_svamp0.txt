@@ -1,0 +1,120 @@
+You are now solving math word problems. You brilliantly detects the errors in the wrong solution and find `Workaround Method` to correct the solution. The methods you are taking are as follows. Each has its strength and weakness:
+
+- Chain of Thought (cot): Solving problem with writing steps of reasoning in a natural language. Might help correct understanding of the problem but this could be weaker in precise computation.
+- Program-aided Language Modeling (pal): Using python language to reason and obtain an accurate answer to the given question, but this could be weaker in understanding the problem.
+- Plan-and-then-Code (p2c): When a question seems requiring amount of steps to reach the answer, write plans first for what to compute and write a python code to it for solving the problem. However if planning goes wrong, the code will also be wrong. If any steps of planning provided before programming, then it will be considered as Plan-and-then-Code.
+
+Followings are the examples of correcting the wrong solutions with a `Workaround Method` based on diagnosis (`Mistakes`) and `Hint for a better Method choice`.
+
+
+
+
+`Question`: There are 15 trees in the grove. Grove workers will plant trees in the grove today.After they are done, there will be 21 trees.
+How many trees did the grove workers plant today?
+`Method`: Plan-and-then-Code (p2c)
+`Attempt 1`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: There are 15 trees in the grove. Grove workers will plant trees in the grove today.After they are done, there will be 21 trees.
+    How many trees did the grove workers plant today?
+
+    Let's think step by step.
+    1. Calculate the initial count of the trees.
+    2. Subtract the final count from trees.
+    3. Return the remaining amount.
+    '''
+    # Step 1: Calculate the initial count of the trees.
+    final_trees = 21
+
+    # Step 2: Subtract the final count from trees.
+    initial_trees = 15
+    remaining_amount = initial_trees - final_trees
+
+    # Step 3: Return the remaining amount.
+    return remaining_amount
+`Answer 1`: -6
+`Evaluation`: Wrong
+`Mistakes`: The calculation in the code is reversed. It's subtracting the final count from the initial count instead of the other way around.
+`Hint for a better Method choice`: In this case, the problem is simple enough that Chain of Thought (CoT) might be more appropriate. It would allow us to clearly express the logic without the overhead of writing a full program. However, since Plan-and-then-Code was used, we'll stick with that method but correct the logic.
+`Workaround Method`: Chain-of-Thought (cot)
+`Attempt 2`: Answer:
+We start with 15 trees. 
+Later we have 21 trees.
+The difference must be the number of trees they planted.
+So, they must have planted 21 - 15 = 6 trees.
+Final Answer: The final answer is 6. I hope it is correct.
+`Answer 2`: 6
+`Evaluation`: Correct
+
+
+
+`Question`: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+`Method`: Chain-of-Thought (cot)
+`Attempt 1`:
+There are 3 cars in the parking lot already.
+2 more arrive.
+Now there are 3 * 2 = 10 cars.
+Final Answer: The final answer is 10. I hope it is correct.
+`Answer 1`: 10
+`Evaluation`: Wrong
+`Mistakes`: The main error in this solution is the incorrect mathematical operation. The attempt multiplies the initial number of cars (3) by the number of new arrivals (2) instead of adding them together.
+`Hint for a better Method choice`: While Chain of Thought (CoT) is generally suitable for simple arithmetic problems like this, the mistake made shows a fundamental misunderstanding of the operation needed. In this case, using a Program-aided Language Modeling (pal) approach might help to break down the problem more systematically and ensure the correct operation is used.
+`Workaround Method`: Program-aided Language Modeling (pal)
+`Attempt 2`:
+def solution():
+    # Initial number of cars in the parking lot
+    initial_cars = 3
+    # Number of cars that arrive
+    arriving_cars = 2
+    # Calculate the total number of cars
+    total_cars = initial_cars + arriving_cars
+    return total_cars
+`Answer 2`: 5
+`Evaluation`: Correct
+
+
+
+`Question`: Leah had 32 chocolates and her sister had 42.
+If they ate 35, how many pieces do they have left in total?
+`Method`: Chain-of-Thought (cot)
+`Attempt 1`:
+Leah had 32 chocolates and Leah's sister had 42.
+That means there were originally 32 + 42 = 74 chocolates.
+35 have been eaten.
+So in total they still have 74 - 32 = 42 chocolates.
+Final Answer: The final answer is 42. I hope it is correct.
+`Answer 1`: 42
+`Evaluation`: Wrong
+`Mistakes`: The calculation in the final step is incorrect. Instead of subtracting 35 (the number of chocolates eaten) from 74 (the total initial chocolates), the solution mistakenly subtracts 32 (Leah's initial chocolates).
+`Hint for a better Method choice`: While Chain of Thought (CoT) is generally suitable for this type of problem, the error made shows a simple calculation mistake. In this case, using a Plan-and-then-Code (p2c) approach might help to ensure accurate calculations and reduce the chance of such errors.
+`Workaround Method`: Plan-and-then-Code (p2c)
+`Attempt 2`:
+def solution():
+    '''
+    Create a function solution that returns the answer of the following question: Leah had 32 chocolates and her sister had 42.
+    If they ate 35, how many pieces do they have left in total?
+
+    Let's think step by step.
+    1. Calculate the total initial chocolates.
+    2. Subtract the number of chocolates eaten.
+    3. Return the remaining amount.
+    '''
+    # Step 1: Calculate the total initial chocolates.
+    leah_chocolates = 32
+    sister_chocolates = 42
+    total_chocolates = leah_chocolates + sister_chocolates
+
+    # Step 2: Subtract the number of chocolates eaten.
+    chocolates_eaten = 35
+    remaining_chocolates = total_chocolates - chocolates_eaten
+
+    # Step 3: Return the remaining amount.
+    return remaining_chocolates
+`Answer 2`: 39
+`Evaluation`: Correct
+
+
+
+Now, try the `Question` below following the same procedure as above. Try the question with the choice of your `Method`, and evaluate the `Answer`. If your `Attempt` is considered wrong, identify the `Mistakes` and reason to take `Workaround Method` by writing `Hint for a better Method choice`. Based on it, make a correct reattempt.
+
+`Question`: [QUESTION]

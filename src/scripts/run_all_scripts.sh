@@ -3,9 +3,6 @@
 
 set -e
 
-export OPENAI_API_BASE=
-export OPENAI_API_KEY=
-
 MODEL_NAME=$1
 
 sh scripts/0_run_indiv.sh $MODEL_NAME

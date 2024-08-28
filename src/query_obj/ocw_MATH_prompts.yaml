@@ -353,3 +353,152 @@ math_pal:
     - 24
     - 16
     - -\frac{2}{3}
+
+
+svamp_cot:
+  system: "You are a helpful assistant that can solve problems step by step."
+  user_tmp: |
+    {QUESTION}
+  user:
+    - |
+      Let's solve the following math problems. You need to solve these math problems step by step. Here is one example how to do it,
+
+      Problem:
+      There are 15 trees in the grove. Grove workers will plant trees in the grove today.After they are done, there will be 21 trees.
+      How many trees did the grove workers plant today?
+
+      Solution:
+      We start with 15 trees. 
+      Later we have 21 trees.
+      The difference must be the number of trees they planted.
+      So, they must have planted 21 - 15 = 6 trees.
+      Final Answer: The final answer is 6. I hope it is correct.
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+    - |
+      Problem:
+      Leah had 32 chocolates and her sister had 42.
+      If they ate 35, how many pieces do they have left in total?
+    - |
+      Problem:
+      Jason had 20 lollipops. He gave Denny some lollipops. Now Jason has 12 lollipops.
+      How many lollipops did Jason give to Denny?
+  assistant:
+    - |
+      Solution:
+      There are 3 cars in the parking lot already.
+      2 more arrive.
+      Now there are 3 + 2 = 5 cars.
+      Final Answer: The final answer is 5. I hope it is correct.
+    - |
+      Solution:
+      Leah had 32 chocolates and Leah's sister had 42.
+      That means there were originally 32 + 42 = 74 chocolates.
+      35 have been eaten.
+      So in total they still have 74 - 35 = 39 chocolates.
+      Final Answer: The final answer is 39. I hope it is correct.
+    - |
+      Solution:
+      Jason had 20 lollipops.
+      Since he only has 12 now, he must have given the rest to Denny.
+      The number of lollipops he has given to Denny must have been 20 - 12 = 8 lollipops.
+      Final Answer: The final answer is 8. I hope it is correct.
+
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - 6
+    - 5
+    - 39
+    - 8
+  questions: # only for fewshot harvesting
+    - |
+      Problem:
+      There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done, there will be 21 trees. How many trees did the grove workers plant today?
+    - |
+      Problem:
+      If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+    - |
+      Problem:
+      Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?
+    - |
+      Problem:
+      Leah had 32 chocolates and her sister had 42. If they ate 35, how many pieces do they have left in total?
+svamp_pal:
+  system: "You are a helpful assistant that can solve math problems by using Python code."
+  user_tmp: |
+    {QUESTION}
+
+    # solution in Python
+
+  user:
+    - |
+      Let's use python to solve math problems. You need to write python code to answer these math problems. Here is one example how to do it,
+
+      Problem:
+      There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done, there will be 21 trees.
+      How many trees did the grove workers plant today?
+
+      # solution in Python
+      def solution():
+          # Initial number of trees
+          initial_trees = 15
+
+          # Final number of trees
+          final_trees = 21
+
+          # Calculate the number of trees planted
+          trees_planted = final_trees - initial_trees
+
+          return trees_planted
+
+
+      Now it's your turn. Here is another math problem:
+      Problem:
+      If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+    - |
+      Problem:
+      Leah had 32 chocolates and her sister had 42.
+      If they ate 35, how many pieces do they have left in total?
+    - |
+      Problem:
+      Jason had 20 lollipops. He gave Denny some lollipops. Now Jason has 12 lollipops.
+      How many lollipops did Jason give to Denny?
+  assistant:
+    - |
+      def solution():
+          # Initial number of cars in the parking lot
+          initial_cars = 3
+          # Number of cars that arrive
+          arriving_cars = 2
+          # Calculate the total number of cars
+          total_cars = initial_cars + arriving_cars
+          return total_cars
+    - |
+      def solution():
+          # Leah's initial number of chocolates
+          leah_chocolates = 32
+          # Leah's sister's initial number of chocolates
+          sister_chocolates = 42
+          # Total initial chocolates
+          total_initial_chocolates = leah_chocolates + sister_chocolates
+          # Number of chocolates eaten
+          chocolates_eaten = 35
+          # Calculate remaining chocolates
+          remaining_chocolates = total_initial_chocolates - chocolates_eaten
+          return remaining_chocolates
+    - |
+      def solution():
+          initial_lollipops = 20
+          # Jason's remaining lollipops
+          remaining_lollipops = 12
+          # Calculate the number of lollipops given to Denny
+          lollipops_given = initial_lollipops - remaining_lollipops
+
+
+  answers: # only used for prompt preparation, not for actual prompting inference
+    - 6
+    - 5
+    - 39
+    - 8

@@ -58,6 +58,7 @@ class P2CQueryObject(BaseQueryObject):
             "gsm": 800,
             "ocw": 800,
             "math": 800,
+            "svamp": 800,
         }
 
         resp = await self.async_query_to_llm(

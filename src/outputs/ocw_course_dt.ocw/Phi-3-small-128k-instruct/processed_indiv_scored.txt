@@ -38,3 +38,23 @@ p2c:	49   /  272 (18.0%)
 =====================================
 
 
+file      = outputs/ocw_course_dt.ocw/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = ocw
+=======individual performance=======
+cot:	50   /  272 (18.4%)
+
+
+pal:	24   /  272 (8.8%)
+
+
+p2c:	26   /  272 (9.6%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 1, 'cotpal-p2c': 7, 'palp2c-cot': 7, 'p2ccot-pal': 7, 'cot_only': 35, 'pal_only': 9, 'p2c_only': 11}
+=====================================
+
+

@@ -336,9 +336,6 @@ ocw_select:
     - (C) can correctly answer the problem. Although (C) did not explicitly solved the DE with python but it reached the correct equation while (A) and (C) results in wrong equation differs from the correct one, "s^2 + b*s + 1".
     - (B) can correctly answer the problem. Because (A) failed to calculate correctly and results in wrong $a$, and the solution (C) invokes programming error.
 
-
-
-
 math_select:
   system: You are a helpful assistant that can identify the correct solution to the math problem.
   user_tmp: |
@@ -547,3 +544,162 @@ math_select:
   assistant:
     - (C) can correctly answer the problem. Because the others, (A) and (B) both wrongly add up determinants of two matrices instead of multiplying it.
     - (B) can correctly answer the problem by returning "-2/3". Because both (A) and (C) makes mistake in the middle and reach the wrong result, -3 and -6, respectively.
+
+svamp_select:
+  system: You are a helpful assistant that can identify the correct answer to the math problem.
+  user_tmp: |
+    Math problem: {QUESTION}
+
+    (A)
+    {COT_SOLUTION}
+
+    (B)
+    {PAL_SOLUTION}
+
+    (C)
+    {P2C_SOLUTION}
+
+    Which of the above three choices can correctly answer the math problem?
+  user:
+    - |
+      There are three choices to the same math problem. One uses natural language to answer the question, while the other two uses Python program to answer it. One directly attempts to answer the problem with coding the solution, while the last one will plan first and then write a code to answer it. Three of them can correctly answer the math problem. You need to identify which choice can correctly answer the math problem. Here is one example how to do it,
+
+      Math problem: There are 15 trees in the grove. Grove workers will plant trees in the grove today.After they are done, there will be 21 trees.
+      How many trees did the grove workers plant today?
+
+      (A)
+      Answer:
+      We start with 15 trees. 
+      Later we have 21 trees.
+      The difference must be the number of trees they planted.
+      So, they must have planted 21 - 15 = 6 trees.
+      Final Answer: The final answer is 6. I hope it is correct.
+
+      (B)
+      def solution():
+          # Initial number of trees
+          initial_trees = 15
+
+          # Final number of trees
+          final_trees = 21
+
+          # Calculate the number of trees planted
+          trees_planted = final_trees + initial_trees
+
+          return trees_planted
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: There are 15 trees in the grove. Grove workers will plant trees in the grove today.After they are done, there will be 21 trees.
+          How many trees did the grove workers plant today?
+
+          Let's think step by step.
+          1. Calculate the initial count of the trees.
+          2. Subtract the final count from trees.
+          3. Return the remaining amount.
+          '''
+          # Step 1: Calculate the initial count of the trees.
+          final_trees = 21
+
+          # Step 2: Subtract the final count from trees.
+          initial_trees = 15
+          remaining_amount = initial_trees - final_trees
+
+          # Step 3: Return the remaining amount.
+          return remaining_amount
+
+      Which of the above three choices can correctly answer the math problem?
+
+      (A) can correctly answer the math problem. Because (B) adds the number of trees to the cost of each bagel instead of subtracting them, and (C) also fails by wrongly subtracting final_trees from initial_trees.
+
+      Now it's your turn. Here is another math problem and three choices.
+      Math Problem: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+
+      (A)
+      Answer:
+      There are 3 cars in the parking lot already.
+      2 more arrive.
+      Now there are 3 * 2 = 10 cars.
+      Final Answer: The final answer is 10. I hope it is correct.
+
+      (B)
+      def solution():
+          # Initial number of cars in the parking lot
+          initial_cars = 3
+          # Number of cars that arrive
+          arriving_cars = 2
+          # Calculate the total number of cars
+          total_cars = initial_cars + arriving_cars
+          return total_cars
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+
+          Let's think step by step.
+          1. Initialize the variable `initial_cars` with the initial number of golf cars.
+          2. Add the number of cars arrived.
+          3. Return the remaining number of cars.
+          '''
+          # Step 1: Initialize the variable `initial_cars` with the initial number of golf cars.
+          initial_cars = 30
+
+          # Step 2: Subtract the number of cars arrived.
+          arriving_cars = 2
+          remaining_cars = initial_cars + arriving_cars
+
+          # Step 3: Return the remaining number of cars.
+          return remaining_cars
+
+      Which of the above three choices can correctly answer the math problem?
+    - |
+      Math problem: Leah had 32 chocolates and her sister had 42.
+      If they ate 35, how many pieces do they have left in total?
+
+      (A)
+      Answer:
+      Leah had 32 chocolates and Leah's sister had 42.
+      That means there were originally 32 + 42 = 74 chocolates.
+      35 have been eaten.
+      So in total they still have 74 - 32 = 42 chocolates.
+      Final Answer: The final answer is 42. I hope it is correct.
+
+      (B)
+      def solution():
+          # Leah's initial number of chocolates
+          leah_chocolates = 32
+          # Leah's sister's initial number of chocolates
+          sister_chocolates = 42
+          # Total initial chocolates
+          total_chocolates = leah_chocolates + sister_chocolates
+          return total_chocolates
+
+      (C)
+      def solution():
+          '''
+          Create a function solution that returns the answer of the following question: Leah had 32 chocolates and her sister had 42.
+          If they ate 35, how many pieces do they have left in total?
+
+          Let's think step by step.
+          1. Calculate the total initial chocolates.
+          2. Subtract the number of chocolates eaten.
+          3. Return the remaining amount.
+          '''
+          # Step 1: Calculate the total initial chocolates.
+          leah_chocolates = 32
+          sister_chocolates = 42
+          total_chocolates = leah_chocolates + sister_chocolates
+
+          # Step 2: Subtract the number of chocolates eaten.
+          chocolates_eaten = 35
+          remaining_chocolates = total_chocolates - chocolates_eaten
+
+          # Step 3: Return the remaining amount.
+          return remaining_chocolates
+
+      Which of the above three choices can correctly answer the math problem?
+  assistant:
+    - (B) can correctly answer the math problem. Because (A) wrongly figured the number of initial_cars, and (C) adds the multiply number of cars instead of adds them.
+    - (C) can correctly answer the math problem. Because (A) substracted the figured the number of eaten chocolates from the total chocolates, and (B) wrongly adds the number of eaten chocolates to the total chocolates.

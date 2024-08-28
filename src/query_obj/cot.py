@@ -21,13 +21,13 @@ class CoTQueryObject(BaseQueryObject):
 def get_cot_prompt(
     question: str,
     backbone: str,
-    dataset_type: Literal["gsm", "ocw", "math"] = None,
+    dataset_type: Literal["gsm", "ocw", "math", "svamp"] = None,
 ):
     """
     This function is used to generate the CoT prompt.
     append "Question: " to the `question`
     """
-    if dataset_type not in "gsm ocw math":
+    if dataset_type not in "gsm ocw math svamp":
         raise ValueError(f"get_cot_prompt(): {dataset_type=} is not supported")
 
     if dataset_type == "gsm":
@@ -46,7 +46,7 @@ def get_cot_prompt(
         )
         messages += [{"role": "user", "content": f"Question: {question}"}]
 
-    elif dataset_type in ["ocw", "math"]:
+    elif dataset_type in ["ocw", "math", "svamp"]:
         # open ocw/MATH targeted CoT prompts
         THIS_PARENT = Path(__file__).parent.resolve()
         ymlf = THIS_PARENT / "ocw_MATH_prompts.yaml"

@@ -112,6 +112,9 @@ async def main(
         outdir.mkdir(parents=True)
 
     outpath = outdir / f"n{n}_{temperature}_sg_raw_query_result.jsonl"
+    if outpath.exists():
+        print('Tasks that have already been completed.')
+        return
 
     res_selection = await run_task(
         records=to_select_records,

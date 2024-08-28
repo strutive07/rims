@@ -30,3 +30,23 @@ p2c:	1370 / 5000 (27.4%)
 =====================================
 
 
+file      = outputs/MATH-full_dt.math/Mathstral-7B-v0.1/processed_indiv.jsonl
+dataset   = math
+=======individual performance=======
+cot:	2111 / 5000 (42.2%)
+
+
+pal:	1573 / 5000 (31.5%)
+
+
+p2c:	1370 / 5000 (27.4%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 624, 'cotpal-p2c': 354, 'palp2c-cot': 299, 'p2ccot-pal': 234, 'cot_only': 899, 'pal_only': 296, 'p2c_only': 213}
+=====================================
+
+

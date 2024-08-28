@@ -30,3 +30,23 @@ p2c:	968  / 1319 (73.4%)
 =====================================
 
 
+file      = outputs/gsm8K_test_dt.gsm/Mathstral-7B-v0.1/processed_indiv.jsonl
+dataset   = gsm
+=======individual performance=======
+cot:	1009 / 1319 (76.5%)
+
+
+pal:	1014 / 1319 (76.9%)
+
+
+p2c:	968  / 1319 (73.4%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 756, 'cotpal-p2c': 98, 'palp2c-cot': 116, 'p2ccot-pal': 64, 'cot_only': 91, 'pal_only': 44, 'p2c_only': 32}
+=====================================
+
+

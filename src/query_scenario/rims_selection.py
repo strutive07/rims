@@ -17,7 +17,7 @@ async def rims_query(
     stop: Union[str, List[str]] = None,
 ) -> Dict:
     dataset_type = row["dataset_type"]
-    assert dataset_type in "gsm ocw math".split(), f"check {dataset_type=}"
+    assert dataset_type in "gsm ocw math svamp".split(), f"check {dataset_type=}"
     assert row["need_selection"][0], f"{row['need_selection']=} shouldn't reach here"
     assert backbone, f"{backbone=} must be passed!"
 

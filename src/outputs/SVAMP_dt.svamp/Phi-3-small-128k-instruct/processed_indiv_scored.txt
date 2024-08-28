@@ -1,0 +1,20 @@
+file      = outputs/SVAMP_dt.svamp/Phi-3-small-128k-instruct/processed_indiv.jsonl
+dataset   = svamp
+=======individual performance=======
+cot:	833  / 1000 (83.3%)
+
+
+pal:	923  / 1000 (92.3%)
+
+
+p2c:	631  / 1000 (63.1%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 533, 'cotpal-p2c': 273, 'palp2c-cot': 74, 'p2ccot-pal': 16, 'cot_only': 11, 'pal_only': 43, 'p2c_only': 8}
+=====================================
+
+

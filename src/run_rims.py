@@ -124,6 +124,10 @@ async def main(
 
         outpath = outdir / f"n{n}_{temperature}_rims_raw_query_result.jsonl"
 
+        if outpath.exists():
+            print('Tasks that have already been completed.')
+            return
+
         res_selection = await run_task(
             prompt_f=prompt_f,
             records=to_select_records,

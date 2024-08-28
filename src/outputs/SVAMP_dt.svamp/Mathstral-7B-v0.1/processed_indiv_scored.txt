@@ -1,0 +1,20 @@
+file      = outputs/SVAMP_dt.svamp/Mathstral-7B-v0.1/processed_indiv.jsonl
+dataset   = svamp
+=======individual performance=======
+cot:	857  / 1000 (85.7%)
+
+
+pal:	910  / 1000 (91.0%)
+
+
+p2c:	877  / 1000 (87.7%)
+
+
+=====================================
+
+
+========distinctive behaviors========
+{'all': 756, 'cotpal-p2c': 50, 'palp2c-cot': 81, 'p2ccot-pal': 30, 'cot_only': 21, 'pal_only': 23, 'p2c_only': 10}
+=====================================
+
+

@@ -34,7 +34,7 @@ async def simple_greedy_query(
     assume this function gets only rows that requires selection
     """
     dataset_type = row["dataset_type"]
-    assert dataset_type in "gsm ocw math".split(), f"check {dataset_type=}"
+    assert dataset_type in "gsm ocw math svamp".split(), f"check {dataset_type=}"
     assert row["need_selection"][0], f"{row['need_selection']=} shouldn't reach here"
     assert backbone, f"{backbone=} must be passed!"
 

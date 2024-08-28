@@ -80,6 +80,11 @@ class BaseQueryObject:
 
     @staticmethod
     async def async_query_to_llm(**chat_params):
+        # system prompt unsupported models
+        if chat_params["model"] in ("gemma-2-9b-it", ) and chat_params["messages"][0]["role"] == "system":
+            chat_params["messages"][1]["content"] = chat_params["messages"][0]["content"] + '\n' + chat_params["messages"][1]["content"]
+            chat_params["messages"].pop(0)
+
         res = await async_client.chat.completions.create(**chat_params)
         return res
 

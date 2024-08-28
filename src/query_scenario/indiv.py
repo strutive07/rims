@@ -30,7 +30,7 @@ async def indiv_query(
     n: int = 1,
     seed: int = 777,
     backbone: str = "chatgpt0613long",
-    dataset_type: Literal["gsm", "ocw", "math"] = "",
+    dataset_type: Literal["gsm", "ocw", "math", "svamp"] = "",
     only_retrieve: bool = False,  # if true, when undone thing found, throws error
 ):
     """
@@ -45,6 +45,8 @@ async def indiv_query(
 
     if dataset_type == "ocw":
         question = row["problem"]
+    elif dataset_type == "svamp":
+        question = row["Body"] + '\n' + row["Question"]
     else:
         question = row["question"]
 
@@ -66,16 +68,19 @@ async def indiv_query(
             "gsm": 400,
             "ocw": 850,
             "math": 950,
+            "svamp": 950,
         },
         "pal": {
             "gsm": 350,
             "ocw": 500,
             "math": 400,
+            "svamp": 400,
         },
         "p2c": {
             "gsm": 1024,
             "ocw": 1024,
             "math": 1024,
+            "svamp": 1024,
         },
     }
 
@@ -106,7 +111,10 @@ async def indiv_query(
         jobs.append(query_obj.async_query(**query_params))
 
     for contents, query_message, resp, meta in await asyncio.gather(*jobs):
-        meta["gt_answer"] = row["answer"]  # append it for later ease
+        if meta["dataset_type"] == "svamp":
+            meta["gt_answer"] = row["Answer"]
+        else:
+            meta["gt_answer"] = row["answer"]  # append it for later ease
         return_data[meta["method_obj"]] = {
             "contents": contents,
             "query_message": query_message,

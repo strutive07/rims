@@ -115,12 +115,13 @@ def score_indiv(
 
         eval_type = data_for_df[0]["dataset_type"]
         assert (
-            eval_type in "gsm ocw math".split()
+            eval_type in "gsm ocw math svamp".split()
         ), f"invalid {eval_type=} check {jslf=} contains proper fields"
         eval_type2eval_f = {
             "gsm": eval_gsm_svamp,
             "math": eval_math,
             "ocw": eval_ocw,
+            "svamp": eval_gsm_svamp,
         }
 
         eval_f = eval_type2eval_f[eval_type]
@@ -202,12 +203,13 @@ def score_sg(
 
         eval_type = data_for_df[0]["dataset_type"]
         assert (
-            eval_type in "gsm ocw math".split()
+            eval_type in "gsm ocw math svamp".split()
         ), f"invalid {eval_type=} check {jslf=} contains proper fields"
         eval_type2eval_f = {
             "gsm": eval_gsm_svamp,
             "math": eval_math,
             "ocw": eval_ocw,
+            "svamp": eval_gsm_svamp,
         }
 
         eval_f = eval_type2eval_f[eval_type]
@@ -279,12 +281,13 @@ def score_rims(
 
         eval_type = data_for_df[0]["dataset_type"]
         assert (
-            eval_type in "gsm ocw math".split()
+            eval_type in "gsm ocw math svamp".split()
         ), f"invalid {eval_type=} check {jslf=} contains proper fields"
         eval_type2eval_f = {
             "gsm": eval_gsm_svamp,
             "math": eval_math,
             "ocw": eval_ocw,
+            "svamp": eval_gsm_svamp,
         }
 
         eval_f = eval_type2eval_f[eval_type]

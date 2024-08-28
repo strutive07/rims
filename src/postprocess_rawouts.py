@@ -41,14 +41,18 @@ def process_indiv(
     print(f"outfile is set to {Path(outfile).name} and saved under {parent_dir=}")
     infile = Path(infile).name
     outfile = Path(outfile).name
+    outjslf = Path(parent_dir) / outfile
     assert infile != outfile
+
+    if outjslf.exists():
+        print(outjslf, ': Tasks that have already been completed.')
+        return
 
     records = list(jsl.open(parent_dir / infile))
 
     dataset_type = records[0]["CoTQueryObject"]["meta"]["dataset_type"]
     processed_rows = []
     for row in tqdm(records):
-        # question = row["question"]
         question = row["CoTQueryObject"]["query_message"][-1]["content"].replace(
             "Question: ", ""
         )
@@ -70,10 +74,13 @@ def process_indiv(
             if dataset_type == "gsm"
             else extract_ans_from_cot_MATHnOCW
         )
+        
         code_exec = safe_execute_turbo
+    
         cot_preds = [cot_exec(s) for s in cot_solutions]
         pal_preds = [code_exec(s) for s in pal_solutions]
         p2c_preds = [code_exec(s) for s in p2c_solutions]
+        
 
         majvote_answers = [
             get_concordant_answer([c, p, p2], dataset_type=dataset_type)
@@ -102,7 +109,6 @@ def process_indiv(
         )
         processed_rows.append(processed_row)
 
-    outjslf = Path(parent_dir) / outfile
     if not outjslf.parent.is_dir():
         outjslf.parent.mkdir(parents=True, exist_ok=True)
 
@@ -125,7 +131,12 @@ def process_simple_greedy(
     print(f"outfile is set to {Path(outfile).name} and saved under {parent_dir=}")
     infile = Path(infile).name
     outfile = Path(outfile).name
+    outjslf = Path(parent_dir) / outfile
     assert infile != outfile
+    if outjslf.exists():
+        print(outjslf, ': Tasks that have already been completed.')
+        return
+        
 
     if n > 1 or not infile.startswith("n1_"):
         raise NotImplementedError("n>1 cannot run here")
@@ -174,7 +185,6 @@ def process_simple_greedy(
         originals[idx] = _process_sg_raw(sel=selrow, og=originals[idx])
 
     # save
-    outjslf = Path(parent_dir) / outfile
     if not outjslf.parent.is_dir():
         outjslf.parent.mkdir(parents=True, exist_ok=True)
 
@@ -196,6 +206,8 @@ def process_rims(
         )
 
     parent_dirs = list(Path("./").glob(ptn))
+    print(parent_dirs)
+
     # path
     for parent_dir in parent_dirs:
         infile = list(parent_dir.glob("n[0-9]_*_rims_raw_query_result.jsonl"))
@@ -205,6 +217,10 @@ def process_rims(
         infile = infile[0]
         ogpath = parent_dir / infile.name.replace(".jsonl", "_input.jsonl")
         outfile = parent_dir / "processed_rims.jsonl"
+        if outfile.exists():
+            print(outfile, ': Tasks that have already been completed.')
+            continue
+        
         assert infile != outfile
 
         raw_selections = list(jsl.open(infile))

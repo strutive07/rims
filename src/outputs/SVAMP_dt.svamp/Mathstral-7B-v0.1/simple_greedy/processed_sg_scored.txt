@@ -1,0 +1,4 @@
+svamp / simple greedy score
+	+ selection: 0.243 (9/37)
+	+ majvote: 0.956 (921/963)
+total: 0.930 (930/1000)

@@ -31,7 +31,7 @@ def get_pal_prompt(
 
     from query_obj import get_user_assistant_messages
 
-    if dataset_type in "gsm svamp".split():
+    if dataset_type == "gsm":
         if backbone == "gpt4" or backbone == "gpt4turbo":
             system_message = math_prompt.GPT4_PAL_SYSTEM
             user_message = math_prompt.GPT4_PAL_USER
@@ -61,7 +61,7 @@ def get_pal_prompt(
                     "content": f"Answer the following question in Python: {question}",
                 }
             ]
-    elif dataset_type in ["ocw", "math"]:
+    elif dataset_type in ["ocw", "math", "svamp"]:
         # open ocw/MATH targeted CoT prompts
         THIS_PARENT = Path(__file__).parent.resolve()
         ymlf = THIS_PARENT / "ocw_MATH_prompts.yaml"
