@@ -1,5 +1,6 @@
 # Rims
-
+## Scores
+score file: [link](https://github.com/strutive07/rims/blob/main/src/scores.md)
 
 ## How to run new model experiment
 
