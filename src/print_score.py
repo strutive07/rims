@@ -19,7 +19,7 @@ def load_scores():
         df_dict[dataset_name][model_name] = df
 
     for dataset_name in df_dict:
-        df_dict[dataset_name] = pd.concat(df_dict[dataset_name].values())
+        df_dict[dataset_name] = pd.concat(df_dict[dataset_name].values()).sort_values(by=["model_name"], ascending=[True]) 
     return df_dict
 
 def get_score_from_text(text):
