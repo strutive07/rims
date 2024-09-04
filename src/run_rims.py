@@ -60,6 +60,7 @@ async def run_task(
     temperature: float = 0.0,
     backbone: str = "vllm",
     seed: int = 777,
+    disable_hinting: bool = False
     # dataset_type: Literal["gsm", "ocw", "math"] = "",
 ):
     task_runner_obj = TaskRunner(80)
@@ -72,6 +73,7 @@ async def run_task(
             temperature=temperature,
             backbone=backbone,
             seed=seed,
+            disable_hinting=disable_hinting,
             # dataset_type=dataset_type
         )
         task_runner_obj.add_task(jobs)
@@ -89,26 +91,37 @@ async def main(
     backbone: str = "meta-llama/Meta-Llama-3-8B-Instruct",
     seed: int = 777,
     temperature: float = 0.0,
+    disable_hinting: bool = False
     # err_idx: list = None,
 ):
     """
     dataset_type will be included in every row of
         `indiv_processed_jslf`
     """
+    if disable_hinting:
+        print('========================================')
+        print('Running with disable_hinting = True !!!')
+        print('========================================')
     assert indiv_processed_jslf, f"need to specify {indiv_processed_jslf=}"
 
     import jsonlines
 
     if not dataset_type:
         print(f"{dataset_type=} not passed. Trying to infer from the file")
-        dataset_type = list(jsonlines.open(indiv_processed_jslf))[0]["dataset_type"]
+        with open(indiv_processed_jslf) as f:
+            line = f.readline()
+            dataset_type = json.loads(line)["dataset_type"]
 
     prompt_files = Path("query_obj/rims_prompts/").glob(f"rims_{dataset_type}[0-9].txt")
 
     for prompt_f in prompt_files:
         print(f"Running for {prompt_f=}")
-        with jsonlines.open(indiv_processed_jslf) as f:
-            records = list(f)[start_idx:]
+        with open(indiv_processed_jslf) as f:
+            records = [
+                json.loads(_row)
+                for _row in f.readlines()
+            ][start_idx:]
+            # records = list(f)[start_idx:]
             records, removed_idxs = dedup(records)  # for sanity check.
             if removed_idxs:
                 print(f"Removed {len(removed_idxs)} duplicates")
@@ -121,8 +134,9 @@ async def main(
 
         if not outdir.exists():
             outdir.mkdir(parents=True)
-
-        outpath = outdir / f"n{n}_{temperature}_rims_raw_query_result.jsonl"
+            
+        disable_hinting_file_fname = '_disable_hinting' if disable_hinting else ''
+        outpath = outdir / f"n{n}_{temperature}_rims_raw_query{disable_hinting_file_fname}_result.jsonl"
 
         if outpath.exists():
             print('Tasks that have already been completed.')
@@ -135,6 +149,7 @@ async def main(
             temperature=temperature,
             backbone=backbone,
             seed=seed,
+            disable_hinting=disable_hinting
         )
         # save_results
         save_res(outpath, res_selection)

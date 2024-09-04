@@ -210,88 +210,89 @@ def process_rims(
 
     # path
     for parent_dir in parent_dirs:
-        infile = list(parent_dir.glob("n[0-9]_*_rims_raw_query_result.jsonl"))
-        assert (
-            len(infile) == 1
-        ), "only one file should be found --> for temperature or n options, separate output directory from the first"
-        infile = infile[0]
-        ogpath = parent_dir / infile.name.replace(".jsonl", "_input.jsonl")
-        outfile = parent_dir / "processed_rims.jsonl"
-        if outfile.exists():
-            print(outfile, ': Tasks that have already been completed.')
-            continue
+        infiles = list(parent_dir.glob("n[0-9]_*_rims_raw_query*_result.jsonl"))
         
-        assert infile != outfile
-
-        raw_selections = list(jsl.open(infile))
-        selidxs = [
-            int(k)
-            for k in open(parent_dir / "selection_performed_idxs.txt")
-            .read()
-            .strip()
-            .split("\n")
-        ]
-
-        assert len(raw_selections) == len(selidxs)
-        originals = list(jsl.open(ogpath))
-        dataset_type = originals[0]["dataset_type"]
-
-        # process
-        from processings.text_exec_functions import process_rims_out_dict
-        from processings.text_parse_functions import parse_raw_modif
-
-        def _process_rims_raw(sel_content: str = None, og: dict = None) -> dict:
-            # read raw sel row and fill the og row with it.
-            og["rims_selected"] = None
-            og["rims_solution"] = None
-            og["rims_answer"] = None
-            og["rims_summary"] = None
-            # for error logging
-            og["error"] = False
-            og["raw_text"] = None
-            og["exception"] = None
-            try:
-                parsed = parse_raw_modif(sel_content)
-            except Exception as e:  # parsing fails
-                og["error"] = True
-                og["exception"] = f"parse_raw_modif()  {str(e)}"
-                og["raw_text"] = sel_content
-            else:  # parsing success
+        for infile in infiles:
+            ogpath = parent_dir / infile.name.replace(".jsonl", "_input.jsonl")
+            if 'disable_hinting' in infile.name:
+                outfile = parent_dir / "processed_disable_hinting_rims.jsonl"
+            else:
+                outfile = parent_dir / "processed_rims.jsonl"
+            if outfile.exists():
+                print(outfile, ': Tasks that have already been completed.')
+                continue
+            
+            assert infile != outfile
+    
+            raw_selections = list(jsl.open(infile))
+            selidxs = [
+                int(k)
+                for k in open(parent_dir / "selection_performed_idxs.txt")
+                .read()
+                .strip()
+                .split("\n")
+            ]
+    
+            assert len(raw_selections) == len(selidxs)
+            originals = list(jsl.open(ogpath))
+            dataset_type = originals[0]["dataset_type"]
+    
+            # process
+            from processings.text_exec_functions import process_rims_out_dict
+            from processings.text_parse_functions import parse_raw_modif
+    
+            def _process_rims_raw(sel_content: str = None, og: dict = None) -> dict:
+                # read raw sel row and fill the og row with it.
+                og["rims_selected"] = None
+                og["rims_solution"] = None
+                og["rims_answer"] = None
+                og["rims_summary"] = None
+                # for error logging
+                og["error"] = False
+                og["raw_text"] = None
+                og["exception"] = None
                 try:
-                    executed = process_rims_out_dict(parsed)
-                    og["rims_selected"] = executed["good_method"]
-                    og["rims_solution"] = executed["good_solution"]
-                except Exception as e:  # parse -> code fail
-                    print(e)
+                    parsed = parse_raw_modif(sel_content)
+                except Exception as e:  # parsing fails
                     og["error"] = True
-                    og["exception"] = f"process_rims_out_dict()  {str(e)}"
+                    og["exception"] = f"parse_raw_modif()  {str(e)}"
                     og["raw_text"] = sel_content
-                else:  # code success (all success)
-                    og["rims_answer"] = executed["good_ans"]
-                    og["rims_summary"] = executed
-
-            return og
-
-        err_idxs = []
-        for idx, selrow in tqdm(zip(selidxs, raw_selections), total=len(selidxs)):
-            originals[idx] = _process_rims_raw(
-                sel_content=selrow["RimsQueryObject"]["contents"][0], og=originals[idx]
-            )
-            if originals[idx]["error"]:
-                err_idxs.append(idx)
-
-        # save
-        outjslf = outfile
-        errjslf = outfile.with_name(outfile.name.replace(".jsonl", "_errors.jsonl"))
-
-        print(outjslf)
-        print(errjslf)
-        with jsl.open(outjslf, "w") as writer, jsl.open(errjslf, "w") as writer_err:
-            writer.write_all(originals)
-            writer_err.write_all([originals[i] for i in err_idxs])
-            print(f"processed\n\t{infile}\n\t{ogpath}")
-            print(f"to\n\t{outfile}")
-            print(f"\t{errjslf}", f"{len(err_idxs)}/{len(originals)}", "errors")
+                else:  # parsing success
+                    try:
+                        executed = process_rims_out_dict(parsed)
+                        og["rims_selected"] = executed["good_method"]
+                        og["rims_solution"] = executed["good_solution"]
+                    except Exception as e:  # parse -> code fail
+                        print(e)
+                        og["error"] = True
+                        og["exception"] = f"process_rims_out_dict()  {str(e)}"
+                        og["raw_text"] = sel_content
+                    else:  # code success (all success)
+                        og["rims_answer"] = executed["good_ans"]
+                        og["rims_summary"] = executed
+    
+                return og
+    
+            err_idxs = []
+            for idx, selrow in tqdm(zip(selidxs, raw_selections), total=len(selidxs)):
+                originals[idx] = _process_rims_raw(
+                    sel_content=selrow["RimsQueryObject"]["contents"][0], og=originals[idx]
+                )
+                if originals[idx]["error"]:
+                    err_idxs.append(idx)
+    
+            # save
+            outjslf = outfile
+            errjslf = outfile.with_name(outfile.name.replace(".jsonl", "_errors.jsonl"))
+    
+            print(outjslf)
+            print(errjslf)
+            with jsl.open(outjslf, "w") as writer, jsl.open(errjslf, "w") as writer_err:
+                writer.write_all(originals)
+                writer_err.write_all([originals[i] for i in err_idxs])
+                print(f"processed\n\t{infile}\n\t{ogpath}")
+                print(f"to\n\t{outfile}")
+                print(f"\t{errjslf}", f"{len(err_idxs)}/{len(originals)}", "errors")
 
 
 if __name__ == "__main__":

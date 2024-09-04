@@ -15,6 +15,7 @@ async def rims_query(
     seed: int = 777,
     backbone: str = "",
     stop: Union[str, List[str]] = None,
+    disable_hinting: bool = False
 ) -> Dict:
     dataset_type = row["dataset_type"]
     assert dataset_type in "gsm ocw math svamp".split(), f"check {dataset_type=}"
@@ -23,6 +24,14 @@ async def rims_query(
 
     # init
     rims_prompt_tmp = open(prompt_f).read().strip()
+
+    if disable_hinting:
+        rims_prompt_tmp = '\n'.join([
+            row
+            for row in rims_prompt_tmp.split('\n')
+            if not row.startswith('`Hint for a better Method choice`:')
+        ])
+        
     query_obj = RimsQueryObject(
         # dataset_type=dataset_type,
         prompt_tmp=rims_prompt_tmp,
