@@ -1,4 +1,4 @@
 svamp / rims score
-	+ selection: 0.495 (51/103)
+	+ selection: 0.515 (53/103)
 	+ majvote: 0.939 (842/897)
-total: 0.893 (893/1000)
+total: 0.895 (895/1000)

@@ -27,7 +27,7 @@ async def rims_query(
 
     if disable_hinting:
         rims_prompt_tmp = '\n'.join([
-            row
+            row.replace(' and `Hint for a better Method choice`', '').replace(" and reason to take `Workaround Method` by writing `Hint for a better Method choice`", ' and choose `Workaround Method`')
             for row in rims_prompt_tmp.split('\n')
             if not row.startswith('`Hint for a better Method choice`:')
         ])

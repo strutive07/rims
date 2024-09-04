@@ -1,4 +1,4 @@
 gsm / rims score
-	+ selection: 0.399 (95/238)
+	+ selection: 0.408 (97/238)
 	+ majvote: 0.926 (1001/1081)
-total: 0.831 (1096/1319)
+total: 0.832 (1098/1319)
