@@ -48,7 +48,30 @@ def get_func_name_from_string(codestring: str) -> str:
         return None
 
 
+def exec_with_timeout(code, timeout, globals_dict=None, locals_dict=None):
+    import signal
+    import threading
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError
+
+    if globals_dict is None:
+        globals_dict = {}
+    if locals_dict is None:
+        locals_dict = {}
+
+    def run_code():
+        exec(code, globals_dict, locals_dict)
+        return locals_dict.get('__return_value__', None)
+
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(run_code)
+        try:
+            return future.result(timeout=timeout)
+        except TimeoutError:
+            raise TimeoutError("Execution timed out")
+
+
 def _execute(code, code_return: str):
+    exit_code = 0
     # these imports are for locals() (to provide `global() context` to exec()
     import itertools
     import math
@@ -108,9 +131,10 @@ def _execute(code, code_return: str):
             try:
                 ans = sp.latex(ans)
             except Exception as e:
+                exit_code = -2
                 print(e)
-                print(f"{ans=} cannot be `sp.latex()`'d")
-        return ans
+                print(f"cannot be `sp.latex()`'d")
+        return ans, exit_code
 
     except Exception as exp:
         # print("Executing code error", exp)
@@ -118,7 +142,7 @@ def _execute(code, code_return: str):
         # print(f"{code_return=}")
         # print(f"{(solution is None)=}")
         # print(f"{funcname=}")
-        return None
+        return None, -1
 
 
 ### executing a code
@@ -155,10 +179,12 @@ def safe_execute_turbo(code_string: str):
             )  # all_codes[-1] # if we parsed more than one function, we need to use them all.
 
             with math_util.timeout(seconds=3):
-                ans = _execute(new_code, code_return)
-
-            ans = _convert_to_float_if_possible(ans)
-            ans = _convert_to_str_if_not_none_nor_float(ans)
+                ans, exit_code = _execute(new_code, code_return)
+            if exit_code == 0:
+                ans = _convert_to_float_if_possible(ans)
+                ans = _convert_to_str_if_not_none_nor_float(ans)
+            else:
+                ans = None
         else:
             ans = None
     except:
@@ -265,28 +291,31 @@ def get_concordant_answer(
         answers_no_none = [
             a for a in answers_no_none if isinstance(a, Union[float, int])
         ]
-        majority, count = Counter(answers_no_none).most_common(1)[0]
-        if count >= 2:
-            res = majority if isinstance(majority, float) else None
+        if len(answers_no_none) == 0:
+            res = None
         else:
-            # continue to check if 1e-3 tolerance same thing exist
-            if len(answers_no_none) == 0:
-                res = None
-            elif len(answers_no_none) == 1:
-                res = answers_no_none.pop()
-                return majority if isinstance(majority, float) else None
-            elif len(answers_no_none) == 2:
-                if abs(answers_no_none[0] - answers_no_none[1]) < 1e-3:
-                    res = answers_no_none[0]
-                else:
-                    res = None
+            majority, count = Counter(answers_no_none).most_common(1)[0]
+            if count >= 2:
+                res = majority if isinstance(majority, float) else None
             else:
-                for a1, a2 in combinations(answers_no_none, 2):
-                    if abs(a1 - a2) < 1e-3:
-                        res = a1
-                        break
+                # continue to check if 1e-3 tolerance same thing exist
+                if len(answers_no_none) == 0:
+                    res = None
+                elif len(answers_no_none) == 1:
+                    res = answers_no_none.pop()
+                    return majority if isinstance(majority, float) else None
+                elif len(answers_no_none) == 2:
+                    if abs(answers_no_none[0] - answers_no_none[1]) < 1e-3:
+                        res = answers_no_none[0]
                     else:
                         res = None
+                else:
+                    for a1, a2 in combinations(answers_no_none, 2):
+                        if abs(a1 - a2) < 1e-3:
+                            res = a1
+                            break
+                        else:
+                            res = None
         return res
     elif dataset_type in ["math"]:
         answers_normalized = []

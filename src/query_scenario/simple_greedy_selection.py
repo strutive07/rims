@@ -51,7 +51,7 @@ async def simple_greedy_query(
     cot_pal_p2c_sln_d = solutions_d_from_row(row=row)
     cot_pal_p2c_sln_d = unwrap_and_listify(d=cot_pal_p2c_sln_d)
 
-    max_tokens = 512
+    max_tokens = 2048
 
     for c_p_p2_sln in cot_pal_p2c_sln_d:
         query_params = {
