@@ -4,7 +4,7 @@ import asyncio
 from typing import Dict, List
 
 import pandas as pd
-from query_obj import SimpleGreedyQueryObject
+from query_obj import CrossAndMixQueryObject
 
 
 def solutions_d_from_row(row: Dict = None) -> Dict[str, List[str]]:
@@ -19,7 +19,7 @@ def unwrap_and_listify(d: Dict[str, List[str]] = None) -> List[Dict[str, str]]:
     return unwrapped
 
 
-async def simple_greedy_query(
+async def cross_and_mix_query(
     # indiv_records_path:Union[str, Path]="some.jsonl",
     row: Dict = None,
     temperature: float = 0.0,
@@ -29,17 +29,16 @@ async def simple_greedy_query(
     # dataset_type: Literal["gsm", "ocw", "math"] = "",
 ):
     """
-    process row and query selection (simple-greedy)
+    process row and query selection (cross-and-mix)
 
     assume this function gets only rows that requires selection
     """
     dataset_type = row["dataset_type"]
     assert dataset_type in "gsm ocw math svamp".split(), f"check {dataset_type=}"
-    assert row["need_selection"][0], f"{row['need_selection']=} shouldn't reach here"
     assert backbone, f"{backbone=} must be passed!"
 
     # init
-    query_obj = SimpleGreedyQueryObject(
+    query_obj = CrossAndMixQueryObject(
         dataset_type=dataset_type,
     )
 
@@ -56,13 +55,12 @@ async def simple_greedy_query(
     for c_p_p2_sln in cot_pal_p2c_sln_d:
         query_params = {
             "question": question,
-            "cot_pal_p2c_sln_d": c_p_p2_sln,  # specially for simple-greedy (prepare prompt)
+            "cot_pal_p2c_sln_d": c_p_p2_sln,
             "temperature": temperature,
             "backbone": backbone,
             "n": n,
             "seed": seed,
             "max_tokens": max_tokens
-            # "stop": # if needed stop let's add it to `model_selection_prompts.yaml` and load.
         }
 
         jobs.append(query_obj.async_query(**query_params))

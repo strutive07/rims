@@ -48,7 +48,30 @@ def get_func_name_from_string(codestring: str) -> str:
         return None
 
 
+def exec_with_timeout(code, timeout, globals_dict=None, locals_dict=None):
+    import signal
+    import threading
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError
+
+    if globals_dict is None:
+        globals_dict = {}
+    if locals_dict is None:
+        locals_dict = {}
+
+    def run_code():
+        exec(code, globals_dict, locals_dict)
+        return locals_dict.get('__return_value__', None)
+
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(run_code)
+        try:
+            return future.result(timeout=timeout)
+        except TimeoutError:
+            raise TimeoutError("Execution timed out")
+
+
 def _execute(code, code_return: str):
+    exit_code = 0
     # these imports are for locals() (to provide `global() context` to exec()
     import itertools
     import math
@@ -108,9 +131,10 @@ def _execute(code, code_return: str):
             try:
                 ans = sp.latex(ans)
             except Exception as e:
+                exit_code = -2
                 print(e)
-                print(f"{ans=} cannot be `sp.latex()`'d")
-        return ans
+                print(f"cannot be `sp.latex()`'d")
+        return ans, exit_code
 
     except Exception as exp:
         # print("Executing code error", exp)
@@ -118,7 +142,7 @@ def _execute(code, code_return: str):
         # print(f"{code_return=}")
         # print(f"{(solution is None)=}")
         # print(f"{funcname=}")
-        return None
+        return None, -1
 
 
 ### executing a code
@@ -155,10 +179,12 @@ def safe_execute_turbo(code_string: str):
             )  # all_codes[-1] # if we parsed more than one function, we need to use them all.
 
             with math_util.timeout(seconds=3):
-                ans = _execute(new_code, code_return)
-
-            ans = _convert_to_float_if_possible(ans)
-            ans = _convert_to_str_if_not_none_nor_float(ans)
+                ans, exit_code = _execute(new_code, code_return)
+            if exit_code == 0:
+                ans = _convert_to_float_if_possible(ans)
+                ans = _convert_to_str_if_not_none_nor_float(ans)
+            else:
+                ans = None
         else:
             ans = None
     except:
@@ -202,29 +228,35 @@ def extract_ans_from_cot_MATHnOCW(solution: str) -> str:
     this is for parsing answers from cot solution of MATH/ocw_courses prompt
     see the corresponding prompt at `rims_minimal/src/utils/ocw_MATH_prompts.yaml`
     """
-    prefix1 = "Final answer:"
-    prefix2 = "The final answer is"
-    suffix = ". I hope it is correct."  # this does not appear frequently in response... but let us use it just in case.
 
-    # assume the solution followed the few-shot format
-    # 1. Answer strictly followed the format in the few-shot examples
-    solution = solution.split(prefix1)[-1].strip()
-    # 2. answer partly followed the format
-    solution = solution.split(prefix2)[-1].strip()
-    solution = solution.split(suffix)[0].strip()
+    prefix_list = [
+        "Final answer:",
+        "Final Answer:",
+        "The final answer is",
+        "The final answer",
+        "### Final Answer",
+        "### Final answer",
+    ]
+    
+    last_solution = None
+    for keyword, is_prefix in list(zip(prefix_list, [True] * len(prefix_list))) + [(". I hope it is correct.",), False]:
+        
+        if is_prefix:
+            solution = solution.split(keyword)[-1].strip()
+        else:
+            solution = solution.split(keyword)[0].strip()
+            
+        found_latex = _find_the_last_latex_expression(solution)
+        if found_latex:
+            return found_latex
+        else:
+            found_numbers = _find_the_last_numbers(solution)
+            if found_numbers:
+                return found_numbers
+            else:
+                last_solution = found_numbers
 
-    # parsed above might still have unnecessary natural languages
-    # 3-1. try to find some math expressions that is in latex format
-    found_latex = _find_the_last_latex_expression(solution)
-    if found_latex:
-        part_of_interest = found_latex
-    else:  # 3-2. last resort: find the last numbers
-        found_numbers = _find_the_last_numbers(solution)
-        if found_numbers:
-            part_of_interest = found_numbers
-        else:  # preserve the minimal-processed-string as a parsed result
-            part_of_interest = solution
-    return part_of_interest
+    return last_solution
 
 
 def extract_num_turbo(solution: str):
@@ -265,28 +297,31 @@ def get_concordant_answer(
         answers_no_none = [
             a for a in answers_no_none if isinstance(a, Union[float, int])
         ]
-        majority, count = Counter(answers_no_none).most_common(1)[0]
-        if count >= 2:
-            res = majority if isinstance(majority, float) else None
+        if len(answers_no_none) == 0:
+            res = None
         else:
-            # continue to check if 1e-3 tolerance same thing exist
-            if len(answers_no_none) == 0:
-                res = None
-            elif len(answers_no_none) == 1:
-                res = answers_no_none.pop()
-                return majority if isinstance(majority, float) else None
-            elif len(answers_no_none) == 2:
-                if abs(answers_no_none[0] - answers_no_none[1]) < 1e-3:
-                    res = answers_no_none[0]
-                else:
-                    res = None
+            majority, count = Counter(answers_no_none).most_common(1)[0]
+            if count >= 2:
+                res = majority if isinstance(majority, float) else None
             else:
-                for a1, a2 in combinations(answers_no_none, 2):
-                    if abs(a1 - a2) < 1e-3:
-                        res = a1
-                        break
+                # continue to check if 1e-3 tolerance same thing exist
+                if len(answers_no_none) == 0:
+                    res = None
+                elif len(answers_no_none) == 1:
+                    res = answers_no_none.pop()
+                    return majority if isinstance(majority, float) else None
+                elif len(answers_no_none) == 2:
+                    if abs(answers_no_none[0] - answers_no_none[1]) < 1e-3:
+                        res = answers_no_none[0]
                     else:
                         res = None
+                else:
+                    for a1, a2 in combinations(answers_no_none, 2):
+                        if abs(a1 - a2) < 1e-3:
+                            res = a1
+                            break
+                        else:
+                            res = None
         return res
     elif dataset_type in ["math"]:
         answers_normalized = []

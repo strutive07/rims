@@ -65,22 +65,22 @@ async def indiv_query(
 
     max_tokens = {
         "cot": {
-            "gsm": 400,
-            "ocw": 850,
-            "math": 950,
-            "svamp": 950,
+            "gsm": 2048,
+            "ocw": 2048,
+            "math": 2048,
+            "svamp": 2048,
         },
         "pal": {
-            "gsm": 350,
-            "ocw": 500,
-            "math": 400,
-            "svamp": 400,
+            "gsm": 2048,
+            "ocw": 2048,
+            "math": 2048,
+            "svamp": 2048,
         },
         "p2c": {
-            "gsm": 1024,
-            "ocw": 1024,
-            "math": 1024,
-            "svamp": 1024,
+            "gsm": 2048,
+            "ocw": 2048,
+            "math": 2048,
+            "svamp": 2048,
         },
     }
 

@@ -189,6 +189,12 @@ REMOVED_EXPRESSIONS = [
     "\\dots",
 ]
 
+def remove_end_bracket_pure_numeric(text):
+    pattern = r'^(\d+\.?\d*)\]$'
+    match = re.match(pattern, text)
+    if match:
+        return match.group(1)
+    return text
 
 def normalize_final_answer(final_answer: str) -> str:
     # https://github.com/wellecks/lm-evaluation-harness/blob/bec2172e72be4adc70e85957cc97a2fbe70c207b/lm_eval/mixins.py#L188
@@ -198,6 +204,26 @@ def normalize_final_answer(final_answer: str) -> str:
 
     Copied character for character from appendix D of Lewkowycz et al. (2022)
     """
+
+    final_answer = final_answer.replace('\frac', '\dfrac')
+    final_answer = final_answer.replace('\n', '')
+    final_answer = final_answer.strip()
+
+    while(True):
+        if final_answer.startswith('\(') and final_answer.endswith('\)'):
+            final_answer = final_answer[2:-2].strip()
+        else:
+            break
+            
+    while(True):
+        if final_answer.startswith('\[') and final_answer.endswith('\]'):
+            final_answer = final_answer[2:-2].strip()
+        else:
+            break
+
+    final_answer = remove_end_bracket_pure_numeric(final_answer)
+
+    
     final_answer = final_answer.split("=")[-1]
 
     for before, after in SUBSTITUTIONS:
