@@ -66,6 +66,36 @@ def load_rims_disable_hinting(dataset_name, model_name):
 
     return f'{max_score} {status}'
 
+def load_cross_and_mix(dataset_name, model_name):
+    fname = f'outputs/{dataset_name}/{model_name}/cross_and_mix/processed_cross_and_mix_scored.txt'
+
+    fnames = glob.glob(fname)
+    max_score = 0
+    status = ''
+    
+    for fname in fnames:
+        with open(fname) as f:
+            score, status = get_score_from_text(f.read())
+            if float(score) >= max_score:
+                max_score = float(score)
+
+    return f'{max_score} {status}'
+
+def load_cross_and_mix_with_selection(dataset_name, model_name):
+    fname = f'outputs/{dataset_name}/{model_name}/cross_and_mix_selection/processed_cross_and_mix_scored.txt'
+
+    fnames = glob.glob(fname)
+    max_score = 0
+    status = ''
+    
+    for fname in fnames:
+        with open(fname) as f:
+            score, status = get_score_from_text(f.read())
+            if float(score) >= max_score:
+                max_score = float(score)
+
+    return f'{max_score} {status}'
+
 def read_md(fname):
     with open(fname) as f:
         markdown_table = f.read()
@@ -79,9 +109,13 @@ def read_md(fname):
     
     df['model_name'] = [model_name]
     df['simple greedy'] = [str(load_sg(dataset_name, model_name))]
-    df['rims'] = [str(load_rims(dataset_name, model_name))]
-    df['rims_disable_hinting'] = [str(load_rims_disable_hinting(dataset_name, model_name))]
-    df = df[['model_name', 'cot', 'pal', 'p2c', 'simple greedy', 'rims', 'rims_disable_hinting']]
+    # df['rims'] = [str(load_rims(dataset_name, model_name))]
+    # df['rims_disable_hinting'] = [str(load_rims_disable_hinting(dataset_name, model_name))]
+    
+    df['cross_and_mix'] = [str(load_cross_and_mix(dataset_name, model_name))]
+    df['cross_and_mix_with_selection'] = [str(load_cross_and_mix_with_selection(dataset_name, model_name))]
+
+    df = df[['model_name', 'cot', 'pal', 'p2c', 'simple greedy', 'cross_and_mix', 'cross_and_mix_with_selection']]
 
     return dataset_name, model_name, df
 

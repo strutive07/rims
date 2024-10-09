@@ -228,29 +228,35 @@ def extract_ans_from_cot_MATHnOCW(solution: str) -> str:
     this is for parsing answers from cot solution of MATH/ocw_courses prompt
     see the corresponding prompt at `rims_minimal/src/utils/ocw_MATH_prompts.yaml`
     """
-    prefix1 = "Final answer:"
-    prefix2 = "The final answer is"
-    suffix = ". I hope it is correct."  # this does not appear frequently in response... but let us use it just in case.
 
-    # assume the solution followed the few-shot format
-    # 1. Answer strictly followed the format in the few-shot examples
-    solution = solution.split(prefix1)[-1].strip()
-    # 2. answer partly followed the format
-    solution = solution.split(prefix2)[-1].strip()
-    solution = solution.split(suffix)[0].strip()
+    prefix_list = [
+        "Final answer:",
+        "Final Answer:",
+        "The final answer is",
+        "The final answer",
+        "### Final Answer",
+        "### Final answer",
+    ]
+    
+    last_solution = None
+    for keyword, is_prefix in list(zip(prefix_list, [True] * len(prefix_list))) + [(". I hope it is correct.",), False]:
+        
+        if is_prefix:
+            solution = solution.split(keyword)[-1].strip()
+        else:
+            solution = solution.split(keyword)[0].strip()
+            
+        found_latex = _find_the_last_latex_expression(solution)
+        if found_latex:
+            return found_latex
+        else:
+            found_numbers = _find_the_last_numbers(solution)
+            if found_numbers:
+                return found_numbers
+            else:
+                last_solution = found_numbers
 
-    # parsed above might still have unnecessary natural languages
-    # 3-1. try to find some math expressions that is in latex format
-    found_latex = _find_the_last_latex_expression(solution)
-    if found_latex:
-        part_of_interest = found_latex
-    else:  # 3-2. last resort: find the last numbers
-        found_numbers = _find_the_last_numbers(solution)
-        if found_numbers:
-            part_of_interest = found_numbers
-        else:  # preserve the minimal-processed-string as a parsed result
-            part_of_interest = solution
-    return part_of_interest
+    return last_solution
 
 
 def extract_num_turbo(solution: str):

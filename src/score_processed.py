@@ -308,6 +308,84 @@ def score_rims(
 
         # log with separation (non select, select, total)
         with open(outpath, "w") as f:
+            print(f"{eval_type} / cross and mix score", file=f)
+            try:
+                print(
+                    f"\t+ selection: {sel_corrects/len(df_sel):.3f} ({sel_corrects}/{len(df_sel)})",
+                    file=f,
+                )
+            except ZeroDivisionError:
+                print(f"{len(df_sel)=}")
+            try:
+                print(
+                    f"\t+ majvote: {maj_corrects/len(df_maj):.3f} ({maj_corrects}/{len(df_maj)})",
+                    file=f,
+                )
+            except ZeroDivisionError:
+                print(f"{len(df_maj)=}")
+            print(
+                f"total: {(sel_corrects+maj_corrects)/len(df):.3f} ({sel_corrects+maj_corrects}/{len(df)})",
+                file=f,
+            )
+        print(outpath)
+
+
+def score_cross_and_mix(
+    ptn: str = "allows_wildcard_expression",
+    n: int = 1,
+):
+    if n > 1:
+        raise NotImplementedError()
+    jslfs = list(Path().glob(ptn))
+    print(f"found {len(jslfs)} files")
+    for jslf in jslfs:
+        print(" *", jslf.name)
+
+    for jslf in jslfs:
+        outpath = jslf.parent / f"{jslf.stem}_scored.txt"
+        # load data
+        data_for_df = []
+
+        with open(jslf) as f:
+            for line in f.readlines():
+                data_for_df.append(json.loads(line))
+
+        df = pd.DataFrame(data_for_df)
+        df["answer"] = df.gt_answer
+
+        # logfile open
+        f = open(outpath, "a")
+
+        eval_type = data_for_df[0]["dataset_type"]
+        assert (
+            eval_type in "gsm ocw math svamp".split()
+        ), f"invalid {eval_type=} check {jslf=} contains proper fields"
+        eval_type2eval_f = {
+            "gsm": eval_gsm_svamp,
+            "math": eval_math,
+            "ocw": eval_ocw,
+            "svamp": eval_gsm_svamp,
+        }
+
+        eval_f = eval_type2eval_f[eval_type]
+
+        # need to specify which to submit
+        mask_sel = df.need_selection.apply(lambda x: x[0])
+        df_sel = df[mask_sel]
+        df_maj = df[~mask_sel]
+        print(len(df_sel), len(df_maj))
+        df_sel["submission"] = df_sel.cross_and_mix_answer
+        df_maj["submission"] = df_maj.majvote_answers.apply(lambda lst: lst[0])
+
+        sel_corrects = eval_f(
+            df_sel, submission_col_already_exists=True, return_flag=False
+        )
+        maj_corrects = eval_f(
+            df_maj, submission_col_already_exists=True, return_flag=False
+        )
+
+        # log with separation (non select, select, total)
+        with open(outpath, "w") as f:
             print(f"{eval_type} / rims score", file=f)
             try:
                 print(

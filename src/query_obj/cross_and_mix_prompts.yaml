@@ -1,0 +1,366 @@
+math_select:
+    system: |
+        You are a helpful assistant that can identify the correct answer to the math problem. There are three solutions to the same math problem. I have not yet verified that these solutions are correct. One uses natural language to answer the question, while the other two uses Python program to answer it. One directly attempts to answer the problem with coding the solution, while the last one will plan first and then write a code to answer it. You can carefully cross and mix various processes of solving the math problem from each solution to make an optimal solution to the problem, referring to the process you think is correct, and if the provided solution is wrong, modify and improve that part. Your answer must contains problem solving process and the answer of problem.
+
+        # Efficiency Constraints
+        - Time Complexity: The solution should efficiently solve the problem within the smallest possible time complexity, ideally minimizing loops or recursive calls. The expected complexity is either constant O(1), linear O(n), or logarithmic O(logn), depending on the nature of the problem.
+        - Space Complexity: The solution should use minimal memory, optimizing for O(1) space complexity where feasible. Data structures and variables should not consume excessive space, especially in large input cases.
+
+        # Clarity and Correctness Constraints
+        - Correctness: The solution must accurately and consistently provide the correct answer for all possible valid inputs. Edge cases, such as extreme values or unusual inputs, should be handled appropriately to ensure that the solution is reliable in all scenarios. Comprehensive testing should be conducted to verify the correctness.
+        - Readability: The solution should be clearly structured and easily understandable. Variable names, comments, and logical sections should be well-defined, ensuring that other programmers can easily follow and maintain the code.
+
+        # Answer Formatting Constraints
+        - Answer Formatting: The final answer should begin with 'Processes: ', followed by an explanation that may include natural language, Python code, or LaTeX syntax. Afterward, 'Final Answer: ' must present only the correct numerical solution or LaTeX format. This ensures a clear and consistent format for responses.
+        - No Natrual Langauge Information After Final Answer: 'Final Answer:' must present only the correct numerical solution or LaTeX format. DO NOT GENERATE ANY SENTENCES AFTER Final Answer.
+    user_tmp: |
+        Problem: {QUESTION}
+
+        (A)
+        {COT_SOLUTION}
+
+        (B)
+        {PAL_SOLUTION}
+
+        (C)
+        {P2C_SOLUTION}
+
+        You must create a processes and correct answer to the math problem which follows the constraints.
+        DO NOT GENERATE ANY SENTENCES AFTER Final Answer.
+
+    contexts:
+        - 
+            role: user
+            content: |
+                Problem: Find the domain of the expression  $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$.
+
+                (A)
+                To find the domain of the expression $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$, we must consider two main constraints:
+
+                1. The radicand (the expression inside the square root) of the numerator, $x - 2$, must be greater than or equal to zero.
+                2. The radicand of the denominator, $5 - x$, must be greater than zero (not merely non-negative since the denominator cannot be zero).
+
+                Let's address these constraints.
+
+                For the numerator, we want $x - 2 \\geq 0$, which simplifies to:
+                $$x \\geq 2.$$
+
+                For the denominator, we want $5 - x > 0$, which simplifies to:
+                $$x < 5.$$
+
+                Now we combine these two inequalities to find the domain where both conditions are met:
+                $$2 \\leq x < 5.$$
+
+                This is an interval from 2 to 5, including 2 but not including 5.
+
+                Therefore, the domain of the expression $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$ is $[2, 5)$.
+
+                (B)
+                def solution():
+                    """Find the domain of the expression sqrt(x-2) / sqrt(5-x)"""
+                    # The expression is defined when the denominator is not zero and the radicand is non-negative
+                    # Denominator is not zero when x != 5
+                    # Radicands are non-negative when x >= 2 and x <= 5
+                    domain = [x for x in range(2, 6) if x != 5]
+                    return domain
+
+                (C)
+                def solution():
+                    '''
+                    The domain of the expression $\frac{\sqrt{x-2}}{\sqrt{5-x}}$ is determined by the conditions under which both the numerator and denominator are defined and the denominator is not zero. Specifically:
+
+                    1. The numerator $\sqrt{x-2}$ requires $x-2 > 0$, which implies $x > 2$. (Mistake: Using a strict inequality instead of a non-strict inequality)
+                    2. The denominator $\sqrt{5-x}$ requires $5-x \geq 0$, which implies $x \leq 5$.
+
+                    Combining these two conditions, the domain of the expression is $2 < x \leq 5$.
+                    '''
+                    # Since the domain is a simple condition, we return it as a string, incorrectly with parentheses instead of brackets.
+                    return "(2,5]"
+
+                You must create a processes and correct answer to the math problem which follows the constraints.
+                DO NOT GENERATE ANY SENTENCES AFTER Final Answer.
+        - 
+            role: assistant
+            content: |
+                Processes: To find the domain of the expression $\displaystyle \frac{\sqrt{x-2}}{\sqrt{5 - x}}$, we need to determine the values of $x$ for which the expression is defined and real, while also ensuring the denominator is not zero.
+
+                1. **Numerator Constraint**:
+                    - The square root in the numerator, $\sqrt{x - 2}$, is defined when the radicand is **greater than or equal to zero**:
+                        \[
+                        x - 2 \geq 0 \implies x \geq 2.
+                        \]
+
+                2. **Denominator Constraint**:
+                    - The square root in the denominator, $\sqrt{5 - x}$, must be **greater than zero** to avoid division by zero (since dividing by zero is undefined):
+                        \[
+                        5 - x > 0 \implies x < 5.
+                        \]
+                    - Note that while $\sqrt{0}$ is defined (equals zero), it cannot be in the denominator because it would make the entire denominator zero.
+
+                3. **Combined Constraints**:
+                    - Combining both constraints for $x$:
+                        \[
+                        x \geq 2 \quad \text{and} \quad x < 5.
+                        \]
+                    - Therefore, the domain is all real numbers $x$ such that:
+                        \[
+                        x \in [2, 5).
+                        \]
+
+                Final Answer: $[2, 5)$
+        -
+            role: user
+            content: |
+                Problem: If $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$
+
+                (A)
+                The determinant of the product of two square matrices is equal to the sum of their determinants. Therefore, if you have two matrices $\\mathbf{A}$ and $\\mathbf{B}$ with determinants $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12$, respectively, then the determinant of their product $\\mathbf{A} \\mathbf{B}$ is given by:
+
+                $$\\det (\\mathbf{A} \\mathbf{B}) = (\\det \\mathbf{A})+(\\det \\mathbf{B}) = 2 + 12 = 14.$$
+
+                So, $\\det (\\mathbf{A} \\mathbf{B}) = 12$.,
+                $\\det (\\mathbf{A} \\mathbf{B}) = 12$
+
+                (B)
+                def solution():
+                    # Step 1: Given values for determinants of A and B
+                    det_A = 2
+                    det_B = 12
+
+                    # Step 2: Incorrectly calculate the determinant of the product of matrices A and B
+                    # Mistake: Assuming det(AB) = det(A) + det(B)
+                    det_product = det_A + det_B
+
+                    # Step 3: Return the incorrect result
+                    return det_product
+
+                (C)
+                def solution():
+                    # Step 1: Given values for determinants of A and B
+                    det_A = 2
+                    det_B = 12
+
+                    # Step 2: Calculate the determinant of the product of matrices A and B
+                    det_product = det_A * det_B
+
+                    # Step 3: Return the result
+                    return det_product
+
+                You must create a processes and correct answer to the math problem which follows the constraints.
+                DO NOT GENERATE ANY SENTENCES AFTER Final Answer.
+        - 
+            role: assistant
+            content: |
+                Processes: To find $\det (\mathbf{A} \mathbf{B})$ given $\det \mathbf{A} = 2$ and $\det \mathbf{B} = 12$, we need to apply the properties of determinants of square matrices.
+
+                1. **Property of Determinants**:
+                    - The determinant of the product of two square matrices is equal to the product of their determinants:
+                        \[
+                        \det (\mathbf{A} \mathbf{B}) = \det \mathbf{A} \times \det \mathbf{B}
+                        \]
+                    - **Important Note**: It is **incorrect** to assume that the determinant of the product is the **sum** of the determinants. That is,
+                        \[
+                        \det (\mathbf{A} \mathbf{B}) \ne \det \mathbf{A} + \det \mathbf{B}
+                        \]
+
+                    This is a common misconception, as seen in the initial solution where the sum was incorrectly used.
+
+                2. **Correct Calculation**:
+                    - Given:
+                        \[
+                        \det \mathbf{A} = 2 \quad \text{and} \quad \det \mathbf{B} = 12
+                        \]
+                    - Applying the correct property:
+                        \[
+                        \det (\mathbf{A} \mathbf{B}) = \det \mathbf{A} \times \det \mathbf{B} = 2 \times 12 = 24
+                        \]
+
+                Final Answer: 24
+        -
+            role: user
+            content: |
+                Problem: If the system of equations
+
+                \\begin{align*}
+                6x-4y&=a,\\\\
+                6y-9x &=b.
+                \\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,
+                find $\\frac{a}{b},$ assuming $b$ is nonzero.
+
+                (A)
+                Solution:
+                To solve this system of equations, we can multiply the second equation by 2 to simplify the system:
+
+                \\begin{align*}
+                    6x - 4y &= a,\\\\
+                    12y - 18x &= 2b.
+                    \\end{align*}
+
+                Now, we can add the two equations to eliminate $x$:
+
+                \\begin{align*}
+                    6x - 4y + 12y - 18x &= a + 2b,\\\\
+                    -12x + 8y + 12y - 18x &= a + 2b,\\\\
+                    -30x + 20y &= a + 2b.
+                    \\end{align*}
+
+                Dividing the equation by 10, we get:
+
+                \\begin{align*}
+                    -3x + 2y &= \\frac{a + 2b}{10}.
+                    \\end{align*}
+
+                Since $x$ and $y$ are both nonzero, we can divide the equation by 2:
+
+                \\begin{align*}
+                    -1.5x + y &= \\frac{a + 2b}{20}.
+                    \\end{align*}
+
+                This implies that $\\frac{a}{b} = \\boxed{-3}$.
+
+                (B)
+                import sympy as sp
+
+                def solution():
+                    x, y, a, b = sp.symbols('x y a b')
+
+                    # Define the equations
+                    eq1 = sp.Eq(6*x - 4*y, a)
+                    eq2 = sp.Eq(6*y - 9*x, b)
+
+                    # Solve the equations for a and b
+                    solutions = sp.solve([eq1, eq2], (a, b), dict=True)
+
+                    # If solutions are found, express a/b
+                    if solutions:
+                        a_expr = solutions[0][a]
+                        b_expr = solutions[0][b]
+                        ratio = a_expr / b_expr
+                        return sp.simplify(ratio)
+                    return "No solution found"
+
+                (C)
+                def solution():
+                    '''
+                    The function solution returns the answer to the algebraic problem presented.
+
+                    We are given a system of equations:
+                    6x - 4y = a  (1)
+                    6y - 9x = b  (2)
+
+                    We need to find the value of a/b, assuming x and y are both nonzero, and b is nonzero.
+
+                    Step by step, we can transform the system of equations to express a in terms of b:
+
+                    From equation (1), we can express x in terms of y and a:
+                    6x = a + 4y  =>  x = (a + 4y)/6  (3)
+
+                    Mistake: We can substitute x from equation (3) into equation (2) to find a relation between y and b, but we will make a mistake in the algebra:
+                    6y - 9((a + 4y)/6) = b
+                    Simplify the equation:
+                    6y - (3a + 12y)/2 = b
+                    Multiply through by 2:
+                    12y - 6a - 24y = 2b
+                    Simplify further:
+                    -12a = 2b  =>  a = -6b  (4)
+
+                    Now we have an incorrect relation for a in terms of b. The ratio a/b is then:
+                    a/b = (-6b) / b
+                    Simplify by canceling out b:
+                    a/b = -6
+
+                    '''
+                    # make latex-comparable string
+                    result = "-6"
+                    return result
+
+                You must create a processes and correct answer to the math problem which follows the constraints.
+                DO NOT GENERATE ANY SENTENCES AFTER Final Answer.
+        -
+            role: assistant
+            content: |
+                Processes: To find the value of $\dfrac{a}{b}$ for the system of equations:
+
+                \[
+                \begin{align*}
+                6x - 4y &= a \quad (1) \\
+                6y - 9x &= b \quad (2)
+                \end{align*}
+                \]
+
+                where $x$ and $y$ are both nonzero, and $b \ne 0$, we can proceed as follows:
+
+                1. **Check for Proportionality**:
+
+                    First, observe that the two equations may be proportional if their coefficients are proportional. This would imply that the system has infinitely many solutions (since the determinant of the coefficient matrix would be zero), which is acceptable as long as $x$ and $y$ are nonzero.
+                    Let's compare the ratios of the coefficients:
+
+                    - For $x$:
+                        \[
+                        \frac{6}{-9} = -\frac{2}{3}
+                        \]
+                    - For $y$:
+                        \[
+                        \frac{-4}{6} = -\frac{2}{3}
+                        \]
+
+                    Since both ratios are equal, the coefficients are proportional with a factor of $k = -\frac{2}{3}$.
+
+                2. **Establish the Relationship Between $a$ and $b$**:
+
+                    Since the left-hand sides are proportional, the right-hand sides must also be proportional for the system to have a solution. Therefore:
+
+                    \[
+                    \frac{\text{LHS of (1)}}{\text{LHS of (2)}} = \frac{a}{b}
+                    \]
+
+                    Since the proportionality constant is $k = -\dfrac{2}{3}$, we have:
+
+                    \[
+                    \frac{6x - 4y}{6y - 9x} = k = -\frac{2}{3}
+                    \]
+
+                    Therefore:
+
+                    \[
+                    \frac{a}{b} = k = -\frac{2}{3}
+                    \]
+
+                3. **Conclusion**:
+                    The ratio of $a$ to $b$ must be $-\dfrac{2}{3}$ for the system to have a nontrivial solution where $x$ and $y$ are both nonzero.
+
+                **Alternative Method**:
+
+                We can also derive the relationship directly:
+
+                1. **Express $a$ and $b$ in Terms of $x$ and $y$**:
+
+                    From equations (1) and (2):
+
+                    - \( a = 6x - 4y \)
+                    - \( b = 6y - 9x \)
+
+                2. **Compute \(\dfrac{a}{b}\) in Terms of $x$ and $y$**:
+
+                    \[
+                    \frac{a}{b} = \frac{6x - 4y}{6y - 9x}
+                    \]
+
+                3. **Simplify the Expression**:
+
+                    To simplify, factor out $x$ and $y$:
+                
+                    \[
+                    \frac{a}{b} = \frac{2(3x - 2y)}{3(2y - 3x)} = \frac{2(3x - 2y)}{3(2y - 3x)}
+                    \]
+
+                    Note that \( 2y - 3x = - (3x - 2y) \), so:
+
+                    \[
+                    \frac{a}{b} = \frac{2(3x - 2y)}{3(- (3x - 2y))} = \frac{2(3x - 2y)}{-3(3x - 2y)} = -\frac{2}{3}
+                    \]
+                
+                    Thus, \(\dfrac{a}{b} = -\dfrac{2}{3}\).
+                ```
+
+                Final Answer: $-\dfrac{2}{3}$

@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import Dict, List, Literal
 
@@ -117,6 +118,68 @@ def process_indiv(
         print(f"wrote {len(processed_rows)} rows to")
         print("\t", outjslf)
 
+
+def process_cross_and_mix(
+    dataset_type: str = "",
+    infile: str = "",
+    outfile: str = "processed_cross_and_mix.jsonl",
+    n: int = 1,
+):
+    assert dataset_type != ""
+    assert infile, f"need to specify {infile=}"
+
+    # path
+    parent_dir = Path(infile).parent
+    print(f"parent dir is automatically set to {parent_dir=}")
+    print(f"outfile is set to {Path(outfile).name} and saved under {parent_dir=}")
+    infile = Path(infile).name
+    outfile = Path(outfile).name
+    outjslf = Path(parent_dir) / outfile
+    assert infile != outfile
+    # if outjslf.exists():
+    #     print(outjslf, ': Tasks that have already been completed.')
+    #     return
+
+    if n > 1 or not infile.startswith("n1_"):
+        raise NotImplementedError("n>1 cannot run here")
+
+    raw_selections = list(jsl.open(parent_dir / infile))
+    selidxs = [
+        int(k)
+        for k in open(parent_dir / "selection_performed_idxs.txt")
+        .read()
+        .strip()
+        .split("\n")
+    ]
+
+    assert len(raw_selections) == len(selidxs)
+    originals = list(jsl.open(parent_dir / infile.replace(".jsonl", "_input.jsonl")))
+
+    def _process_cross_and_mix_raw(sel: dict = None, og: dict = None) -> dict:
+        cross_and_mix_res = sel['CrossAndMixQueryObject']['contents'][0]
+
+        if cross_and_mix_res is None:
+            og["cross_and_mix_answer"] = [None]
+        else:
+            cot_exec = (
+                extract_num_turbo
+                if dataset_type == "gsm"
+                else extract_ans_from_cot_MATHnOCW
+            )
+
+            og["cross_and_mix_answer"] = cot_exec(cross_and_mix_res)
+        return og
+
+    for idx, selrow in zip(selidxs, raw_selections):
+        originals[idx] = _process_cross_and_mix_raw(sel=selrow, og=originals[idx])
+
+    # save
+    if not outjslf.parent.is_dir():
+        outjslf.parent.mkdir(parents=True, exist_ok=True)
+
+    with jsl.open(outjslf, "w") as writer:
+        writer.write_all(originals)
+        print("\t", outjslf)
 
 def process_simple_greedy(
     infile: str = "",
